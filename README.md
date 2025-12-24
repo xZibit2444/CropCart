@@ -42,4 +42,4 @@ CropCart Team · Sourcing that keeps farms thriving and cities fed.
 
 ---
 
-Built with ❤️ for Ghana's farmers and cities.
+Built for Ghana's farmers and cities.
