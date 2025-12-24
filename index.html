@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CropCart | Local produce, delivered</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f7f8f7;
+      --fg: #0b1b12;
+      --muted: #4a5e52;
+      --accent: #2faa5a;
+      --accent-strong: #1e8b49;
+      --card: #ffffff;
+      --stroke: #e4ebe3;
+      --shadow: 0 8px 24px rgba(11, 27, 18, 0.06);
+      --shadow-soft: 0 4px 12px rgba(11, 27, 18, 0.05);
+      --max-width: 1140px;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Manrope', 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      position: relative;
+    }
+    
+    .crop-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    
+    .leaf {
+      position: absolute;
+      opacity: 0.25;
+      animation: float linear infinite;
+    }
+    
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+      }
+      5% {
+        opacity: 0.25;
+      }
+      95% {
+        opacity: 0.25;
+      }
+      100% {
+        transform: translateY(-120px) rotate(180deg);
+        opacity: 0;
+      }
+    }
+
+    .leaf:nth-child(odd) {
+      animation-name: leafRotateSlow;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes scaleIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes textReveal {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+        clip-path: inset(0 100% 0 0);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+        clip-path: inset(0 0 0 0);
+      }
+    }
+
+    @keyframes leafRotateSlow {
+      0% {
+        transform: translateY(100vh) rotate(0deg) scale(1);
+        opacity: 0;
+      }
+      5% {
+        opacity: 0.25;
+      }
+      50% {
+        transform: translateY(50vh) rotate(90deg) scale(0.98);
+        opacity: 0.25;
+      }
+      95% {
+        opacity: 0.25;
+      }
+      100% {
+        transform: translateY(-120px) rotate(180deg) scale(1);
+        opacity: 0;
+      }
+    }
+
+    .cursor-glow {
+      display: none;
+    }
+    
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(16px);
+      background: rgba(255, 255, 255, 0.9);
+      border-bottom: 1px solid var(--stroke);
+      font-family: 'Manrope', 'Segoe UI', sans-serif;
+    }
+    nav {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      font-family: inherit;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; font-weight: 700; letter-spacing: 0.01em; font-family: 'Manrope', 'Segoe UI', sans-serif; }
+    .brand-mark {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: #0b1b12;
+      display: grid; place-items: center;
+      color: #ffffff; font-weight: 800; box-shadow: var(--shadow-soft);
+      letter-spacing: 0.02em;
+    }
+
+    .nav-links { display: flex; gap: 18px; align-items: center; font-family: 'Manrope', 'Segoe UI', sans-serif; }
+    .nav-links a {
+      position: relative;
+      font-weight: 600;
+      color: var(--muted);
+      padding: 6px 4px;
+      transition: color 0.35s ease, opacity 0.35s ease;
+    }
+    .nav-links a:hover { color: var(--fg); opacity: 0.9; }
+    .cta-btn {
+      padding: 12px 18px;
+      background: var(--accent);
+      color: #ffffff;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      border-radius: 10px;
+      border: 1px solid var(--accent-strong);
+      cursor: pointer;
+      transition: transform 0.35s ease, box-shadow 0.35s ease, filter 0.35s ease;
+      box-shadow: 0 8px 18px rgba(47, 170, 90, 0.16);
+    }
+    .cta-btn:hover { transform: translateY(-1px); filter: brightness(1.02); }
+    .cta-btn:active { transform: translateY(0); box-shadow: 0 4px 10px rgba(47, 170, 90, 0.14); }
+    .ghost-btn {
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--stroke);
+      color: var(--fg);
+      background: #ffffff;
+      font-weight: 600;
+      cursor: pointer;
+      transition: border-color 0.35s ease, transform 0.35s ease, box-shadow 0.35s ease;
+      box-shadow: var(--shadow-soft);
+    }
+    .ghost-btn:hover { transform: translateY(-1px); border-color: rgba(47,170,90,0.35); }
+
+    main { max-width: var(--max-width); margin: 0 auto; padding: 40px 24px 88px; position: relative; z-index: 1; }
+    .hero { display: grid; grid-template-columns: 1fr; gap: 24px; padding: 44px 0 28px; align-items: start; animation: fadeInUp 0.8s ease-out; }
+    .eyebrow { font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); font-weight: 700; animation: fadeInUp 0.7s ease-out both; }
+    h1 { margin: 12px 0 10px; font-size: clamp(32px, 4.6vw, 46px); line-height: 1.1; font-family: 'Manrope', 'Segoe UI', sans-serif; letter-spacing: -0.01em; font-weight: 700; animation: textReveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both; }
+    h2 { margin: 0 0 10px; font-size: 22px; letter-spacing: -0.01em; font-family: 'Manrope', 'Segoe UI', sans-serif; font-weight: 700; animation: textReveal 0.9s cubic-bezier(0.16, 1, 0.3, 1) both; }
+    p.lead { color: var(--muted); max-width: 640px; font-size: 16px; line-height: 1.6; animation: fadeInUp 0.9s ease-out 0.25s both; }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin: 22px 0 28px; animation: fadeInUp 0.8s ease-out 0.3s both; }
+    .stats { display: grid; grid-template-columns: 1fr; gap: 12px; }
+    .stat-card {
+      padding: 14px 16px; border: 1px solid var(--stroke); border-radius: 10px; background: var(--card);
+      box-shadow: var(--shadow-soft);
+      transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+      animation: fadeInUp 0.6s ease-out;
+    }
+    .stat-card strong { display: block; font-size: 22px; color: var(--fg); letter-spacing: -0.01em; }
+    .stat-card span { color: var(--muted); font-size: 13px; }
+    .stat-mono { font-family: 'DM Mono', 'IBM Plex Mono', monospace; font-weight: 600; letter-spacing: 0.01em; }
+
+    .card-hover:hover { transform: translateY(-1px); border-color: rgba(47, 170, 90, 0.28); box-shadow: 0 10px 26px rgba(11, 27, 18, 0.08); }
+    .card-hover:focus-visible { outline: 2px solid rgba(47, 170, 90, 0.4); outline-offset: 2px; }
+    .card-hover {
+      animation: fadeInUp 0.6s ease-out;
+    }
+
+    .hero-visual { position: relative; }
+    .bubble { display: none; }
+    .panel {
+      position: relative;
+      padding: 18px;
+      border-radius: 12px;
+      background: #ffffff;
+      border: 1px solid var(--stroke);
+      box-shadow: var(--shadow-soft);
+      display: grid;
+      gap: 10px;
+      overflow: hidden;
+    }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+
+    .section { margin: 68px 0 0; }
+    .section-header { display: flex; justify-content: space-between; align-items: center; gap: 12px; animation: fadeInUp 0.8s ease-out; }
+    .section-header p { color: var(--muted); margin: 0; max-width: 560px; }
+
+    .feature-card { padding: 18px; border-radius: 10px; border: 1px solid var(--stroke); background: var(--card); box-shadow: var(--shadow-soft); animation: fadeInUp 0.7s ease-out; }
+    .feature-card h3 { margin: 0 0 8px; font-size: 20px; }
+    .feature-card p { margin: 0; color: var(--muted); }
+    .pill-row { display: flex; gap: 8px; flex-wrap: wrap; margin: 10px 0 0; }
+    .pill { padding: 6px 10px; background: rgba(47, 170, 90, 0.08); color: var(--fg); border-radius: 999px; font-weight: 600; font-size: 12px; border: 1px solid rgba(47, 170, 90, 0.28); }
+    .badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 999px; font-weight: 700; font-size: 12px; letter-spacing: 0.01em; background: rgba(11,27,18,0.04); color: #0b1b12; border: 1px solid rgba(11,27,18,0.1); }
+
+    .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-top: 12px; }
+    .step { padding: 16px; border: 1px solid var(--stroke); border-radius: 10px; background: var(--card); position: relative; box-shadow: var(--shadow-soft); }
+    .step::before { content: attr(data-step); position: absolute; top: 12px; right: 12px; font-weight: 700; color: var(--accent); }
+    .step h4 { margin: 0 0 8px; }
+    .step p { margin: 0; color: var(--muted); }
+
+    .route-list { display: grid; gap: 10px; }
+    .route-item { display: grid; grid-template-columns: 1fr auto; align-items: center; padding: 12px; border: 1px solid var(--stroke); border-radius: 10px; background: #ffffff; box-shadow: var(--shadow-soft); }
+    .route-meta { display: flex; flex-direction: column; gap: 4px; }
+    .route-title { font-weight: 700; letter-spacing: -0.01em; }
+    .route-sub { color: var(--muted); font-size: 13px; }
+    .mini-progress { position: relative; width: 100%; height: 6px; border-radius: 999px; background: #e7efe4; overflow: hidden; margin-top: 4px; }
+    .mini-progress span { position: absolute; inset: 0; background: var(--accent); transform-origin: left; border-radius: inherit; }
+
+    .farm-card { padding: 16px; border-radius: 10px; border: 1px solid var(--stroke); background: var(--card); display: grid; gap: 8px; box-shadow: var(--shadow-soft); }
+    .farm-meta { display: flex; gap: 12px; align-items: center; }
+    .farm-tag { padding: 6px 10px; background: rgba(245, 212, 125, 0.14); border-radius: 10px; color: var(--fg); font-weight: 600; border: 1px solid rgba(245, 212, 125, 0.35); }
+
+    .cta-wide {
+      margin-top: 48px;
+      padding: 24px;
+      border-radius: 12px;
+      border: 1px solid var(--stroke);
+      background: #ffffff;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      align-items: start;
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-wide h3 { margin: 0 0 10px; font-size: 24px; }
+    .cta-wide p { margin: 0; color: var(--muted); }
+    .cta-form { display: grid; gap: 10px; }
+    .cta-form input, .cta-form textarea, .cta-form select {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid var(--stroke);
+      background: rgba(255, 255, 255, 0.9);
+      color: var(--fg);
+      font-size: 14px;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .cta-form input:focus, .cta-form textarea:focus, .cta-form select:focus {
+      border-color: rgba(47,170,90,0.5);
+      box-shadow: 0 0 0 4px rgba(47,170,90,0.15);
+      outline: none;
+    }
+    .cta-form textarea { min-height: 88px; resize: vertical; }
+
+    .testimonials { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+    .quote { padding: 16px; border-radius: 10px; border: 1px solid var(--stroke); background: var(--card); box-shadow: var(--shadow-soft); animation: fadeInUp 0.7s ease-out; }
+    .quote strong { display: block; margin-top: 8px; }
+    .quote span { color: var(--muted); }
+
+    footer { border-top: 1px solid var(--stroke); margin-top: 64px; padding: 18px 0 36px; color: var(--muted); text-align: center; }
+
+    .chips { display: flex; gap: 10px; flex-wrap: wrap; margin: 12px 0 0; }
+    .chip { padding: 8px 12px; border-radius: 999px; background: #ffffff; border: 1px solid var(--stroke); font-weight: 600; box-shadow: none; }
+
+    button:focus-visible { outline: 2px solid rgba(47, 170, 90, 0.5); outline-offset: 3px; }
+
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; }
+      .cta-wide { grid-template-columns: 1fr; }
+      nav { flex-wrap: wrap; }
+      .nav-links { flex-wrap: wrap; justify-content: flex-end; }
+    }
+    @media (max-width: 620px) {
+      nav { padding: 14px 16px; }
+      .hero { padding-top: 10px; }
+      .section { margin-top: 52px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="crop-bg">
+    <svg class="leaf" style="left: 10%; animation-duration: 25s; animation-delay: 0s;" width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 2C12 2 6 8 6 14C6 17.31 8.69 20 12 20C15.31 20 18 17.31 18 14C18 8 12 2 12 2Z" fill="#2faa5a"/>
+    </svg>
+    <svg class="leaf" style="left: 25%; animation-duration: 30s; animation-delay: 3s;" width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 2C12 2 6 8 6 14C6 17.31 8.69 20 12 20C15.31 20 18 17.31 18 14C18 8 12 2 12 2Z" fill="#2faa5a"/>
+    </svg>
+    <svg class="leaf" style="left: 45%; animation-duration: 28s; animation-delay: 5s;" width="70" height="70" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 2C12 2 6 8 6 14C6 17.31 8.69 20 12 20C15.31 20 18 17.31 18 14C18 8 12 2 12 2Z" fill="#2faa5a"/>
+    </svg>
+    <svg class="leaf" style="left: 65%; animation-duration: 32s; animation-delay: 2s;" width="65" height="65" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 2C12 2 6 8 6 14C6 17.31 8.69 20 12 20C15.31 20 18 17.31 18 14C18 8 12 2 12 2Z" fill="#2faa5a"/>
+    </svg>
+    <svg class="leaf" style="left: 80%; animation-duration: 27s; animation-delay: 7s;" width="75" height="75" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 2C12 2 6 8 6 14C6 17.31 8.69 20 12 20C15.31 20 18 17.31 18 14C18 8 12 2 12 2Z" fill="#2faa5a"/>
+    </svg>
+    <svg class="leaf" style="left: 90%; animation-duration: 29s; animation-delay: 4s;" width="72" height="72" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 2C12 2 6 8 6 14C6 17.31 8.69 20 12 20C15.31 20 18 17.31 18 14C18 8 12 2 12 2Z" fill="#2faa5a"/>
+    </svg>
+  </div>
+  <header>
+    <nav>
+      <div class="brand">
+        <div class="brand-mark">C</div>
+        <span>CropCart</span>
+      </div>
+      <div class="nav-links">
+        <a href="#how">How it works</a>
+        <a href="#wholesale">Wholesale</a>
+        <a href="#farms">Partner farms</a>
+        <button class="ghost-btn">Login</button>
+        <button class="cta-btn">Get started</button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <div class="eyebrow">Ghana-grown · Fresh · Fast</div>
+        <h1>From Ghana's fields to city doors in hours.</h1>
+        <p class="lead">CropCart links verified Ghanaian farms to buyers in Accra and Kumasi with sealed cold chain and tracked loads, so produce arrives crisp, traceable, and on time.</p>
+        <div class="hero-actions">
+          <button class="cta-btn">Browse partner farms</button>
+          <button class="ghost-btn">Talk to wholesale team</button>
+        </div>
+        <div class="stats">
+          <div class="stat-card card-hover">
+            <strong class="stat-mono">210+</strong>
+            <span>Ghana farms onboarded</span>
+          </div>
+          <div class="stat-card card-hover">
+            <strong class="stat-mono">12h</strong>
+            <span>Avg harvest-to-door nationwide</span>
+          </div>
+          <div class="stat-card card-hover">
+            <strong class="stat-mono">99.3%</strong>
+            <span>On-time fulfillment</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="panel">
+          <div class="section-header" style="margin: 0;">
+            <div>
+              <div class="eyebrow" style="letter-spacing: 0.1em;">Live routes</div>
+              <p style="margin: 6px 0 0; color: var(--muted);">Balancing Volta harvests with city delivery slots.</p>
+            </div>
+            <span class="badge">Realtime</span>
+          </div>
+          <div class="route-list">
+            <div class="route-item">
+              <div class="route-meta">
+                <span class="route-title">Route 12 · Volta Plains → Accra CBD</span>
+                <span class="route-sub">Leafy greens · Cold chain sealed · ETA 09:40</span>
+                <div class="mini-progress"><span style="width: 72%;"></span></div>
+              </div>
+              <span class="badge">On track</span>
+            </div>
+            <div class="route-item">
+              <div class="route-meta">
+                <span class="route-title">Route 7 · Techiman Hub → Kumasi Kejetia</span>
+                <span class="route-sub">Plantain & citrus · Photo QC logged</span>
+                <div class="mini-progress"><span style="width: 54%;"></span></div>
+              </div>
+              <span class="badge">Cooling</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="how" class="section">
+      <div class="section-header">
+        <div>
+          <h2>How CropCart delivers fresher</h2>
+          <p>We match orders to nearby harvests, schedule picks around weather, and keep the cold chain sealed to handoff.</p>
+        </div>
+      </div>
+      <div class="steps">
+        <div class="step card-hover" data-step="01">
+          <h4>Source</h4>
+          <p>Curated growers within 200 miles, verified for soil health, water use, and traceability.</p>
+        </div>
+        <div class="step card-hover" data-step="02">
+          <h4>Balance</h4>
+          <p>Demand is matched to harvest windows to reduce waste and stabilize payouts for farmers.</p>
+        </div>
+        <div class="step card-hover" data-step="03">
+          <h4>Deliver</h4>
+          <p>Cross-dock hubs and reefers keep produce chilled; real-time alerts keep teams aligned.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="farms" class="section">
+      <div class="section-header">
+        <div>
+          <h2>Partner farms on this week's routes</h2>
+          <p>Seasonal picks from Ghanaian growers. Build your box or lock in wholesale pallets.</p>
+        </div>
+        <button class="ghost-btn">See full directory</button>
+      </div>
+      <div class="grid" style="margin-top: 14px;">
+        <div class="farm-card card-hover">
+          <div class="farm-meta">
+            <span class="farm-tag">Organic</span>
+            <strong>Volta Leafy Co-Op</strong>
+          </div>
+          <p style="margin: 0; color: var(--muted);">Volta Region · Baby spinach, arugula, butter lettuce</p>
+          <div class="pill-row">
+            <span class="pill">Cut at dawn</span>
+            <span class="pill">Hydro-cooled</span>
+            <span class="pill">48 cases</span>
+          </div>
+        </div>
+        <div class="farm-card card-hover">
+          <div class="farm-meta">
+            <span class="farm-tag">Regenerative</span>
+            <strong>Ashanti Orchard Collective</strong>
+          </div>
+          <p style="margin: 0; color: var(--muted);">Ashanti Region · Mango, citrus, pawpaw</p>
+          <div class="pill-row">
+            <span class="pill">Hand-sorted</span>
+            <span class="pill">Bin to box</span>
+            <span class="pill">72 crates</span>
+          </div>
+        </div>
+        <div class="farm-card card-hover">
+          <div class="farm-meta">
+            <span class="farm-tag">GAP Certified</span>
+            <strong>Upper East Roots</strong>
+          </div>
+          <p style="margin: 0; color: var(--muted);">Bolgatanga · Carrots, beets, radish</p>
+          <div class="pill-row">
+            <span class="pill">Washed & topped</span>
+            <span class="pill">Cold-chain</span>
+            <span class="pill">110 totes</span>
+          </div>
+        </div>
+        <div class="farm-card card-hover">
+          <div class="farm-meta">
+            <span class="farm-tag">Beyond Organic</span>
+            <strong>Eastern Plains Harvest</strong>
+          </div>
+          <p style="margin: 0; color: var(--muted);">Eastern Region · Heirloom tomatoes, cucumbers</p>
+          <div class="pill-row">
+            <span class="pill">Vine-ripened</span>
+            <span class="pill">Zero pesticides</span>
+            <span class="pill">64 flats</span>
+          </div>
+        </div>
+      </div>
+      <div class="chips">
+        <span class="chip">Greens</span>
+        <span class="chip">Roots</span>
+        <span class="chip">Stone fruit</span>
+        <span class="chip">Tomatoes</span>
+        <span class="chip">Herbs</span>
+        <span class="chip">Dairy partners</span>
+      </div>
+    </section>
+
+    <section id="wholesale" class="section">
+      <div class="cta-wide">
+        <div>
+          <h3>Wholesale, simplified</h3>
+          <p>Reserve pallets with clear pricing, verified cold-chain, and capacity held for your kitchens or shelves.</p>
+          <div class="pill-row">
+            <span class="pill">Dock scheduling</span>
+            <span class="pill">EDI ready</span>
+            <span class="pill">Allergen tracking</span>
+            <span class="pill">Lot traceability</span>
+          </div>
+        </div>
+        <form class="cta-form">
+          <input type="text" placeholder="Business name" required />
+          <input type="email" placeholder="Work email" required />
+          <select>
+            <option>Order size: Weekly pallets</option>
+            <option>Order size: Multiple truckloads</option>
+            <option>Order size: Mixed cases</option>
+          </select>
+          <textarea placeholder="What do you need sourced?"></textarea>
+          <button class="cta-btn" type="submit">Request a call</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <div>
+          <h2>What our partners say</h2>
+          <p>Chefs, buyers, and farmers rely on us to keep the chain tight and the quality high.</p>
+        </div>
+      </div>
+      <div class="testimonials">
+        <div class="quote card-hover">
+          “Orders land with field heat gone and moisture right—our prep cooks notice.”
+          <strong>Head Chef, Sequoia Bistro</strong>
+          <span>120 boxes weekly</span>
+        </div>
+        <div class="quote card-hover">
+          “Predictable payouts let us plan soil amendments; zero waste on peaches this season.”
+          <strong>Grower, Stone & Soil Orchards</strong>
+          <span>7-year partner</span>
+        </div>
+        <div class="quote card-hover">
+          “Their EDI and lot tracking dropped our receiving time by 40%.”
+          <strong>Procurement Lead, Urban Greens Market</strong>
+          <span>4 stores, Midwest</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="cta-wide">
+        <div>
+          <h3>Ready to build your next box?</h3>
+          <p>Tell us your mix and route—we'll assemble a harvest-fresh lineup that meets your standards.</p>
+        </div>
+        <div class="hero-actions" style="margin: 0; justify-content: flex-end;">
+          <button class="ghost-btn">Explore produce catalog</button>
+          <button class="cta-btn">Start an order</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    CropCart · Sourcing that keeps farms thriving and cities fed.
+  </footer>
+
+  <script>
+    // Stagger animations for cards based on index
+    const cards = document.querySelectorAll('.card-hover');
+    cards.forEach((card, index) => {
+      card.style.animationDelay = (0.1 * index) + 's';
+    });
+
+    // Observer for scroll-triggered animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -100px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.animationPlayState = 'running';
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    // Observe section headers and cards for staggered reveal
+    document.querySelectorAll('.section-header, .card-hover, .quote, .step').forEach(el => {
+      el.style.animationPlayState = 'paused';
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>
