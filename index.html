@@ -4,6 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CropCart | Local produce, delivered</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="mask-icon" href="favicon.svg" color="#22c55e" />
+  <link rel="icon" sizes="32x32" href="favicon-32.png" />
+  <link rel="icon" sizes="16x16" href="favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -27,6 +32,7 @@
     }
 
     * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
       margin: 0;
       font-family: 'Manrope', 'Segoe UI', sans-serif;
@@ -50,7 +56,7 @@
     
     .leaf {
       position: absolute;
-      opacity: 0.25;
+      opacity: 0;
       animation: float linear infinite;
     }
     
@@ -67,6 +73,57 @@
       }
       100% {
         transform: translateY(-120px) rotate(180deg);
+        opacity: 0;
+      }
+    }
+
+    @keyframes floatLeftRight {
+      0% {
+        transform: translate(-120px, 100vh) rotate(0deg);
+        opacity: 0;
+      }
+      5% {
+        opacity: 0.25;
+      }
+      95% {
+        opacity: 0.25;
+      }
+      100% {
+        transform: translate(100vw, -120px) rotate(180deg);
+        opacity: 0;
+      }
+    }
+
+    @keyframes floatRightLeft {
+      0% {
+        transform: translate(100vw, 100vh) rotate(0deg);
+        opacity: 0;
+      }
+      5% {
+        opacity: 0.25;
+      }
+      95% {
+        opacity: 0.25;
+      }
+      100% {
+        transform: translate(-120px, -120px) rotate(-180deg);
+        opacity: 0;
+      }
+    }
+
+    @keyframes floatDiagonal {
+      0% {
+        transform: translate(100vw, 0) rotate(0deg);
+        opacity: 0;
+      }
+      5% {
+        opacity: 0.25;
+      }
+      95% {
+        opacity: 0.25;
+      }
+      100% {
+        transform: translate(-120px, 100vh) rotate(180deg);
         opacity: 0;
       }
     }
@@ -223,23 +280,19 @@
       max-width: none;
       margin: 0;
       height: var(--header-height);
-      padding: 0 12px; /* tighter left padding to push brand left */
+      padding: 0 24px; /* small right shift for brand */
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 20px;
       font-family: inherit;
     }
-    .brand { display: flex; align-items: center; gap: 14px; font-weight: 700; letter-spacing: 0.01em; font-family: 'Manrope', 'Segoe UI', sans-serif; cursor: pointer; transition: opacity 0.3s ease; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; letter-spacing: 0.01em; font-family: 'Manrope', 'Segoe UI', sans-serif; cursor: pointer; transition: opacity 0.3s ease; }
     .brand:hover { opacity: 0.9; }
     .brand-mark {
-      display: inline-flex;
-      align-items: baseline;
-      gap: 6px;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      line-height: 1;
-      font-size: calc(var(--header-height) * 0.75);
+      width: 240px;
+      height: 60px;
+      display: block;
     }
     .brand-crop { color: var(--fg); }
     .brand-cart { color: var(--accent); }
@@ -588,7 +641,164 @@
     .quote strong { display: block; margin-top: 16px; font-size: 16px; color: var(--fg); }
     .quote span { color: var(--muted); font-size: 14px; }
 
-    footer { border-top: 1px solid var(--stroke); margin-top: 64px; padding: 18px 0 36px; color: var(--muted); text-align: center; }
+    footer { 
+      border-top: 1px solid var(--stroke); 
+      margin-top: 80px; 
+      padding: 48px 24px 32px; 
+      background: linear-gradient(180deg, #ffffff 0%, #f9fafb 100%);
+    }
+    .footer-content {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 40px;
+      margin-bottom: 32px;
+    }
+    .footer-column h4 {
+      font-size: 14px;
+      font-weight: 700;
+      margin: 0 0 16px;
+      color: var(--fg);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .footer-column ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .footer-column ul li {
+      margin-bottom: 10px;
+    }
+    .footer-column ul li a {
+      color: var(--muted);
+      font-size: 14px;
+      transition: color 0.2s ease;
+    }
+    .footer-column ul li a:hover {
+      color: var(--accent);
+    }
+    .footer-bottom {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding-top: 24px;
+      border-top: 1px solid var(--stroke);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .social-links {
+      display: flex;
+      gap: 16px;
+    }
+    .social-links a {
+      color: var(--muted);
+      transition: color 0.2s ease;
+    }
+    .social-links a:hover {
+      color: var(--accent);
+    }
+    .faq-section {
+      max-width: 900px;
+      margin: 0 auto;
+      display: grid;
+      gap: 20px;
+    }
+    .faq-item {
+      background: var(--card);
+      border: 2px solid var(--stroke);
+      border-radius: var(--radius);
+      padding: 28px 32px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .faq-item::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 4px;
+      background: var(--accent);
+      transform: scaleY(0);
+      transform-origin: bottom;
+      transition: transform 0.3s ease;
+    }
+    .faq-item:hover {
+      border-color: var(--accent-light);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+    .faq-item:hover::before {
+      transform: scaleY(1);
+    }
+    .faq-question {
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--fg);
+      margin: 0 0 14px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      line-height: 1.4;
+    }
+    .faq-question::before {
+      content: '';
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      margin-top: 2px;
+      background: var(--accent-light);
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%2322c55e"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>');
+      background-size: 20px 20px;
+      background-repeat: no-repeat;
+      background-position: center;
+      transition: transform 0.3s ease;
+    }
+    .faq-item:hover .faq-question::before {
+      transform: scale(1.1);
+    }
+    .faq-answer {
+      color: var(--muted);
+      line-height: 1.8;
+      margin: 0;
+      margin-left: 42px;
+      font-size: 16px;
+    }
+    .trust-badges {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 32px;
+      padding: 24px;
+      background: rgba(34, 197, 94, 0.05);
+      border-radius: 12px;
+    }
+    .badge-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--fg);
+    }
+    .badge-item svg {
+      width: 24px;
+      height: 24px;
+      fill: var(--accent);
+    }
 
     .chips { display: flex; gap: 12px; flex-wrap: wrap; margin: 28px 0 0; justify-content: center; align-items: center; }
     .chip { padding: 10px 16px; border-radius: 999px; background: #ffffff; border: 1px solid var(--stroke); font-weight: 600; font-size: 14px; cursor: pointer; transition: all 0.3s ease; animation: fadeInUp 0.7s ease-out forwards; }
@@ -601,18 +811,25 @@
       .cta-wide { grid-template-columns: 1fr; }
       nav { flex-wrap: wrap; }
       .nav-links { flex-wrap: wrap; justify-content: flex-end; }
+      .footer-content { grid-template-columns: 1fr; }
     }
     @media (max-width: 620px) {
-      nav { padding: 14px 16px; }
+      nav { padding: 0 16px; }
       .hero { padding-top: 10px; }
       .section { margin-top: 52px; }
+      main { padding: 40px 20px 80px; }
+      .brand-mark { width: 180px; height: 45px; }
+      .brand-mark text { font-size: 36px; }
+      h1 { font-size: 32px !important; }
+      h2 { font-size: 24px; }
+      .grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
   <div class="crop-bg">
     <!-- Orange -->
-    <svg class="leaf" style="left: 10%; animation-duration: 25s; animation-delay: 0s;" width="140" height="140" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg class="leaf" style="left: 10%; animation: floatLeftRight 25s linear 0s infinite;" width="140" height="140" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
       <circle cx="50" cy="50" r="35" fill="#ff8c00"/>
       <ellipse cx="50" cy="35" rx="8" ry="4" fill="#ffa500" opacity="0.6"/>
       <ellipse cx="60" cy="45" rx="6" ry="3" fill="#ffa500" opacity="0.5"/>
@@ -621,7 +838,7 @@
     </svg>
     
     <!-- Apple -->
-    <svg class="leaf" style="left: 25%; animation-duration: 30s; animation-delay: 3s;" width="110" height="110" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg class="leaf" style="left: 25%; animation: floatRightLeft 30s linear 3s infinite;" width="110" height="110" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
       <ellipse cx="50" cy="55" rx="28" ry="32" fill="#dc143c"/>
       <ellipse cx="45" cy="50" rx="12" ry="15" fill="#ff6b6b" opacity="0.4"/>
       <rect x="48" y="20" width="4" height="12" rx="2" fill="#8b4513"/>
@@ -629,7 +846,7 @@
     </svg>
     
     <!-- Watermelon slice -->
-    <svg class="leaf" style="left: 45%; animation-duration: 28s; animation-delay: 5s;" width="125" height="125" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg class="leaf" style="left: 45%; animation: float 28s linear 5s infinite;" width="125" height="125" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M20 70 Q50 30, 80 70 Z" fill="#ff6b6b"/>
       <path d="M20 70 Q50 35, 80 70 Z" fill="#228b22" opacity="0.3"/>
       <path d="M23 70 Q50 38, 77 70" stroke="#2d5016" stroke-width="3" fill="none"/>
@@ -639,12 +856,12 @@
     </svg>
     
     <!-- Leaf -->
-    <svg class="leaf" style="left: 65%; animation-duration: 32s; animation-delay: 2s;" width="120" height="120" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg class="leaf" style="left: 65%; animation: floatDiagonal 32s linear 2s infinite;" width="120" height="120" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M12 2C12 2 6 8 6 14C6 17.31 8.69 20 12 20C15.31 20 18 17.31 18 14C18 8 12 2 12 2Z" fill="#22c55e"/>
     </svg>
     
     <!-- Orange -->
-    <svg class="leaf" style="left: 80%; animation-duration: 27s; animation-delay: 7s;" width="135" height="135" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg class="leaf" style="left: 80%; animation: floatLeftRight 27s linear 7s infinite;" width="135" height="135" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
       <circle cx="50" cy="50" r="35" fill="#ff8c00"/>
       <ellipse cx="50" cy="35" rx="8" ry="4" fill="#ffa500" opacity="0.6"/>
       <ellipse cx="60" cy="45" rx="6" ry="3" fill="#ffa500" opacity="0.5"/>
@@ -653,25 +870,93 @@
     </svg>
     
     <!-- Apple -->
-    <svg class="leaf" style="left: 90%; animation-duration: 29s; animation-delay: 4s;" width="130" height="130" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg class="leaf" style="left: 90%; animation: float 29s linear 4s infinite;" width="130" height="130" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
       <ellipse cx="50" cy="55" rx="28" ry="32" fill="#dc143c"/>
       <ellipse cx="45" cy="50" rx="12" ry="15" fill="#ff6b6b" opacity="0.4"/>
       <rect x="48" y="20" width="4" height="12" rx="2" fill="#8b4513"/>
       <path d="M50 23 Q55 18, 58 20 Q60 23, 56 26 Q52 28, 50 23Z" fill="#228b22"/>
     </svg>
+    
+    <!-- Banana -->
+    <svg class="leaf" style="left: 5%; animation: floatRightLeft 35s linear 2.5s infinite;" width="115" height="115" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M30 50 Q50 30, 60 20 Q65 25, 55 40 Q45 55, 35 65 Q30 60, 30 50Z" fill="#FFD700"/>
+      <path d="M33 52 Q48 38, 56 28" stroke="#DAA520" stroke-width="2" fill="none"/>
+    </svg>
+    
+    <!-- Carrot -->
+    <svg class="leaf" style="left: 15%; animation: floatDiagonal 31s linear 6s infinite;" width="105" height="105" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M30 40 L70 70 L68 75 L28 45 Z" fill="#FF8C00"/>
+      <path d="M70 65 L75 50 L78 55 Z" fill="#228b22"/>
+      <path d="M75 50 L80 45" stroke="#228b22" stroke-width="2" fill="none"/>
+    </svg>
+    
+    <!-- Mango -->
+    <svg class="leaf" style="left: 35%; animation: float 33s linear 1s infinite;" width="120" height="120" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="50" cy="55" rx="25" ry="30" fill="#FF6B35"/>
+      <ellipse cx="45" cy="50" rx="12" ry="18" fill="#FF8C42" opacity="0.5"/>
+      <rect x="48" y="20" width="4" height="10" rx="2" fill="#8b4513"/>
+      <path d="M50 22 Q45 18, 42 20 Q40 22, 43 25 Q46 26, 50 22Z" fill="#228b22"/>
+    </svg>
+    
+    <!-- Tomato -->
+    <svg class="leaf" style="left: 55%; animation: floatLeftRight 29s linear 4.5s infinite;" width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="50" cy="55" r="32" fill="#E41E3F"/>
+      <path d="M50 23 Q45 18, 40 20 Q38 23, 42 27 Q48 29, 50 23Z" fill="#228b22"/>
+      <ellipse cx="50" cy="55" rx="25" ry="28" fill="#DC143C" opacity="0.4"/>
+    </svg>
+    
+    <!-- Pineapple -->
+    <svg class="leaf" style="left: 72%; animation: floatDiagonal 36s linear 3.5s infinite;" width="125" height="125" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="50" cy="60" rx="28" ry="32" fill="#FFD700"/>
+      <path d="M40 35 L45 20 M50 35 L50 18 M60 35 L55 20" stroke="#228b22" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <g opacity="0.6">
+        <line x1="30" y1="45" x2="50" y2="55" stroke="#DAA520" stroke-width="2"/>
+        <line x1="35" y1="55" x2="55" y2="65" stroke="#DAA520" stroke-width="2"/>
+        <line x1="50" y1="45" x2="70" y2="55" stroke="#DAA520" stroke-width="2"/>
+      </g>
+    </svg>
+    
+    <!-- Papaya -->
+    <svg class="leaf" style="left: 88%; animation: float 31s linear 5.5s infinite;" width="110" height="110" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="50" cy="55" rx="26" ry="32" fill="#FF7F50"/>
+      <circle cx="40" cy="50" r="4" fill="#000" opacity="0.3"/>
+      <circle cx="60" cy="50" r="4" fill="#000" opacity="0.3"/>
+      <circle cx="50" cy="65" r="3" fill="#000" opacity="0.3"/>
+      <rect x="48" y="20" width="4" height="10" rx="2" fill="#8b4513"/>
+    </svg>
+    
+    <!-- Grape cluster -->
+    <svg class="leaf" style="left: 20%; animation: floatRightLeft 32s linear 7.5s infinite;" width="95" height="95" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="50" cy="35" r="12" fill="#722f37"/>
+      <circle cx="35" cy="45" r="11" fill="#722f37"/>
+      <circle cx="65" cy="45" r="11" fill="#722f37"/>
+      <circle cx="40" cy="60" r="10" fill="#722f37"/>
+      <circle cx="60" cy="60" r="10" fill="#722f37"/>
+      <circle cx="50" cy="72" r="9" fill="#722f37"/>
+      <path d="M50 25 L50 10" stroke="#8b4513" stroke-width="2"/>
+    </svg>
+    
+    <!-- Avocado -->
+    <svg class="leaf" style="left: 78%; animation: floatLeftRight 34s linear 1.5s infinite;" width="118" height="118" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="50" cy="55" rx="28" ry="32" fill="#6B8E23"/>
+      <circle cx="50" cy="55" r="14" fill="#D4A574"/>
+      <rect x="48" y="20" width="4" height="10" rx="2" fill="#8b4513"/>
+      <path d="M50 22 Q45 17, 42 19 Q40 22, 43 26 Q47 27, 50 22Z" fill="#7CB342"/>
+    </svg>
   </div>
   <header>
     <nav>
       <div class="brand" aria-label="CropCart">
-        <div class="brand-mark">
-          <span class="brand-crop">Crop</span><span class="brand-cart">Cart</span>
-        </div>
+        <svg class="brand-mark" width="240" height="60" viewBox="0 0 240 60" xmlns="http://www.w3.org/2000/svg">
+          <text x="0" y="45" font-family="Manrope, Arial, sans-serif" font-size="48" font-weight="800" fill="#1a1a1a" letter-spacing="-1">Crop</text>
+          <text x="105" y="45" font-family="Manrope, Arial, sans-serif" font-size="48" font-weight="800" fill="#22c55e" letter-spacing="-1">Cart</text>
+        </svg>
       </div>
       <div class="nav-links">
         <a href="#how">How it works</a>
-        <a href="#wholesale">Wholesale</a>
+        <a href="#wholesale">For wholesale</a>
         <a href="#farms">Partner farms</a>
-        <button class="cta-btn">Get started</button>
+        <button class="cta-btn">Join waitlist</button>
       </div>
     </nav>
   </header>
@@ -679,39 +964,39 @@
   <main>
     <section class="hero">
       <div>
-        <div class="eyebrow">Ghana-grown · Fresh · Fast</div>
+        <div class="eyebrow">Launching Q1 2025 · Ghana-grown · Fresh · Fast</div>
         <h1>From Ghana's fields to city doors in hours.</h1>
-        <p class="lead">CropCart links verified Ghanaian farms to buyers in Accra and Kumasi with sealed cold chain and tracked loads, so produce arrives crisp, traceable, and on time.</p>
+        <p class="lead">CropCart links verified Ghanaian farms to buyers in Accra and Kumasi with sealed cold chain and tracked loads. We're building the network now and opening to early buyers soon.</p>
         <div class="hero-actions">
-          <button class="cta-btn">Browse partner farms</button>
-          <button class="ghost-btn">Talk to wholesale team</button>
+          <button class="cta-btn">Join early access</button>
+          <button class="ghost-btn">Learn more</button>
         </div>
         <div class="stats">
           <div class="stat-card card-hover">
-            <strong class="stat-mono">210+</strong>
-            <span>Ghana farms onboarded</span>
+            <strong class="stat-mono">50+</strong>
+            <span>Farms ready for launch</span>
           </div>
           <div class="stat-card card-hover">
-            <strong class="stat-mono">12h</strong>
-            <span>Avg harvest-to-door nationwide</span>
+            <strong class="stat-mono"><12h</strong>
+            <span>Target harvest-to-door time</span>
           </div>
           <div class="stat-card card-hover">
-            <strong class="stat-mono">99.3%</strong>
-            <span>On-time fulfillment</span>
+            <strong class="stat-mono">100%</strong>
+            <span>Cold-chain guarantee</span>
           </div>
         </div>
         
-        <!-- Testimonials in hero -->
+        <!-- Vision statements instead of testimonials -->
         <div class="testimonials" style="margin-top: 32px;">
           <div class="quote card-hover">
-            "Orders land with field heat gone and moisture right—our prep cooks notice."
-            <strong>Head Chef, Sequoia Bistro</strong>
-            <span>120 boxes weekly</span>
+            "Built for chefs who demand field-fresh quality and kitchens that run on precision."
+            <strong>Our Vision for Restaurants</strong>
+            <span>Coming Q1 2025</span>
           </div>
           <div class="quote card-hover">
-            "Predictable payouts let us plan soil amendments; zero waste on peaches this season."
-            <strong>Grower, Stone & Soil Orchards</strong>
-            <span>7-year partner</span>
+            "Fair pricing and predictable offtake so farms can plan ahead and grow sustainably."
+            <strong>Our Commitment to Growers</strong>
+            <span>Partner applications open</span>
           </div>
         </div>
       </div>
@@ -743,10 +1028,10 @@
     <section id="farms" class="section">
       <div class="section-header">
         <div>
-          <h2>Partner farms on this week's routes</h2>
-          <p>Seasonal picks from Ghanaian growers. Build your box or lock in wholesale pallets.</p>
+          <h2>Meet our founding farm partners</h2>
+          <p>These 4 farms are piloting with us. At launch, we'll have 50+ farms across Greater Accra.</p>
         </div>
-        <button class="ghost-btn">See full directory</button>
+        <button class="ghost-btn">Pre-register your farm</button>
       </div>
       <div class="grid" style="margin-top: 14px;">
         <div class="farm-card card-hover">
@@ -823,68 +1108,142 @@
     <section id="wholesale" class="section">
       <div class="cta-wide">
         <div>
-          <h3>Wholesale, simplified</h3>
-          <p>Reserve pallets with clear pricing, verified cold-chain, and capacity held for your kitchens or shelves.</p>
+          <h3>Get early access to wholesale</h3>
+          <p>Be among the first restaurants and food businesses to order. We're onboarding launch partners in January and February.</p>
           <div class="pill-row">
-            <span class="pill">Dock scheduling</span>
-            <span class="pill">EDI ready</span>
-            <span class="pill">Allergen tracking</span>
-            <span class="pill">Lot traceability</span>
+            <span class="pill">First-month discounts</span>
+            <span class="pill">Dedicated support</span>
+            <span class="pill">Custom sourcing</span>
+            <span class="pill">Guaranteed cold-chain</span>
           </div>
         </div>
         <form class="cta-form">
           <input type="text" placeholder="Business name" required />
           <input type="email" placeholder="Work email" required />
           <select>
-            <option>Order size: Weekly pallets</option>
-            <option>Order size: Multiple truckloads</option>
-            <option>Order size: Mixed cases</option>
+            <option>I'm interested in: Wholesale volumes</option>
+            <option>I'm interested in: Weekly orders</option>
+            <option>I'm interested in: Being a farm partner</option>
+            <option>I'm interested in: Learning more</option>
           </select>
-          <textarea placeholder="What do you need sourced?"></textarea>
-          <button class="cta-btn" type="submit">Submit</button>
+          <textarea placeholder="Tell us about your business or farm"></textarea>
+          <button class="cta-btn" type="submit">Request early access</button>
         </form>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="section-header">
-        <div>
-          <h2>What our partners say</h2>
-          <p>Chefs, buyers, and farmers rely on us to keep the chain tight and the quality high.</p>
-        </div>
-      </div>
-      <div class="testimonials">
-        <div class="quote">
-          <strong>Head Chef, Sequoia Bistro</strong>
-          <span>120 boxes weekly</span>
-        </div>
-        <div class="quote">
-          <strong>Grower, Stone & Soil Orchards</strong>
-          <span>7-year partner</span>
-        </div>
-        <div class="quote">
-          <strong>Procurement Lead, Urban Greens Market</strong>
-          <span>4 stores, Midwest</span>
-        </div>
       </div>
     </section>
 
     <section class="section">
       <div class="cta-wide">
         <div>
-          <h3>Ready to build your next box?</h3>
-          <p>Tell us your mix and route—we'll assemble a harvest-fresh lineup that meets your standards.</p>
+          <h3>Want to be part of the launch?</h3>
+          <p>We're selecting early partners now—restaurants, markets, and food businesses ready to source smarter.</p>
         </div>
         <div class="hero-actions" style="margin: 0; justify-content: flex-end;">
-          <button class="ghost-btn">Explore produce catalog</button>
+          <button class="ghost-btn">Get early access</button>
           <button class="cta-btn">Start an order</button>
+        </div>
+      </div>
+    </section>
+    <section id="faq" class="section">
+      <div class="section-header">
+        <div>
+          <h2>Frequently asked questions</h2>
+          <p>Everything you need to know about sourcing with CropCart.</p>
+        </div>
+      </div>
+      <div class="faq-section">
+        <div class="faq-item">
+          <h3 class="faq-question">What areas do you serve?</h3>
+          <p class="faq-answer">We currently operate across Greater Accra and surrounding regions. Our network includes farms within a 150km radius to ensure freshness and reduce transit time.</p>
+        </div>
+        <div class="faq-item">
+          <h3 class="faq-question">What's your minimum order size?</h3>
+          <p class="faq-answer">For wholesale buyers, we require a minimum of 10 mixed cases per delivery. Restaurants and smaller operations can build custom boxes starting from 5 cases.</p>
+        </div>
+        <div class="faq-item">
+          <h3 class="faq-question">How do you ensure product quality?</h3>
+          <p class="faq-answer">Every farm partner is audited quarterly. We track cold-chain compliance, use GPS-enabled reefer trucks, and provide real-time quality alerts. All produce is graded at source.</p>
+        </div>
+        <div class="faq-item">
+          <h3 class="faq-question">Can I customize my delivery schedule?</h3>
+          <p class="faq-answer">Absolutely. Set up recurring orders on your preferred days or place one-time orders with 48-hour notice. We offer morning and afternoon delivery windows.</p>
+        </div>
+        <div class="faq-item">
+          <h3 class="faq-question">What payment terms do you offer?</h3>
+          <p class="faq-answer">We accept Mobile Money, bank transfers, and invoice with net-30 terms for established accounts. All transactions are secured and transparent through our platform.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="trust-badges">
+        <div class="badge-item">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+          <span>ISO Certified</span>
+        </div>
+        <div class="badge-item">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+          <span>HACCP Compliant</span>
+        </div>
+        <div class="badge-item">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/></svg>
+          <span>Ghana FDA Approved</span>
         </div>
       </div>
     </section>
   </main>
 
   <footer>
-    CropCart · Sourcing that keeps farms thriving and cities fed.
+    <div class="footer-content">
+      <div class="footer-column">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Our Story</a></li>
+          <li><a href="#farms">Partner Farms</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Press</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Products</h4>
+        <ul>
+          <li><a href="#how">How It Works</a></li>
+          <li><a href="#wholesale">Wholesale</a></li>
+          <li><a href="#">Pricing</a></li>
+          <li><a href="#">Produce Catalog</a></li>
+          <li><a href="#">Seasonal Availability</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Recipes</a></li>
+          <li><a href="#">Storage Tips</a></li>
+          <li><a href="#">Support Center</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:+233123456789">+233 123 456 789</a></li>
+          <li><a href="mailto:hello@cropcart.gh">hello@cropcart.gh</a></li>
+          <li><a href="#">WhatsApp Support</a></li>
+          <li>Accra, Ghana</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 CropCart. All rights reserved.</span>
+      <div class="social-links">
+        <a href="#" aria-label="Facebook">Facebook</a>
+        <a href="#" aria-label="Instagram">Instagram</a>
+        <a href="#" aria-label="Twitter">Twitter</a>
+        <a href="#" aria-label="LinkedIn">LinkedIn</a>
+      </div>
+    </div>
   </footer>
 
   <script>
