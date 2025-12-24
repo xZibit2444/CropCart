@@ -6,7 +6,7 @@
       <stop offset="100%" stop-color="#16a34a"/>
     </linearGradient>
   </defs>
-  <g transform="translate(2,4) scale(1.25)">
+  <g transform="translate(7,11) scale(1.25)">
     <!-- Cart basket -->
     <path d="M6 12 H34 L31 26 H12 Z" fill="url(#g)" stroke="#168f3c" stroke-width="3" stroke-linejoin="round"/>
     <!-- Handle -->
