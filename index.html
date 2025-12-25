@@ -644,9 +644,43 @@
     footer { 
       border-top: 1px solid var(--stroke); 
       margin-top: 80px; 
-      padding: 48px 24px 32px; 
-      background: linear-gradient(180deg, #ffffff 0%, #f9fafb 100%);
+      padding: 56px 24px 36px; 
+      background: linear-gradient(180deg, #16a34a 0%, #22c55e 100%);
     }
+    .footer-top {
+      max-width: var(--max-width);
+      margin: 0 auto 36px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.24);
+    }
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .footer-brand .brand-mark { width: 160px; height: 40px; display: block; }
+    .footer-tagline { color: rgba(255, 255, 255, 0.85); font-size: 14px; }
+    .newsletter {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .newsletter input[type="email"] {
+      border: 2px solid rgba(255, 255, 255, 0.6);
+      border-radius: 999px;
+      padding: 10px 14px;
+      min-width: 260px;
+      background: rgba(255, 255, 255, 0.95);
+      color: var(--fg);
+      box-shadow: var(--shadow-soft);
+    }
+    .newsletter input[type="email"]::placeholder { color: var(--muted); }
+    .newsletter .cta-btn { padding: 10px 16px; }
     .footer-content {
       max-width: var(--max-width);
       margin: 0 auto;
@@ -659,7 +693,7 @@
       font-size: 14px;
       font-weight: 700;
       margin: 0 0 16px;
-      color: var(--fg);
+      color: #ffffff;
       text-transform: uppercase;
       letter-spacing: 0.05em;
     }
@@ -672,37 +706,45 @@
       margin-bottom: 10px;
     }
     .footer-column ul li a {
-      color: var(--muted);
+      color: rgba(255, 255, 255, 0.85);
       font-size: 14px;
-      transition: color 0.2s ease;
+      transition: opacity 0.2s ease;
     }
     .footer-column ul li a:hover {
-      color: var(--accent);
+      opacity: 1;
+      color: #ffffff;
     }
     .footer-bottom {
       max-width: var(--max-width);
       margin: 0 auto;
       padding-top: 24px;
-      border-top: 1px solid var(--stroke);
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
       gap: 16px;
-      color: var(--muted);
+      color: rgba(255, 255, 255, 0.85);
       font-size: 14px;
     }
+    .legal-links { display: flex; gap: 16px; }
+    .legal-links a { color: rgba(255, 255, 255, 0.85); }
+    .legal-links a:hover { color: #ffffff; }
     .social-links {
       display: flex;
       gap: 16px;
     }
     .social-links a {
-      color: var(--muted);
-      transition: color 0.2s ease;
+      color: rgba(255, 255, 255, 0.85);
+      transition: opacity 0.2s ease;
     }
     .social-links a:hover {
-      color: var(--accent);
+      opacity: 1;
+      color: #ffffff;
     }
+    footer .cta-btn { background: #ffffff; color: var(--accent-strong); border-color: #ffffff; }
+    footer .cta-btn:hover { background: #f0fdf4; color: var(--accent-strong); }
+    footer .brand-mark text { fill: #ffffff; }
     .faq-section {
       max-width: 900px;
       margin: 0 auto;
@@ -811,6 +853,9 @@
       .cta-wide { grid-template-columns: 1fr; }
       nav { flex-wrap: wrap; }
       .nav-links { flex-wrap: wrap; justify-content: flex-end; }
+      .footer-top { flex-direction: column; align-items: flex-start; }
+      .newsletter { width: 100%; }
+      .newsletter input[type="email"] { flex: 1; min-width: 0; width: 100%; }
       .footer-content { grid-template-columns: 1fr; }
     }
     @media (max-width: 620px) {
@@ -1194,6 +1239,19 @@
   </main>
 
   <footer>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <svg class="brand-mark" viewBox="0 0 240 60" xmlns="http://www.w3.org/2000/svg" aria-label="CropCart">
+          <text x="0" y="45" font-family="Manrope, Arial, sans-serif" font-size="40" font-weight="800" fill="#ffffff" letter-spacing="-1">Crop</text>
+          <text x="95" y="45" font-family="Manrope, Arial, sans-serif" font-size="40" font-weight="800" fill="#ffffff" letter-spacing="-1">Cart</text>
+        </svg>
+        <span class="footer-tagline">Sourcing that keeps farms thriving and cities fed.</span>
+      </div>
+      <form class="newsletter" action="#" method="post" novalidate>
+        <input type="email" name="email" placeholder="Your email" aria-label="Email" />
+        <button class="cta-btn" type="submit">Join waitlist</button>
+      </form>
+    </div>
     <div class="footer-content">
       <div class="footer-column">
         <h4>Company</h4>
@@ -1237,6 +1295,10 @@
     </div>
     <div class="footer-bottom">
       <span>&copy; 2025 CropCart. All rights reserved.</span>
+      <div class="legal-links">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+      </div>
       <div class="social-links">
         <a href="#" aria-label="Facebook">Facebook</a>
         <a href="#" aria-label="Instagram">Instagram</a>
