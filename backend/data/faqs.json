@@ -1,0 +1,108 @@
+{
+  "categories": [
+    { "id": "all", "name": "All Questions" },
+    { "id": "general", "name": "General" },
+    { "id": "ordering", "name": "Ordering" },
+    { "id": "delivery", "name": "Delivery" },
+    { "id": "farmers", "name": "For Farmers" },
+    { "id": "pricing", "name": "Pricing" }
+  ],
+  "faqs": [
+    {
+      "id": "faq_1",
+      "category": "general",
+      "question": "What is CropCart GH?",
+      "answer": "CropCart GH is Ghana's first farm-to-buyer cold-chain platform. We connect verified farms directly to wholesale buyers, restaurants, and institutions in Accra and Kumasi, delivering fresh produce within 12 hours of harvest with full GPS tracking and temperature monitoring."
+    },
+    {
+      "id": "faq_2",
+      "category": "general",
+      "question": "When does CropCart GH launch?",
+      "answer": "We're launching in Q1 2025 with early access for waitlist members. Join our waitlist today to be among the first to access farm-fresh produce with guaranteed cold-chain delivery."
+    },
+    {
+      "id": "faq_3",
+      "category": "general",
+      "question": "Which areas do you serve?",
+      "answer": "At launch, we're focusing on Accra and surrounding areas within 200km of verified farms. We're actively mapping farms and delivery routes for expansion to Kumasi and other regions in 2025."
+    },
+    {
+      "id": "faq_4",
+      "category": "ordering",
+      "question": "How do I place an order?",
+      "answer": "Once we launch, you'll be able to browse our catalog online, select produce from verified farms, choose your delivery window, and track your order in real-time. Early access members will receive instructions via email."
+    },
+    {
+      "id": "faq_5",
+      "category": "ordering",
+      "question": "What's the minimum order size?",
+      "answer": "We're designed for wholesale and institutional buyers. Minimum order will be GH₵500 to ensure efficient cold-chain logistics. For individual consumers, we recommend checking back in late 2025 when we expand to retail orders."
+    },
+    {
+      "id": "faq_6",
+      "category": "ordering",
+      "question": "Can I choose specific farms?",
+      "answer": "Yes! Our platform shows you which farms are supplying each item. You can filter by farm, certification type, or specialty. All farms are verified and audited quarterly for quality standards."
+    },
+    {
+      "id": "faq_7",
+      "category": "delivery",
+      "question": "How fast is delivery?",
+      "answer": "Our target is harvest-to-door in under 12 hours. Produce is harvested at 4-6 AM, packed with temperature monitoring, and delivered the same day. You'll receive real-time GPS tracking for every shipment."
+    },
+    {
+      "id": "faq_8",
+      "category": "delivery",
+      "question": "How do you maintain freshness?",
+      "answer": "All produce is transported in reefer trucks maintaining 2-4°C from farm gate to delivery. Every container has GPS tracking and temperature sensors. If temperature thresholds are breached, you're notified immediately and can refuse delivery."
+    },
+    {
+      "id": "faq_9",
+      "category": "delivery",
+      "question": "What if I'm not satisfied with the quality?",
+      "answer": "We have a quality guarantee. If produce doesn't meet our standards at delivery, you can refuse the shipment or specific items. We'll issue a full credit or refund within 24 hours. All farms are graded based on quality metrics."
+    },
+    {
+      "id": "faq_10",
+      "category": "delivery",
+      "question": "Can I schedule recurring deliveries?",
+      "answer": "Yes! Restaurants and institutions can set up weekly or bi-weekly standing orders. You'll have flexibility to modify quantities or skip deliveries as needed through our dashboard."
+    },
+    {
+      "id": "faq_11",
+      "category": "farmers",
+      "question": "How do I become a partner farm?",
+      "answer": "Visit our Partner Farms page and click 'Apply Now' to submit your farm details. Our team reviews applications within 2-3 business days. We look for farms with consistent quality, sustainable practices, and capacity for cold-chain compliance."
+    },
+    {
+      "id": "faq_12",
+      "category": "farmers",
+      "question": "What are the requirements for partner farms?",
+      "answer": "Partner farms must: Be within 200km of Accra or Kumasi; Meet our quality and safety standards; Have consistent weekly capacity; Comply with cold-chain handling procedures; Allow quarterly audits and inspections."
+    },
+    {
+      "id": "faq_13",
+      "category": "farmers",
+      "question": "How do farms get paid?",
+      "answer": "Farms receive payment immediately upon successful delivery via mobile money or bank transfer. Pricing is transparent and set above market rates to ensure fair compensation for quality and cold-chain compliance."
+    },
+    {
+      "id": "faq_14",
+      "category": "pricing",
+      "question": "How is pricing determined?",
+      "answer": "Our pricing is based on farm gate costs plus cold-chain logistics. We publish transparent pricing that reflects true costs while ensuring farmers receive fair compensation. Bulk buyers get volume discounts."
+    },
+    {
+      "id": "faq_15",
+      "category": "pricing",
+      "question": "Are there delivery fees?",
+      "answer": "Delivery is free for orders above GH₵2,000. For orders between GH₵500-2,000, there's a flat GH₵50 delivery fee to cover cold-chain logistics. All pricing will be finalized before launch."
+    },
+    {
+      "id": "faq_16",
+      "category": "pricing",
+      "question": "Do you offer payment plans for institutions?",
+      "answer": "Yes, verified institutions and restaurants can apply for net-30 payment terms after an initial trial period. Contact our business team for details on institutional pricing and payment arrangements."
+    }
+  ]
+}

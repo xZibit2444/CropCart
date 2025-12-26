@@ -1,0 +1,58 @@
+{
+  "categories": [
+    {
+      "id": "greens",
+      "name": "Greens",
+      "items": [
+        { "id": "spinach", "name": "Baby Spinach", "price": 8.50, "unit": "kg", "season": "Year-round", "origin": "Accra" },
+        { "id": "arugula", "name": "Arugula", "price": 12.00, "unit": "kg", "season": "Year-round", "origin": "Kumasi" },
+        { "id": "lettuce", "name": "Butter Lettuce", "price": 6.75, "unit": "kg", "season": "Year-round", "origin": "Accra" },
+        { "id": "kale", "name": "Kale", "price": 9.00, "unit": "kg", "season": "Nov-Mar", "origin": "Kumasi" }
+      ]
+    },
+    {
+      "id": "roots",
+      "name": "Root Vegetables",
+      "items": [
+        { "id": "cassava", "name": "Cassava", "price": 4.50, "unit": "kg", "season": "Year-round", "origin": "Eastern Region" },
+        { "id": "yam", "name": "Yam", "price": 5.25, "unit": "kg", "season": "Aug-Dec", "origin": "Volta Region" },
+        { "id": "carrots", "name": "Carrots", "price": 7.00, "unit": "kg", "season": "Year-round", "origin": "Accra" },
+        { "id": "beets", "name": "Beets", "price": 8.25, "unit": "kg", "season": "Oct-Mar", "origin": "Accra" },
+        { "id": "cocoyam", "name": "Cocoyam", "price": 6.00, "unit": "kg", "season": "Year-round", "origin": "Ashanti Region" }
+      ]
+    },
+    {
+      "id": "fruits",
+      "name": "Tropical Fruits",
+      "items": [
+        { "id": "mango", "name": "Mango", "price": 10.00, "unit": "kg", "season": "Mar-Jul", "origin": "Northern Region" },
+        { "id": "pawpaw", "name": "Pawpaw (Papaya)", "price": 5.50, "unit": "kg", "season": "Year-round", "origin": "Accra" },
+        { "id": "pineapple", "name": "Pineapple", "price": 6.00, "unit": "piece", "season": "Year-round", "origin": "Central Region" },
+        { "id": "orange", "name": "Orange", "price": 4.00, "unit": "kg", "season": "Nov-Apr", "origin": "Eastern Region" },
+        { "id": "banana", "name": "Banana (Plantain)", "price": 3.50, "unit": "kg", "season": "Year-round", "origin": "Ashanti Region" },
+        { "id": "watermelon", "name": "Watermelon", "price": 8.00, "unit": "piece", "season": "Dec-Apr", "origin": "Upper East" },
+        { "id": "avocado", "name": "Avocado", "price": 15.00, "unit": "kg", "season": "May-Sep", "origin": "Brong Ahafo" }
+      ]
+    },
+    {
+      "id": "tomatoes",
+      "name": "Tomatoes & Peppers",
+      "items": [
+        { "id": "tomato", "name": "Heirloom Tomatoes", "price": 9.00, "unit": "kg", "season": "Year-round", "origin": "Accra" },
+        { "id": "cherry-tomato", "name": "Cherry Tomatoes", "price": 12.00, "unit": "kg", "season": "Year-round", "origin": "Accra" },
+        { "id": "pepper", "name": "Scotch Bonnet Pepper", "price": 18.00, "unit": "kg", "season": "Year-round", "origin": "Northern Region" },
+        { "id": "bell-pepper", "name": "Bell Pepper", "price": 14.00, "unit": "kg", "season": "Year-round", "origin": "Accra" }
+      ]
+    },
+    {
+      "id": "herbs",
+      "name": "Herbs & Aromatics",
+      "items": [
+        { "id": "ginger", "name": "Ginger", "price": 16.00, "unit": "kg", "season": "Year-round", "origin": "Eastern Region" },
+        { "id": "basil", "name": "Fresh Basil", "price": 20.00, "unit": "kg", "season": "Year-round", "origin": "Kumasi" },
+        { "id": "thyme", "name": "Thyme", "price": 25.00, "unit": "kg", "season": "Year-round", "origin": "Accra" },
+        { "id": "cilantro", "name": "Cilantro", "price": 18.00, "unit": "kg", "season": "Year-round", "origin": "Accra" }
+      ]
+    }
+  ]
+}

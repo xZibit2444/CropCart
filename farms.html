@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Partner Farms | CropCart GH</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="mask-icon" href="favicon.svg" color="#22c55e" />
+  <link rel="icon" sizes="32x32" href="favicon-32.png" />
+  <link rel="icon" sizes="16x16" href="favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #fafbfa;
+      --fg: #1a1a1a;
+      --muted: #6b7280;
+      --accent: #22c55e;
+      --accent-strong: #16a34a;
+      --accent-light: #dcfce7;
+      --card: #ffffff;
+      --stroke: #e5e7eb;
+      --shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+      --shadow-soft: 0 4px 16px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.12);
+      --max-width: 1200px;
+      --radius: 16px;
+      --radius-sm: 12px;
+      --header-height: 80px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: 'Manrope', 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.7;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--stroke);
+      transition: box-shadow 0.3s ease;
+    }
+
+    nav {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      height: var(--header-height);
+    }
+
+    .brand-mark { width: 280px; height: 60px; display: block; }
+    
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .nav-links a {
+      color: var(--fg);
+      font-weight: 500;
+      font-size: 15px;
+      text-decoration: none;
+      position: relative;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover::after { width: 100%; }
+    .nav-links a:hover { color: var(--accent); }
+
+    .cta-btn {
+      padding: 12px 24px;
+      border-radius: var(--radius-sm);
+      border: none;
+      background: var(--accent);
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow-soft);
+      font-size: 15px;
+    }
+    .cta-btn:hover { background: var(--accent-strong); transform: translateY(-2px); box-shadow: var(--shadow); }
+
+    main {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 40px 32px 100px;
+    }
+
+    .page-header {
+      padding: 60px 0 40px;
+      text-align: center;
+    }
+
+    .page-header h1 {
+      font-size: clamp(36px, 5vw, 52px);
+      margin: 0 0 16px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .page-header p {
+      color: var(--muted);
+      font-size: 18px;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .filters {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin: 32px 0;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      padding: 10px 20px;
+      border-radius: 999px;
+      border: 2px solid var(--stroke);
+      background: var(--card);
+      color: var(--fg);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 14px;
+    }
+
+    .filter-btn:hover {
+      border-color: var(--accent);
+      background: var(--accent-light);
+    }
+
+    .filter-btn.active {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: white;
+    }
+
+    .farms-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 24px;
+      margin-top: 40px;
+    }
+
+    .farm-card {
+      background: var(--card);
+      border: 2px solid var(--stroke);
+      border-radius: var(--radius);
+      padding: 28px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .farm-card::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 5px;
+      background: var(--accent);
+      transform: scaleY(0);
+      transform-origin: bottom;
+      transition: transform 0.3s ease;
+    }
+
+    .farm-card:hover {
+      border-color: var(--accent-light);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .farm-card:hover::before {
+      transform: scaleY(1);
+    }
+
+    .farm-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .farm-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--accent-light);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .farm-icon svg {
+      width: 28px;
+      height: 28px;
+      fill: var(--accent);
+    }
+
+    .farm-title {
+      flex: 1;
+    }
+
+    .farm-title h3 {
+      margin: 0 0 4px;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--fg);
+    }
+
+    .farm-location {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .farm-location svg {
+      width: 14px;
+      height: 14px;
+      fill: var(--accent);
+    }
+
+    .farm-specialties {
+      margin: 16px 0;
+    }
+
+    .farm-specialties h4 {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+
+    .specialties-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .specialty-tag {
+      padding: 4px 10px;
+      background: var(--accent-light);
+      color: var(--accent-strong);
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .farm-certifications {
+      display: flex;
+      gap: 8px;
+      margin: 16px 0;
+      flex-wrap: wrap;
+    }
+
+    .cert-badge {
+      padding: 6px 12px;
+      background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
+      border: 1px solid var(--stroke);
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--fg);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .cert-badge::before {
+      content: '✓';
+      width: 16px;
+      height: 16px;
+      background: var(--accent);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .farm-features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 16px 0;
+    }
+
+    .feature-pill {
+      padding: 6px 12px;
+      background: var(--bg);
+      border-radius: 999px;
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .farm-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid var(--stroke);
+    }
+
+    .capacity {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--accent-strong);
+    }
+
+    .established {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .contact-btn {
+      margin-top: 16px;
+      width: 100%;
+      padding: 12px;
+      border-radius: var(--radius-sm);
+      border: 2px solid var(--stroke);
+      background: var(--card);
+      color: var(--fg);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 15px;
+    }
+
+    .contact-btn:hover {
+      border-color: var(--accent);
+      background: var(--accent-light);
+      transform: translateY(-2px);
+    }
+
+    .loading {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .error {
+      text-align: center;
+      padding: 60px 20px;
+      color: #dc2626;
+      font-size: 16px;
+    }
+
+    .stats-bar {
+      display: flex;
+      gap: 32px;
+      justify-content: center;
+      padding: 24px;
+      background: var(--card);
+      border-radius: var(--radius);
+      border: 2px solid var(--stroke);
+      margin: 32px 0;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-item strong {
+      display: block;
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+
+    .stat-item span {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    @media (max-width: 900px) {
+      nav { flex-wrap: wrap; }
+      .nav-links { flex-wrap: wrap; justify-content: flex-end; }
+      .farms-grid { grid-template-columns: 1fr; }
+      .stats-bar { flex-direction: column; gap: 16px; }
+    }
+
+    @media (max-width: 620px) {
+      nav { padding: 0 16px; }
+      main { padding: 40px 20px 80px; }
+      .brand-mark { width: 220px; height: 45px; }
+      h1 { font-size: 32px !important; }
+    }
+
+    /* Become a Partner Section */
+    .partner-cta {
+      margin: 80px 0 40px;
+      padding: 60px 48px;
+      background: linear-gradient(135deg, #16a34a 0%, #22c55e 100%);
+      border-radius: var(--radius);
+      text-align: center;
+      color: white;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .partner-cta h2 {
+      font-size: 36px;
+      font-weight: 800;
+      margin: 0 0 16px;
+      color: white;
+    }
+
+    .partner-cta p {
+      font-size: 18px;
+      opacity: 0.95;
+      margin: 0 auto 32px;
+      max-width: 600px;
+      line-height: 1.6;
+    }
+
+    .partner-benefits {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 24px;
+      margin: 32px 0;
+      text-align: left;
+    }
+
+    .benefit-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .benefit-item svg {
+      width: 24px;
+      height: 24px;
+      fill: white;
+      flex-shrink: 0;
+      opacity: 0.9;
+    }
+
+    .benefit-item div h4 {
+      margin: 0 0 4px;
+      font-size: 16px;
+      font-weight: 700;
+      color: white;
+    }
+
+    .benefit-item div p {
+      margin: 0;
+      font-size: 14px;
+      opacity: 0.85;
+      line-height: 1.5;
+    }
+
+    .apply-btn {
+      padding: 16px 48px;
+      background: white;
+      color: var(--accent-strong);
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 16px;
+      font-weight: 700;
+      font-family: 'Manrope', sans-serif;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .apply-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: var(--radius);
+      max-width: 600px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: var(--shadow-lg);
+      animation: slideUp 0.3s ease;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .modal-header {
+      padding: 32px 32px 24px;
+      border-bottom: 1px solid var(--stroke);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-header h3 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--fg);
+    }
+
+    .close-modal {
+      background: none;
+      border: none;
+      font-size: 28px;
+      color: var(--muted);
+      cursor: pointer;
+      padding: 0;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .close-modal:hover {
+      background: var(--bg);
+      color: var(--fg);
+    }
+
+    .modal-body {
+      padding: 32px;
+    }
+
+    .form-group {
+      margin-bottom: 24px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--fg);
+      font-size: 14px;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid var(--stroke);
+      border-radius: var(--radius-sm);
+      font-family: 'Manrope', sans-serif;
+      font-size: 15px;
+      color: var(--fg);
+      transition: border-color 0.2s ease;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .form-group small {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, #16a34a, #22c55e);
+      color: white;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 16px;
+      font-weight: 700;
+      font-family: 'Manrope', sans-serif;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 20px rgba(34, 197, 94, 0.3);
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    @media (max-width: 620px) {
+      .partner-cta {
+        padding: 40px 24px;
+      }
+      .partner-cta h2 {
+        font-size: 28px;
+      }
+      .partner-benefits {
+        grid-template-columns: 1fr;
+      }
+      .modal-content {
+        margin: 0;
+      }
+      .modal-header,
+      .modal-body {
+        padding: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="index.html" class="brand" aria-label="CropCart GH">
+        <svg class="brand-mark" width="280" height="60" viewBox="0 0 280 60" xmlns="http://www.w3.org/2000/svg">
+          <text x="0" y="45" font-family="Manrope, Arial, sans-serif" font-size="48" font-weight="800" fill="#1a1a1a" letter-spacing="-1">Crop</text>
+          <text x="105" y="45" font-family="Manrope, Arial, sans-serif" font-size="48" font-weight="800" fill="#22c55e" letter-spacing="-1">Cart</text>
+          <text x="198" y="45" font-family="Manrope, Arial, sans-serif" font-size="48" font-weight="800" fill="#22c55e" letter-spacing="-1">GH</text>
+        </svg>
+      </a>
+      <div class="nav-links">
+        <a href="how-it-works.html">How it works</a>
+        <a href="index.html#wholesale">For wholesale</a>
+        <a href="farms.html">Partner farms</a>
+        <a href="faq.html">FAQ</a>
+        <button class="cta-btn" onclick="window.location.href='index.html#wholesale'">Join waitlist</button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div class="page-header">
+      <h1>Our Partner Farms</h1>
+      <p>Verified growers across Ghana committed to quality, sustainability, and fair pricing. Each farm is audited quarterly and tracked for cold-chain compliance.</p>
+    </div>
+
+    <div class="stats-bar" id="stats-bar">
+      <div class="stat-item">
+        <strong id="total-farms">—</strong>
+        <span>Partner Farms</span>
+      </div>
+      <div class="stat-item">
+        <strong id="total-regions">—</strong>
+        <span>Regions</span>
+      </div>
+      <div class="stat-item">
+        <strong id="total-capacity">—</strong>
+        <span>Weekly Capacity</span>
+      </div>
+    </div>
+
+    <div class="filters" id="filters">
+      <button class="filter-btn active" data-location="all">All Locations</button>
+    </div>
+
+    <div class="farms-grid" id="farms-grid">
+      <div class="loading">Loading farms...</div>
+    </div>
+
+    <!-- Become a Partner Section -->
+    <div class="partner-cta">
+      <h2>Become a Partner Farm</h2>
+      <p>Join our network of verified farms supplying fresh produce across Ghana. Get access to wholesale buyers and premium pricing.</p>
+      
+      <div class="partner-benefits">
+        <div class="benefit-item">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          <div>
+            <h4>Fair Pricing</h4>
+            <p>Market-leading rates with transparent pricing</p>
+          </div>
+        </div>
+        <div class="benefit-item">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2C12 2 6 8 6 14C6 17.31 8.69 20 12 20C15.31 20 18 17.31 18 14C18 8 12 2 12 2Z"/>
+          </svg>
+          <div>
+            <h4>Direct Access</h4>
+            <p>Connect with wholesale buyers instantly</p>
+          </div>
+        </div>
+        <div class="benefit-item">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"/>
+          </svg>
+          <div>
+            <h4>Free Support</h4>
+            <p>Training on cold-chain and quality standards</p>
+          </div>
+        </div>
+      </div>
+
+      <button class="apply-btn" onclick="openApplicationModal()">Apply Now</button>
+    </div>
+  </main>
+
+  <!-- Application Modal -->
+  <div class="modal" id="application-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Partner Farm Application</h3>
+        <button class="close-modal" onclick="closeApplicationModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="application-form" onsubmit="submitApplication(event)">
+          <div class="form-group">
+            <label for="farm-name">Farm Name *</label>
+            <input type="text" id="farm-name" name="farmName" required placeholder="e.g., Green Valley Farms">
+          </div>
+
+          <div class="form-group">
+            <label for="location">Location *</label>
+            <input type="text" id="location" name="location" required placeholder="e.g., Accra, Greater Accra Region">
+          </div>
+
+          <div class="form-group">
+            <label for="farm-size">Farm Size (acres) *</label>
+            <input type="number" id="farm-size" name="farmSize" required placeholder="e.g., 50">
+          </div>
+
+          <div class="form-group">
+            <label for="specialties">Main Crops/Specialties *</label>
+            <textarea id="specialties" name="specialties" required placeholder="e.g., Tomatoes, Peppers, Leafy Greens"></textarea>
+            <small>List the main produce you grow</small>
+          </div>
+
+          <div class="form-group">
+            <label for="certifications">Certifications (if any)</label>
+            <input type="text" id="certifications" name="certifications" placeholder="e.g., Organic, GlobalGAP">
+          </div>
+
+          <div class="form-group">
+            <label for="contact-name">Contact Person Name *</label>
+            <input type="text" id="contact-name" name="contactName" required placeholder="Full name">
+          </div>
+
+          <div class="form-group">
+            <label for="phone">Phone Number *</label>
+            <input type="tel" id="phone" name="phone" required placeholder="e.g., +233 XX XXX XXXX">
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email Address *</label>
+            <input type="email" id="email" name="email" required placeholder="your@email.com">
+          </div>
+
+          <div class="form-group">
+            <label for="experience">Years of Farming Experience *</label>
+            <select id="experience" name="experience" required>
+              <option value="">Select...</option>
+              <option value="0-2">0-2 years</option>
+              <option value="3-5">3-5 years</option>
+              <option value="6-10">6-10 years</option>
+              <option value="10+">10+ years</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Additional Information</label>
+            <textarea id="message" name="message" placeholder="Tell us more about your farm and why you'd like to partner with CropCart GH"></textarea>
+          </div>
+
+          <button type="submit" class="submit-btn">Submit Application</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const API_BASE = 'http://localhost:3001';
+    let allFarms = [];
+    let currentFilter = 'all';
+
+    async function loadFarms() {
+      try {
+        const response = await fetch(`${API_BASE}/api/farms`);
+        const data = await response.json();
+        allFarms = data.farms;
+        
+        updateStats();
+        createFilters();
+        renderFarms(allFarms);
+      } catch (error) {
+        console.error('Error loading farms:', error);
+        document.getElementById('farms-grid').innerHTML = `
+          <div class="error">
+            Unable to load farms. Make sure the backend server is running on port 3001.
+            <br><br>
+            <code>cd backend && npm start</code>
+          </div>
+        `;
+      }
+    }
+
+    function updateStats() {
+      const regions = new Set(allFarms.map(f => f.location)).size;
+      const totalCapacity = allFarms.length * 60; // Approximate
+      
+      document.getElementById('total-farms').textContent = allFarms.length;
+      document.getElementById('total-regions').textContent = regions;
+      document.getElementById('total-capacity').textContent = `${totalCapacity}+ cases`;
+    }
+
+    function createFilters() {
+      const locations = new Set(allFarms.map(f => f.location));
+      const filtersHTML = `
+        <button class="filter-btn active" data-location="all">All Locations</button>
+        ${Array.from(locations).map(loc => 
+          `<button class="filter-btn" data-location="${loc}">${loc}</button>`
+        ).join('')}
+      `;
+      
+      document.getElementById('filters').innerHTML = filtersHTML;
+      
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          
+          const location = btn.dataset.location;
+          currentFilter = location;
+          
+          const filtered = location === 'all' 
+            ? allFarms 
+            : allFarms.filter(f => f.location === location);
+          
+          renderFarms(filtered);
+        });
+      });
+    }
+
+    function renderFarms(farms) {
+      if (farms.length === 0) {
+        document.getElementById('farms-grid').innerHTML = `
+          <div class="loading">No farms found in this location.</div>
+        `;
+        return;
+      }
+
+      const farmsHTML = farms.map(farm => `
+        <div class="farm-card">
+          <div class="farm-header">
+            <div class="farm-icon">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2C12 2 6 8 6 14C6 17.31 8.69 20 12 20C15.31 20 18 17.31 18 14C18 8 12 2 12 2Z"/>
+              </svg>
+            </div>
+            <div class="farm-title">
+              <h3>${farm.name}</h3>
+              <div class="farm-location">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                </svg>
+                ${farm.location}
+              </div>
+            </div>
+          </div>
+
+          <div class="farm-specialties">
+            <h4>Specialties</h4>
+            <div class="specialties-list">
+              ${farm.specialties.map(s => `<span class="specialty-tag">${s}</span>`).join('')}
+            </div>
+          </div>
+
+          <div class="farm-certifications">
+            ${farm.certifications.map(c => `<span class="cert-badge">${c}</span>`).join('')}
+          </div>
+
+          <div class="farm-features">
+            ${farm.features.map(f => `<span class="feature-pill">${f}</span>`).join('')}
+          </div>
+
+          <div class="farm-meta">
+            <span class="capacity">${farm.capacity}</span>
+            <span class="established">Est. ${farm.established}</span>
+          </div>
+
+          <button class="contact-btn" onclick="contactFarm('${farm.id}', '${farm.name}')">
+            Contact Farm
+          </button>
+        </div>
+      `).join('');
+
+      document.getElementById('farms-grid').innerHTML = farmsHTML;
+    }
+
+    function contactFarm(id, name) {
+      const farm = allFarms.find(f => f.id === id);
+      if (farm && farm.contact) {
+        alert(`Contact ${name}:\n\nPhone: ${farm.contact.phone}\nEmail: ${farm.contact.email}\n\nWe'll enable direct contact forms in the full launch!`);
+      }
+    }
+
+    // Load farms on page load
+    loadFarms();
+
+    // Header shadow on scroll
+    const headerEl = document.querySelector('header');
+    let lastScrollY = 0;
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY || document.documentElement.scrollTop;
+      if (!headerEl) return;
+      if (y > 8 && lastScrollY <= 8) {
+        headerEl.style.boxShadow = '0 8px 24px rgba(0,0,0,0.06)';
+      } else if (y <= 8 && lastScrollY > 8) {
+        headerEl.style.boxShadow = '0 2px 8px rgba(0,0,0,0.04)';
+      }
+      lastScrollY = y;
+    });
+
+    // Modal functions
+    function openApplicationModal() {
+      document.getElementById('application-modal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeApplicationModal() {
+      document.getElementById('application-modal').classList.remove('active');
+      document.body.style.overflow = '';
+      document.getElementById('application-form').reset();
+    }
+
+    // Close modal on backdrop click
+    document.getElementById('application-modal').addEventListener('click', (e) => {
+      if (e.target.id === 'application-modal') {
+        closeApplicationModal();
+      }
+    });
+
+    // Close modal on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeApplicationModal();
+      }
+    });
+
+    // Handle form submission
+    function submitApplication(event) {
+      event.preventDefault();
+      
+      const formData = new FormData(event.target);
+      const applicationData = Object.fromEntries(formData.entries());
+      
+      const submitBtn = event.target.querySelector('.submit-btn');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting...';
+      
+      // Submit to backend API
+      fetch(`${API_BASE}/api/farm-applications`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(applicationData)
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          alert(`Thank you for your interest in partnering with CropCart GH!\n\nWe've received your application for ${applicationData.farmName}.\n\nOur team will review your submission and contact you at ${applicationData.email} within 2-3 business days.\n\nExpected review timeline: January 2025`);
+          closeApplicationModal();
+        } else {
+          alert(`Error: ${data.error || 'Failed to submit application. Please try again.'}`);
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Submit Application';
+        }
+      })
+      .catch(error => {
+        console.error('Error submitting application:', error);
+        alert('Network error. Please check that the backend server is running and try again.');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit Application';
+      });
+    }
+  </script>
+</body>
+</html>

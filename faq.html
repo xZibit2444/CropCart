@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FAQ | CropCart GH</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="mask-icon" href="favicon.svg" color="#22c55e" />
+  <link rel="icon" sizes="32x32" href="favicon-32.png" />
+  <link rel="icon" sizes="16x16" href="favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #fafbfa;
+      --fg: #1a1a1a;
+      --muted: #6b7280;
+      --accent: #22c55e;
+      --accent-strong: #16a34a;
+      --accent-light: #dcfce7;
+      --card: #ffffff;
+      --stroke: #e5e7eb;
+      --shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+      --shadow-soft: 0 4px 16px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.12);
+      --max-width: 1200px;
+      --radius: 16px;
+      --radius-sm: 12px;
+      --header-height: 80px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: 'Manrope', 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.7;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--stroke);
+      transition: box-shadow 0.3s ease;
+    }
+
+    nav {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      height: var(--header-height);
+    }
+
+    .brand-mark { width: 280px; height: 60px; display: block; }
+    
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .nav-links a {
+      color: var(--fg);
+      font-weight: 500;
+      font-size: 15px;
+      text-decoration: none;
+      position: relative;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 100%;
+      height: 2px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.25s ease;
+    }
+
+    .nav-links a:hover { color: var(--accent-strong); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+    .nav-links a[aria-current="page"]::after { transform: scaleX(1); }
+
+    .cta-btn {
+      padding: 12px 24px;
+      border-radius: var(--radius-sm);
+      border: none;
+      background: linear-gradient(135deg, #16a34a, #22c55e);
+      color: white;
+      font-weight: 700;
+      font-size: 15px;
+      font-family: 'Manrope', sans-serif;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(34, 197, 94, 0.3);
+    }
+
+    main {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 60px 24px 100px;
+    }
+
+    .page-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .page-header h1 {
+      font-size: 48px;
+      font-weight: 800;
+      margin: 0 0 16px;
+      color: var(--fg);
+    }
+
+    .page-header p {
+      font-size: 18px;
+      color: var(--muted);
+      max-width: 650px;
+      margin: 0 auto;
+    }
+
+    .faq-categories {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 48px;
+    }
+
+    .category-btn {
+      padding: 10px 20px;
+      border: 2px solid var(--stroke);
+      background: white;
+      border-radius: 999px;
+      font-family: 'Manrope', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--fg);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .category-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent-strong);
+    }
+
+    .category-btn.active {
+      background: linear-gradient(135deg, #16a34a, #22c55e);
+      border-color: var(--accent);
+      color: white;
+    }
+
+    .faq-list {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .faq-item {
+      background: var(--card);
+      border: 2px solid var(--stroke);
+      border-radius: var(--radius);
+      margin-bottom: 16px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .faq-item:hover {
+      border-color: var(--accent-light);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .faq-question {
+      width: 100%;
+      padding: 24px;
+      background: none;
+      border: none;
+      text-align: left;
+      font-family: 'Manrope', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--fg);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      transition: color 0.2s ease;
+    }
+
+    .faq-question:hover {
+      color: var(--accent-strong);
+    }
+
+    .faq-icon {
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+      transition: transform 0.3s ease;
+    }
+
+    .faq-item.active .faq-icon {
+      transform: rotate(180deg);
+    }
+
+    .faq-icon svg {
+      width: 100%;
+      height: 100%;
+      fill: var(--accent);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+    }
+
+    .faq-item.active .faq-answer {
+      max-height: 500px;
+      padding: 0 24px 24px;
+    }
+
+    .faq-answer p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 16px;
+    }
+
+    .faq-answer ul {
+      margin: 12px 0 0;
+      padding-left: 24px;
+      color: var(--muted);
+    }
+
+    .faq-answer li {
+      margin-bottom: 8px;
+    }
+
+    .cta-section {
+      margin-top: 80px;
+      padding: 48px;
+      background: linear-gradient(135deg, #16a34a 0%, #22c55e 100%);
+      border-radius: var(--radius);
+      text-align: center;
+      color: white;
+    }
+
+    .cta-section h2 {
+      font-size: 32px;
+      font-weight: 800;
+      margin: 0 0 12px;
+    }
+
+    .cta-section p {
+      font-size: 18px;
+      margin: 0 0 24px;
+      opacity: 0.95;
+    }
+
+    .cta-section .cta-btn {
+      background: white;
+      color: var(--accent-strong);
+      padding: 16px 40px;
+      font-size: 16px;
+    }
+
+    .cta-section .cta-btn:hover {
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    @media (max-width: 620px) {
+      nav { padding: 0 16px; }
+      main { padding: 40px 20px 80px; }
+      .brand-mark { width: 220px; height: 45px; }
+      .page-header h1 { font-size: 32px; }
+      .faq-question { font-size: 16px; padding: 20px; }
+      .faq-answer p { font-size: 15px; }
+      .cta-section { padding: 32px 24px; }
+      .cta-section h2 { font-size: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="index.html" class="brand" aria-label="CropCart GH">
+        <svg class="brand-mark" width="280" height="60" viewBox="0 0 280 60" xmlns="http://www.w3.org/2000/svg">
+          <text x="0" y="45" font-family="Manrope, Arial, sans-serif" font-size="48" font-weight="800" fill="#1a1a1a" letter-spacing="-1">Crop</text>
+          <text x="105" y="45" font-family="Manrope, Arial, sans-serif" font-size="48" font-weight="800" fill="#22c55e" letter-spacing="-1">Cart</text>
+          <text x="198" y="45" font-family="Manrope, Arial, sans-serif" font-size="48" font-weight="800" fill="#22c55e" letter-spacing="-1">GH</text>
+        </svg>
+      </a>
+      <div class="nav-links">
+        <a href="how-it-works.html">How it works</a>
+        <a href="index.html#wholesale">For wholesale</a>
+        <a href="farms.html">Partner farms</a>
+        <a href="faq.html" aria-current="page">FAQ</a>
+        <button class="cta-btn" onclick="window.location.href='index.html#wholesale'">Join waitlist</button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div class="page-header">
+      <h1>Frequently Asked Questions</h1>
+      <p>Everything you need to know about CropCart GH, our service, and how we're revolutionizing farm-to-table delivery in Ghana.</p>
+    </div>
+
+    <div class="faq-categories">
+      <button class="category-btn active" data-category="all">All Questions</button>
+      <button class="category-btn" data-category="general">General</button>
+      <button class="category-btn" data-category="ordering">Ordering</button>
+      <button class="category-btn" data-category="delivery">Delivery</button>
+      <button class="category-btn" data-category="farmers">For Farmers</button>
+      <button class="category-btn" data-category="pricing">Pricing</button>
+    </div>
+
+    <div class="faq-list" id="faq-list">
+      <!-- General -->
+      <div class="faq-item" data-category="general">
+        <button class="faq-question">
+          <span>What is CropCart GH?</span>
+          <div class="faq-icon">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19 9l-7 7-7-7"/>
+            </svg>
+          </div>
+        </button>
+        <div class="faq-answer">
+          <p>CropCart GH is Ghana's first farm-to-buyer cold-chain platform. We connect verified farms directly to wholesale buyers, restaurants, and institutions in Accra and Kumasi, delivering fresh produce within 12 hours of harvest with full GPS tracking and temperature monitoring.</p>
+        </div>
+      </div>
+
+      <div class="faq-item" data-category="general">
+        <button class="faq-question">
+          <span>When does CropCart GH launch?</span>
+          <div class="faq-icon">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19 9l-7 7-7-7"/>
+            </svg>
+          </div>
+        </button>
+        <div class="faq-answer">
+          <p>We're launching in Q1 2025 with early access for waitlist members. Join our waitlist today to be among the first to access farm-fresh produce with guaranteed cold-chain delivery.</p>
+        </div>
+      </div>
+
+      <div class="faq-item" data-category="general">
+        <button class="faq-question">
+          <span>Which areas do you serve?</span>
+          <div class="faq-icon">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19 9l-7 7-7-7"/>
+            </svg>
+          </div>
+        </button>
+        <div class="faq-answer">
+          <p>At launch, we're focusing on Accra and surrounding areas within 200km of verified farms. We're actively mapping farms and delivery routes for expansion to Kumasi and other regions in 2025.</p>
+        </div>
+      </div>
+
+      <!-- Ordering -->
+      <div class="faq-item" data-category="ordering">
+        <button class="faq-question">
+          <span>How do I place an order?</span>
+          <div class="faq-icon">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19 9l-7 7-7-7"/>
+            </svg>
+          </div>
+        </button>
+        <div class="faq-answer">
+          <p>Once we launch, you'll be able to browse our catalog online, select produce from verified farms, choose your delivery window, and track your order in real-time. Early access members will receive instructions via email.</p>
+        </div>
+      </div>
+
+      <div class="faq-item" data-category="ordering">
+        <button class="faq-question">
+          <span>What's the minimum order size?</span>
+          <div class="faq-icon">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19 9l-7 7-7-7"/>
+            </svg>
+          </div>
+        </button>
+        <div class="faq-answer">
+          <p>We're designed for wholesale and institutional buyers. Minimum order will be GH₵500 to ensure efficient cold-chain logistics. For individual consumers, we recommend checking back in late 2025 when we expand to retail orders.</p>
+        </div>
+      </div>
+
+      <div class="faq-item" data-category="ordering">
+        <button class="faq-question">
+          <span>Can I choose specific farms?</span>
+          <div class="faq-icon">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19 9l-7 7-7-7"/>
+            </svg>
+          </div>
+        </button>
+        <div class="faq-answer">
+          <p>Yes! Our platform shows you which farms are supplying each item. You can filter by farm, certification type, or specialty. All farms are verified and audited quarterly for quality standards.</p>
+        </div>
+      </div>
+
+      <!-- Delivery -->
+      <div class="faq-item" data-category="delivery">
+        <button class="faq-question">
+          <span>How fast is delivery?</span>
+          <div class="faq-icon">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19 9l-7 7-7-7"/>
+            </svg>
+          </div>
+        </button>
+        <div class="faq-answer">
+          <p>Our target is harvest-to-door in under 12 hours. Produce is harvested at 4-6 AM, packed with temperature monitoring, and delivered the same day. You'll receive real-time GPS tracking for every shipment.</p>
+        </div>
+      </div>
+
+      <div class="faq-item" data-category="delivery">
+        <button class="faq-question">
+          <span>How do you maintain freshness?</span>
+          <div class="faq-icon">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19 9l-7 7-7-7"/>
+            </svg>
+          </div>
+        </button>
+        <div class="faq-answer">
+          <p>All produce is transported in reefer trucks maintaining 2-4°C from farm gate to delivery. Every container has GPS tracking and temperature sensors. If temperature thresholds are breached, you're notified immediately and can refuse delivery.</p>
+        </div>
+      </div>
+
+      <div class="faq-item" data-category="delivery">
+        <button class="faq-question">
+          <span>What if I'm not satisfied with the quality?</span>
+          <div class="faq-icon">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19 9l-7 7-7-7"/>
+            </svg>
+          </div>
+        </button>
+        <div class="faq-answer">
+          <p>We have a quality guarantee. If produce doesn't meet our standards at delivery, you can refuse the shipment or specific items. We'll issue a full credit or refund within 24 hours. All farms are graded based on quality metrics.</p>
+        </div>
+      </div>
+
+      <div class="faq-item" data-category="delivery">
+        <button class="faq-question">
+          <span>Can I schedule recurring deliveries?</span>
+          <div class="faq-icon">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19 9l-7 7-7-7"/>
+            </svg>
+          </div>
+        </button>
+        <div class="faq-answer">
+          <p>Yes! Restaurants and institutions can set up weekly or bi-weekly standing orders. You'll have flexibility to modify quantities or skip deliveries as needed through our dashboard.</p>
+        </div>
+      </div>
+
+      <!-- Farmers -->
+      <div class="faq-item" data-category="farmers">
+        <button class="faq-question">
+          <span>How do I become a partner farm?</span>
+          <div class="faq-icon">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19 9l-7 7-7-7"/>
+            </svg>
+          </div>
+        </button>
+        <div class="faq-answer">
+          <p>Visit our Partner Farms page and click "Apply Now" to submit your farm details. Our team reviews applications within 2-3 business days. We look for farms with consistent quality, sustainable practices, and capacity for cold-chain compliance.</p>
+        </div>
+      </div>
+
+      <div class="faq-item" data-category="farmers">
+        <button class="faq-question">
+          <span>What are the requirements for partner farms?</span>
+          <div class="faq-icon">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19 9l-7 7-7-7"/>
+            </svg>
+          </div>
+        </button>
+        <div class="faq-answer">
+          <p>Partner farms must:</p>
+          <ul>
+            <li>Be within 200km of Accra or Kumasi</li>
+            <li>Meet our quality and safety standards</li>
+            <li>Have consistent weekly capacity</li>
+            <li>Comply with cold-chain handling procedures</li>
+            <li>Allow quarterly audits and inspections</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="faq-item" data-category="farmers">
+        <button class="faq-question">
+          <span>How do farms get paid?</span>
+          <div class="faq-icon">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19 9l-7 7-7-7"/>
+            </svg>
+          </div>
+        </button>
+        <div class="faq-answer">
+          <p>Farms receive payment immediately upon successful delivery via mobile money or bank transfer. Pricing is transparent and set above market rates to ensure fair compensation for quality and cold-chain compliance.</p>
+        </div>
+      </div>
+
+      <!-- Pricing -->
+      <div class="faq-item" data-category="pricing">
+        <button class="faq-question">
+          <span>How is pricing determined?</span>
+          <div class="faq-icon">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19 9l-7 7-7-7"/>
+            </svg>
+          </div>
+        </button>
+        <div class="faq-answer">
+          <p>Our pricing is based on farm gate costs plus cold-chain logistics. We publish transparent pricing that reflects true costs while ensuring farmers receive fair compensation. Bulk buyers get volume discounts.</p>
+        </div>
+      </div>
+
+      <div class="faq-item" data-category="pricing">
+        <button class="faq-question">
+          <span>Are there delivery fees?</span>
+          <div class="faq-icon">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19 9l-7 7-7-7"/>
+            </svg>
+          </div>
+        </button>
+        <div class="faq-answer">
+          <p>Delivery is free for orders above GH₵2,000. For orders between GH₵500-2,000, there's a flat GH₵50 delivery fee to cover cold-chain logistics. All pricing will be finalized before launch.</p>
+        </div>
+      </div>
+
+      <div class="faq-item" data-category="pricing">
+        <button class="faq-question">
+          <span>Do you offer payment plans for institutions?</span>
+          <div class="faq-icon">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19 9l-7 7-7-7"/>
+            </svg>
+          </div>
+        </button>
+        <div class="faq-answer">
+          <p>Yes, verified institutions and restaurants can apply for net-30 payment terms after an initial trial period. Contact our business team for details on institutional pricing and payment arrangements.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta-section">
+      <h2>Still have questions?</h2>
+      <p>Join our waitlist and our team will reach out with more details</p>
+      <button class="cta-btn" onclick="window.location.href='index.html#wholesale'">Join Early Access</button>
+    </div>
+  </main>
+
+  <script>
+    const API_BASE = 'http://localhost:3001';
+
+    // Load FAQs from backend
+    async function loadFAQs() {
+      try {
+        const response = await fetch(`${API_BASE}/api/faqs`);
+        const data = await response.json();
+        
+        if (data.faqs && data.faqs.length > 0) {
+          renderFAQs(data.faqs);
+        }
+      } catch (error) {
+        console.error('Error loading FAQs:', error);
+        // FAQs are already in HTML, so no error shown to user
+      }
+    }
+
+    function renderFAQs(faqs) {
+      const faqList = document.getElementById('faq-list');
+      faqList.innerHTML = faqs.map(faq => `
+        <div class="faq-item" data-category="${faq.category}">
+          <button class="faq-question">
+            <span>${faq.question}</span>
+            <div class="faq-icon">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M19 9l-7 7-7-7"/>
+              </svg>
+            </div>
+          </button>
+          <div class="faq-answer">
+            <p>${faq.answer}</p>
+          </div>
+        </div>
+      `).join('');
+
+      // Reattach accordion functionality
+      attachAccordionListeners();
+    }
+
+    function attachAccordionListeners() {
+      document.querySelectorAll('.faq-question').forEach(button => {
+        button.addEventListener('click', () => {
+          const item = button.parentElement;
+          const isActive = item.classList.contains('active');
+          
+          // Close all items
+          document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+          
+          // Open clicked item if it wasn't active
+          if (!isActive) {
+            item.classList.add('active');
+          }
+        });
+      });
+    }
+
+    // FAQ accordion functionality
+    attachAccordionListeners();
+
+    // Category filtering
+    document.querySelectorAll('.category-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const category = btn.dataset.category;
+        
+        // Update active button
+        document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        // Filter FAQ items
+        document.querySelectorAll('.faq-item').forEach(item => {
+          if (category === 'all' || item.dataset.category === category) {
+            item.style.display = 'block';
+          } else {
+            item.style.display = 'none';
+            item.classList.remove('active');
+          }
+        });
+      });
+    });
+
+    // Header shadow on scroll
+    const headerEl = document.querySelector('header');
+    let lastScrollY = 0;
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY || document.documentElement.scrollTop;
+      if (!headerEl) return;
+      if (y > 8 && lastScrollY <= 8) {
+        headerEl.style.boxShadow = '0 8px 24px rgba(0,0,0,0.06)';
+      } else if (y <= 8 && lastScrollY > 8) {
+        headerEl.style.boxShadow = '0 2px 8px rgba(0,0,0,0.04)';
+      }
+      lastScrollY = y;
+    });
+  </script>
+</body>
+</html>

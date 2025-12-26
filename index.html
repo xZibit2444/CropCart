@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CropCart | Local produce, delivered</title>
+  <title>CropCart GH | Local produce, delivered</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="mask-icon" href="favicon.svg" color="#22c55e" />
   <link rel="icon" sizes="32x32" href="favicon-32.png" />
@@ -225,6 +225,158 @@
       }
     }
 
+    /* Chat widget */
+    .chat-launcher {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #16a34a, #22c55e);
+      color: #ffffff;
+      border: none;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.18);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      z-index: 10;
+    }
+
+    .chat-launcher:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 18px 36px rgba(0, 0, 0, 0.22);
+    }
+
+    .chat-notification {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      width: 20px;
+      height: 20px;
+      background: #ef4444;
+      border-radius: 50%;
+      border: 3px solid #ffffff;
+      display: none;
+      animation: pulse-notification 2s ease-in-out infinite;
+    }
+
+    .chat-notification.active {
+      display: block;
+    }
+
+    @keyframes pulse-notification {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(1.1);
+        opacity: 0.8;
+      }
+    }
+
+    .chat-panel {
+      position: fixed;
+      right: 24px;
+      bottom: 96px;
+      width: 320px;
+      max-width: calc(100vw - 32px);
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
+      border: 1px solid #e5e7eb;
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      z-index: 11;
+    }
+
+    .chat-panel.active {
+      display: flex;
+    }
+
+    .chat-header {
+      padding: 14px 16px;
+      background: linear-gradient(135deg, #16a34a, #22c55e);
+      color: #ffffff;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .chat-body {
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-height: 280px;
+      overflow-y: auto;
+      background: #f8faf8;
+    }
+
+    .chat-msg {
+      padding: 10px 12px;
+      border-radius: 12px;
+      font-size: 14px;
+      line-height: 1.5;
+      max-width: 85%;
+    }
+
+    .chat-msg.user {
+      align-self: flex-end;
+      background: #e8f8ed;
+      color: #14532d;
+      border: 1px solid #c8f2d4;
+    }
+
+    .chat-msg.bot {
+      align-self: flex-start;
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      color: #111827;
+    }
+
+    .chat-timestamp {
+      font-size: 11px;
+      color: #9ca3af;
+      margin-top: 4px;
+      text-align: right;
+    }
+
+    .chat-input-row {
+      display: flex;
+      gap: 8px;
+      padding: 10px 12px;
+      border-top: 1px solid #e5e7eb;
+      background: #ffffff;
+    }
+
+    .chat-input-row input {
+      flex: 1;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid #d1d5db;
+      font-family: inherit;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .chat-input-row button {
+      background: #22c55e;
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      padding: 0 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .chat-input-row button:hover {
+      background: #16a34a;
+    }
+
     h1 .word {
       display: inline-block;
       opacity: 0;
@@ -290,7 +442,7 @@
     .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; letter-spacing: 0.01em; font-family: 'Manrope', 'Segoe UI', sans-serif; cursor: pointer; transition: opacity 0.3s ease; }
     .brand:hover { opacity: 0.9; }
     .brand-mark {
-      width: 240px;
+      width: 280px;
       height: 60px;
       display: block;
     }
@@ -662,7 +814,7 @@
       align-items: center;
       gap: 14px;
     }
-    .footer-brand .brand-mark { width: 160px; height: 40px; display: block; }
+    .footer-brand .brand-mark { width: 230px; height: 45px; display: block; }
     .footer-tagline { color: rgba(255, 255, 255, 0.85); font-size: 14px; }
     .newsletter {
       display: flex;
@@ -863,7 +1015,7 @@
       .hero { padding-top: 10px; }
       .section { margin-top: 52px; }
       main { padding: 40px 20px 80px; }
-      .brand-mark { width: 180px; height: 45px; }
+      .brand-mark { width: 220px; height: 48px; }
       .brand-mark text { font-size: 36px; }
       h1 { font-size: 32px !important; }
       h2 { font-size: 24px; }
@@ -991,16 +1143,17 @@
   </div>
   <header>
     <nav>
-      <div class="brand" aria-label="CropCart">
-        <svg class="brand-mark" width="240" height="60" viewBox="0 0 240 60" xmlns="http://www.w3.org/2000/svg">
+      <div class="brand" aria-label="CropCart GH">
+        <svg class="brand-mark" width="280" height="60" viewBox="0 0 280 60" xmlns="http://www.w3.org/2000/svg">
           <text x="0" y="45" font-family="Manrope, Arial, sans-serif" font-size="48" font-weight="800" fill="#1a1a1a" letter-spacing="-1">Crop</text>
           <text x="105" y="45" font-family="Manrope, Arial, sans-serif" font-size="48" font-weight="800" fill="#22c55e" letter-spacing="-1">Cart</text>
+          <text x="198" y="45" font-family="Manrope, Arial, sans-serif" font-size="48" font-weight="800" fill="#22c55e" letter-spacing="-1">GH</text>
         </svg>
       </div>
       <div class="nav-links">
-        <a href="#how">How it works</a>
+        <a href="how-it-works.html">How it works</a>
         <a href="#wholesale">For wholesale</a>
-        <a href="#farms">Partner farms</a>
+        <a href="farms.html">Partner farms</a>
         <button class="cta-btn">Join waitlist</button>
       </div>
     </nav>
@@ -1011,10 +1164,10 @@
       <div>
         <div class="eyebrow">Launching Q1 2025 · Ghana-grown · Fresh · Fast</div>
         <h1>From Ghana's fields to city doors in hours.</h1>
-        <p class="lead">CropCart links verified Ghanaian farms to buyers in Accra and Kumasi with sealed cold chain and tracked loads. We're building the network now and opening to early buyers soon.</p>
+        <p class="lead">CropCart GH links verified Ghanaian farms to buyers in Accra and Kumasi with sealed cold chain and tracked loads. We're building the network now and opening to early buyers soon.</p>
         <div class="hero-actions">
           <button class="cta-btn">Join early access</button>
-          <button class="ghost-btn">Learn more</button>
+          <button class="ghost-btn" onclick="window.location.href='faq.html'">Learn more</button>
         </div>
         <div class="stats">
           <div class="stat-card card-hover">
@@ -1050,7 +1203,7 @@
     <section id="how" class="section">
       <div class="section-header">
         <div>
-          <h2>How CropCart delivers fresher</h2>
+          <h2>How CropCart GH delivers fresher</h2>
           <p>We match orders to nearby harvests, schedule picks around weather, and keep the cold chain sealed to handoff.</p>
         </div>
       </div>
@@ -1193,7 +1346,7 @@
       <div class="section-header">
         <div>
           <h2>Frequently asked questions</h2>
-          <p>Everything you need to know about sourcing with CropCart.</p>
+          <p>Everything you need to know about sourcing with CropCart GH.</p>
         </div>
       </div>
       <div class="faq-section">
@@ -1238,17 +1391,42 @@
     </section>
   </main>
 
+  <button class="chat-launcher" aria-label="Open chat">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 5.5C4 4.12 5.12 3 6.5 3h11C18.88 3 20 4.12 20 5.5v7c0 1.38-1.12 2.5-2.5 2.5H9l-4 3v-3.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <span class="chat-notification" id="chatNotification"></span>
+  </button>
+
+  <!-- Notification sound -->
+  <audio id="notificationSound" preload="auto">
+    <source src="data:audio/wav;base64,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" type="audio/wav">
+  </audio>
+
+  <div class="chat-panel" aria-live="polite">
+    <div class="chat-header">
+      <span>CropCart GH Assistant</span>
+      <small style="font-weight:600; opacity:0.85">Online</small>
+    </div>
+    <div class="chat-body" id="chatBody"></div>
+    <form class="chat-input-row" id="chatForm">
+      <input type="text" id="chatInput" placeholder="Ask about farms, produce, delivery..." aria-label="Chat message" required />
+      <button type="submit">Send</button>
+    </form>
+  </div>
+
   <footer>
     <div class="footer-top">
       <div class="footer-brand">
-        <svg class="brand-mark" viewBox="0 0 240 60" xmlns="http://www.w3.org/2000/svg" aria-label="CropCart">
+        <svg class="brand-mark" viewBox="0 0 230 60" xmlns="http://www.w3.org/2000/svg" aria-label="CropCart GH">
           <text x="0" y="45" font-family="Manrope, Arial, sans-serif" font-size="40" font-weight="800" fill="#ffffff" letter-spacing="-1">Crop</text>
-          <text x="95" y="45" font-family="Manrope, Arial, sans-serif" font-size="40" font-weight="800" fill="#ffffff" letter-spacing="-1">Cart</text>
+          <text x="88" y="45" font-family="Manrope, Arial, sans-serif" font-size="40" font-weight="800" fill="#ffffff" letter-spacing="-1">Cart</text>
+          <text x="165" y="45" font-family="Manrope, Arial, sans-serif" font-size="40" font-weight="800" fill="#ffffff" letter-spacing="-1">GH</text>
         </svg>
         <span class="footer-tagline">Sourcing that keeps farms thriving and cities fed.</span>
       </div>
-      <form class="newsletter" action="#" method="post" novalidate>
-        <input type="email" name="email" placeholder="Your email" aria-label="Email" />
+      <form class="newsletter" id="newsletter-form" novalidate>
+        <input type="email" id="newsletter-email" name="email" placeholder="Your email" aria-label="Email" required />
         <button class="cta-btn" type="submit">Join waitlist</button>
       </form>
     </div>
@@ -1258,7 +1436,7 @@
         <ul>
           <li><a href="#">About Us</a></li>
           <li><a href="#">Our Story</a></li>
-          <li><a href="#farms">Partner Farms</a></li>
+          <li><a href="farms.html">Partner Farms</a></li>
           <li><a href="#">Careers</a></li>
           <li><a href="#">Press</a></li>
         </ul>
@@ -1266,7 +1444,7 @@
       <div class="footer-column">
         <h4>Products</h4>
         <ul>
-          <li><a href="#how">How It Works</a></li>
+          <li><a href="how-it-works.html">How It Works</a></li>
           <li><a href="#wholesale">Wholesale</a></li>
           <li><a href="#">Pricing</a></li>
           <li><a href="#">Produce Catalog</a></li>
@@ -1294,7 +1472,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <span>&copy; 2025 CropCart. All rights reserved.</span>
+      <span>&copy; 2025 CropCart GH. All rights reserved.</span>
       <div class="legal-links">
         <a href="#">Privacy</a>
         <a href="#">Terms</a>
@@ -1338,6 +1516,131 @@
 
     // Stagger animations for cards based on index
     const cards = document.querySelectorAll('.card-hover');
+
+    // Chat widget
+    const chatLauncher = document.querySelector('.chat-launcher');
+    const chatPanel = document.querySelector('.chat-panel');
+    const chatBody = document.getElementById('chatBody');
+    const chatForm = document.getElementById('chatForm');
+    const chatInput = document.getElementById('chatInput');
+    const chatNotification = document.getElementById('chatNotification');
+
+    // Generate unique session ID
+    let chatSessionId = sessionStorage.getItem('chatSessionId');
+    if (!chatSessionId) {
+      chatSessionId = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      sessionStorage.setItem('chatSessionId', chatSessionId);
+    }
+
+    // Clear previous greeting flag for testing (remove in production)
+    // sessionStorage.removeItem('hasAutoGreeted');
+    
+    let hasAutoGreeted = sessionStorage.getItem('hasAutoGreeted');
+    const notificationSound = document.getElementById('notificationSound');
+
+    const appendMessage = (role, text, saveToBackend = true) => {
+      const msg = document.createElement('div');
+      msg.className = `chat-msg ${role}`;
+      msg.textContent = text;
+      
+      const timestamp = document.createElement('div');
+      timestamp.className = 'chat-timestamp';
+      const now = new Date();
+      timestamp.textContent = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+      msg.appendChild(timestamp);
+      
+      chatBody.appendChild(msg);
+      chatBody.scrollTop = chatBody.scrollHeight;
+
+      // Save to backend
+      if (saveToBackend && role === 'user') {
+        // Store user message, bot response will be added when it's generated
+        window.lastUserMessage = text;
+      }
+    };
+
+    const saveChatToBackend = async (userMessage, botResponse) => {
+      try {
+        await fetch(`${API_BASE}/api/chat/messages`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            sessionId: chatSessionId,
+            userMessage,
+            botResponse,
+            timestamp: new Date().toISOString()
+          })
+        });
+      } catch (error) {
+        console.error('Error saving chat message:', error);
+      }
+    };
+
+    const botReply = (userText) => {
+      const lower = userText.toLowerCase();
+      if (lower.includes('farm') || lower.includes('farms')) {
+        return 'We currently feature Accra partner farms with cold-chain ready dispatch. Want to view the directory?';
+      }
+      if (lower.includes('produce') || lower.includes('catalog')) {
+        return 'We stock Ghana-grown greens, roots, and tropical fruits. Need seasonal availability or pricing?';
+      }
+      if (lower.includes('delivery')) {
+        return 'Target delivery is under 12 hours in Greater Accra with full cold-chain. Which area are you in?';
+      }
+      return 'Thanks for reaching out! Tell me if you want farms, produce, or delivery details and I will share quick info.';
+    };
+
+    if (chatLauncher && chatPanel && chatBody) {
+      // Initial bot message (always show)
+      appendMessage('bot', 'Hi! I am the CropCart GH assistant. Ask about partner farms, produce availability, or delivery.', false);
+
+      // Auto-open chat and greet after 3 seconds (only once per session)
+      if (!hasAutoGreeted) {
+        setTimeout(() => {
+          // Show notification badge
+          if (chatNotification) {
+            chatNotification.classList.add('active');
+            console.log('Notification badge activated');
+          }
+          
+          // Play notification sound
+          if (notificationSound) {
+            notificationSound.play().catch(err => {
+              console.log('Audio playback failed (requires user interaction):', err);
+            });
+          }
+          
+          // Add the greeting message without opening the panel
+          appendMessage('bot', 'Do you have any questions about CropCart GH? I\'m here to help!', false);
+          sessionStorage.setItem('hasAutoGreeted', 'true');
+        }, 3000);
+      }
+
+      chatLauncher.addEventListener('click', () => {
+        chatPanel.classList.toggle('active');
+        if (chatPanel.classList.contains('active')) {
+          chatInput.focus();
+          // Hide notification when chat is opened
+          if (chatNotification) chatNotification.classList.remove('active');
+        }
+      });
+
+      chatForm?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const text = chatInput.value.trim();
+        if (!text) return;
+        
+        appendMessage('user', text);
+        chatInput.value = '';
+        
+        setTimeout(() => {
+          const response = botReply(text);
+          appendMessage('bot', response, false);
+          // Save both messages to backend
+          saveChatToBackend(text, response);
+        }, 400);
+      });
+    }
     cards.forEach((card, index) => {
       card.style.animationDelay = (0.1 * index) + 's';
     });
@@ -1370,6 +1673,51 @@
       el.style.animationDelay = (index * 0.06) + 's';
       observer.observe(el);
     });
+
+    // Newsletter form submission
+    const newsletterForm = document.getElementById('newsletter-form');
+    const API_BASE = 'http://localhost:3001';
+
+    if (newsletterForm) {
+      newsletterForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const emailInput = document.getElementById('newsletter-email');
+        const submitBtn = newsletterForm.querySelector('button[type="submit"]');
+        const email = emailInput.value.trim();
+        
+        if (!email) {
+          alert('Please enter your email address');
+          return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Joining...';
+
+        try {
+          const response = await fetch(`${API_BASE}/api/waitlist`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email })
+          });
+
+          const data = await response.json();
+
+          if (data.success) {
+            alert(`Welcome to the CropCart GH waitlist!\n\nYou're #${data.position} on the list.\n\nWe'll email you at ${email} when we launch in Q1 2025.`);
+            emailInput.value = '';
+          } else {
+            alert(`Error: ${data.error || 'Failed to join waitlist'}`);
+          }
+        } catch (error) {
+          console.error('Error joining waitlist:', error);
+          alert('Network error. Please check that the backend server is running and try again.');
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Join waitlist';
+        }
+      });
+    }
   </script>
 </body>
 </html>

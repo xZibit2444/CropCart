@@ -1,4 +1,4 @@
-# CropCart
+# CropCart GH
 
 Farm-to-consumer logistics platform connecting local Ghanaian farms with urban buyers and wholesalers. Sealed cold chain, tracked loads, harvest-fresh delivery.
 
@@ -20,7 +20,7 @@ Farm-to-consumer logistics platform connecting local Ghanaian farms with urban b
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/cropcart.git
+git clone https://github.com/yourusername/cropcart-gh.git
 
 # Start local dev server
 python -m http.server 4173
@@ -38,7 +38,7 @@ http://localhost:4173
 
 ## Team
 
-CropCart Team · Sourcing that keeps farms thriving and cities fed.
+CropCart GH Team · Sourcing that keeps farms thriving and cities fed.
 
 ---
 

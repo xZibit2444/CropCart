@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How It Works | CropCart GH</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="mask-icon" href="favicon.svg" color="#22c55e" />
+  <link rel="icon" sizes="32x32" href="favicon-32.png" />
+  <link rel="icon" sizes="16x16" href="favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #fafbfa;
+      --fg: #1a1a1a;
+      --muted: #6b7280;
+      --accent: #22c55e;
+      --accent-strong: #16a34a;
+      --accent-light: #dcfce7;
+      --card: #ffffff;
+      --stroke: #e5e7eb;
+      --shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+      --shadow-soft: 0 4px 16px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.12);
+      --max-width: 1200px;
+      --radius: 16px;
+      --radius-sm: 12px;
+      --header-height: 80px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: 'Manrope', 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.7;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--stroke);
+      transition: box-shadow 0.3s ease;
+    }
+
+    nav {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      height: var(--header-height);
+    }
+
+    .brand-mark { width: 280px; height: 60px; display: block; }
+    
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .nav-links a {
+      color: var(--fg);
+      font-weight: 500;
+      font-size: 15px;
+      text-decoration: none;
+      position: relative;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 100%;
+      height: 2px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.25s ease;
+    }
+
+    .nav-links a:hover { color: var(--accent-strong); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+    .nav-links a[aria-current="page"]::after { transform: scaleX(1); }
+
+    .cta-btn {
+      padding: 12px 22px;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-strong) 100%);
+      color: #ffffff;
+      font-weight: 700;
+      border-radius: var(--radius-sm);
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+      font-size: 15px;
+    }
+
+    .cta-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(34, 197, 94, 0.4);
+    }
+
+    main {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 60px 24px 120px;
+    }
+
+    .page-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .page-header h1 {
+      font-size: 48px;
+      font-weight: 800;
+      margin: 0 0 16px 0;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    .page-header p {
+      font-size: 18px;
+      color: var(--muted);
+      max-width: 650px;
+      margin: 0 auto;
+    }
+
+    .process-section {
+      margin-bottom: 80px;
+    }
+
+    .section-title {
+      font-size: 32px;
+      font-weight: 800;
+      margin: 0 0 32px 0;
+      text-align: center;
+      color: var(--fg);
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      margin-bottom: 60px;
+    }
+
+    .step-card {
+      background: var(--card);
+      border-radius: var(--radius-sm);
+      padding: 24px 28px;
+      border: 1px solid var(--stroke);
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      transition: all 0.3s ease;
+      display: flex;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .step-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+      border-color: var(--accent);
+    }
+
+    .step-number {
+      flex-shrink: 0;
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+      color: #ffffff;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 18px;
+      font-weight: 800;
+      box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+    }
+
+    .step-content {
+      flex: 1;
+    }
+
+    .step-card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      margin: 0 0 8px 0;
+      color: var(--fg);
+    }
+
+    .step-card p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+      margin-top: 40px;
+    }
+
+    .feature-card {
+      background: var(--card);
+      border-radius: var(--radius-sm);
+      padding: 24px;
+      border: 1px solid var(--stroke);
+      display: flex;
+      gap: 16px;
+      align-items: start;
+      transition: all 0.3s ease;
+    }
+
+    .feature-card:hover {
+      border-color: var(--accent);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .feature-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--accent-light);
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+
+    .feature-icon svg {
+      width: 22px;
+      height: 22px;
+      stroke: var(--accent-strong);
+    }
+
+    .feature-content h4 {
+      font-size: 16px;
+      font-weight: 700;
+      margin: 0 0 6px 0;
+      color: var(--fg);
+    }
+
+    .feature-content p {
+      font-size: 14px;
+      color: var(--muted);
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    .timeline {
+      position: relative;
+      padding: 40px 0;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: var(--stroke);
+      transform: translateX(-50%);
+      z-index: 0;
+    }
+
+    .timeline-item {
+      display: flex;
+      gap: 40px;
+      margin-bottom: 48px;
+      position: relative;
+      opacity: 0;
+      animation: fadeInTimeline 0.8s ease-out forwards;
+    }
+
+    .timeline-item:nth-child(1) { animation-delay: 0.2s; }
+    .timeline-item:nth-child(2) { animation-delay: 0.4s; }
+    .timeline-item:nth-child(3) { animation-delay: 0.6s; }
+    .timeline-item:nth-child(4) { animation-delay: 0.8s; }
+    .timeline-item:nth-child(5) { animation-delay: 1s; }
+    .timeline-item:nth-child(6) { animation-delay: 1.2s; }
+
+    @keyframes fadeInTimeline {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .timeline-item:nth-child(odd) {
+      flex-direction: row-reverse;
+    }
+
+    .timeline-content {
+      flex: 1;
+      background: var(--card);
+      border-radius: var(--radius-sm);
+      padding: 28px;
+      border: 1px solid var(--stroke);
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      transition: all 0.3s ease;
+      z-index: 10;
+    }
+
+    .timeline-content:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: var(--shadow);
+      border-color: var(--accent);
+    }
+
+    .timeline-number {
+      position: absolute;
+      top: -12px;
+      left: 28px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+      color: #ffffff;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 14px;
+      font-weight: 800;
+      box-shadow: 0 4px 12px rgba(34, 197, 94, 0.4);
+      z-index: 5;
+    }
+
+    .timeline-marker {
+      width: 24px;
+      height: 24px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+      border-radius: 50%;
+      border: 4px solid var(--bg);
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 24px;
+      z-index: 15;
+      box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+      }
+      70% {
+        box-shadow: 0 0 0 12px rgba(34, 197, 94, 0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+      }
+    }
+
+    .timeline-content h4 {
+      font-size: 18px;
+      font-weight: 700;
+      margin: 0 0 12px 0;
+      color: var(--fg);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .time-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--accent-light);
+      color: var(--accent-strong);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .time-badge svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .timeline-title {
+      font-weight: 700;
+      color: var(--fg);
+    }
+
+    .timeline-content p {
+      font-size: 15px;
+      color: var(--muted);
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    .cta-section {
+      background: linear-gradient(135deg, var(--accent-light), #ffffff);
+      border-radius: var(--radius);
+      padding: 60px 40px;
+      text-align: center;
+      margin-top: 80px;
+      border: 1px solid var(--accent);
+    }
+
+    .cta-section h2 {
+      font-size: 36px;
+      font-weight: 800;
+      margin: 0 0 16px 0;
+      color: var(--fg);
+    }
+
+    .cta-section p {
+      font-size: 18px;
+      color: var(--muted);
+      margin: 0 0 32px 0;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .ghost-btn {
+      padding: 12px 22px;
+      background: transparent;
+      color: var(--accent-strong);
+      font-weight: 700;
+      border-radius: var(--radius-sm);
+      border: 2px solid var(--accent);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 15px;
+    }
+
+    .ghost-btn:hover {
+      background: var(--accent);
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+
+    @media (max-width: 900px) {
+      .timeline::before, .timeline::after { left: 20px; }
+      .timeline-item { flex-direction: column !important; padding-left: 50px; }
+      .timeline-marker { left: 20px; transform: none; }
+      .timeline-content { max-width: 100%; }
+      .steps-grid { grid-template-columns: 1fr; }
+      .feature-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 620px) {
+      nav { padding: 0 16px; }
+      main { padding: 40px 20px 80px; }
+      .brand-mark { width: 220px; height: 48px; }
+      .page-header h1 { font-size: 36px !important; }
+      .section-title { font-size: 28px; }
+      .nav-links { flex-wrap: wrap; justify-content: flex-end; }
+      .cta-section { padding: 40px 24px; }
+      .cta-section h2 { font-size: 28px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="index.html" class="brand" aria-label="CropCart GH">
+        <svg class="brand-mark" width="280" height="60" viewBox="0 0 280 60" xmlns="http://www.w3.org/2000/svg">
+          <text x="0" y="45" font-family="Manrope, Arial, sans-serif" font-size="48" font-weight="800" fill="#1a1a1a" letter-spacing="-1">Crop</text>
+          <text x="105" y="45" font-family="Manrope, Arial, sans-serif" font-size="48" font-weight="800" fill="#22c55e" letter-spacing="-1">Cart</text>
+          <text x="198" y="45" font-family="Manrope, Arial, sans-serif" font-size="48" font-weight="800" fill="#22c55e" letter-spacing="-1">GH</text>
+        </svg>
+      </a>
+      <div class="nav-links">
+        <a href="how-it-works.html" aria-current="page">How it works</a>
+        <a href="index.html#wholesale">For wholesale</a>
+        <a href="farms.html">Partner farms</a>
+        <a href="faq.html">FAQ</a>
+        <button class="cta-btn" onclick="window.location.href='index.html#wholesale'">Join waitlist</button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div class="page-header">
+      <h1>How CropCart GH Works</h1>
+      <p>From harvest to handoff in under 12 hours. Our sealed cold-chain and farm-direct model ensures the freshest produce reaches your kitchen with full traceability.</p>
+    </div>
+
+    <div class="process-section">
+      <h2 class="section-title">The Process</h2>
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h3>Place Your Order</h3>
+            <p>Browse our catalog of Ghana-grown produce. Set your delivery schedule and choose from verified farms within 200km of Accra.</p>
+          </div>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h3>Farm Verification</h3>
+            <p>Our team verifies availability, quality standards, and cold-chain readiness at partner farms. Every item is graded at source.</p>
+          </div>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <h3>Harvest & Pack</h3>
+            <p>Produce is harvested at peak ripeness in the early morning, hand-sorted, and packed into GPS-tracked containers with temperature monitors.</p>
+          </div>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">4</div>
+          <div class="step-content">
+            <h3>Cold-Chain Transit</h3>
+            <p>Reefer trucks with live temperature monitoring maintain 2-4°C from farm gate to your door. Real-time GPS tracking available via dashboard.</p>
+          </div>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">5</div>
+          <div class="step-content">
+            <h3>Quality Check</h3>
+            <p>Before delivery, produce undergoes final quality inspection. Any items below standard are rejected and farms are notified.</p>
+          </div>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">6</div>
+          <div class="step-content">
+            <h3>Delivery</h3>
+            <p>Produce arrives at your location within 12 hours of harvest. Scheduled morning or afternoon windows, contactless handoff available.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="process-section">
+      <h2 class="section-title">Our Guarantees</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <div class="feature-content">
+            <h4>Harvest to Door in 12 Hours</h4>
+            <p>Target delivery within 12 hours of harvest for maximum freshness and shelf life.</p>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+          </div>
+          <div class="feature-content">
+            <h4>100% Cold-Chain Compliance</h4>
+            <p>Sealed refrigeration from farm to handoff with temperature logs for every shipment.</p>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+          </div>
+          <div class="feature-content">
+            <h4>Full Traceability</h4>
+            <p>Track your produce back to the specific farm plot with lot numbers and harvest dates.</p>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <div class="feature-content">
+            <h4>Quality Certified Farms</h4>
+            <p>All partner farms are HACCP, Organic, or Ghana FDA certified and audited quarterly.</p>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+          </div>
+          <div class="feature-content">
+            <h4>Real-Time Updates</h4>
+            <p>GPS tracking and SMS notifications keep you informed from harvest to delivery.</p>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <div class="feature-content">
+            <h4>Fair Farm Pricing</h4>
+            <p>Direct sourcing means better prices for farms and fresher produce for you.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="process-section">
+      <h2 class="section-title">A Typical Day</h2>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">            <div class="timeline-number">3</div>            <div class="timeline-number">1</div>
+            <h4>
+              <span class="time-badge">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                4:00 AM
+              </span>
+              <span class="timeline-title">Dawn Harvest</span>
+            </h4>
+            <p>Farms begin harvesting greens, tomatoes, and delicate produce at dawn when temperatures are cool and moisture content is optimal.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <div class="timeline-number">2</div>
+            <h4>
+              <span class="time-badge">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                6:00 AM
+              </span>
+              <span class="timeline-title">Sorting & Packing</span>
+            </h4>
+            <p>Produce is hand-sorted, graded, and packed into refrigerated containers. Temperature monitors are activated and GPS trackers attached.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <div class="timeline-number">3</div>
+            <h4>
+              <span class="time-badge">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                7:30 AM
+              </span>
+              <span class="timeline-title">Dispatch</span>
+            </h4>
+            <p>Reefer trucks depart from farm consolidation points. Cold-chain begins with target 2-4°C maintained throughout transit.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <div class="timeline-number">4</div>
+            <h4>
+              <span class="time-badge">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                10:00 AM
+              </span>
+              <span class="timeline-title">Quality Check</span>
+            </h4>
+            <p>Shipments arrive at our Accra hub for final quality inspection and load verification before final-mile delivery.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <div class="timeline-number">5</div>
+            <h4>
+              <span class="time-badge">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                11:00 AM
+              </span>
+              <span class="timeline-title">Delivery</span>
+            </h4>
+            <p>Morning delivery window begins. Produce reaches restaurants and wholesalers within 7-12 hours of harvest.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <div class="timeline-number">6</div>
+            <h4>
+              <span class="time-badge">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                3:00 PM
+              </span>
+              <span class="timeline-title">Afternoon Window</span>
+            </h4>
+            <p>Second delivery window for businesses that prefer afternoon restocking. Same cold-chain standards maintained.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta-section">
+      <h2>Ready to source smarter?</h2>
+      <p>Join restaurants and food businesses across Accra getting farm-fresh produce with full traceability and guaranteed cold-chain.</p>
+      <div class="cta-buttons">
+        <button class="cta-btn" onclick="window.location.href='index.html#wholesale'">Join waitlist</button>
+        <button class="ghost-btn" onclick="window.location.href='farms.html'">View partner farms</button>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
