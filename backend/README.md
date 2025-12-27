@@ -17,6 +17,7 @@ Backend API for CropCart GH - Ghana's farm-to-table produce platform.
 ```powershell
 cd backend
 npm install
+npm install helmet express-rate-limit morgan dotenv
 ```
 
 ### Run Server
@@ -30,6 +31,17 @@ npm start
 ```
 
 Server runs on: **http://localhost:3001**
+
+### Configure Environment
+
+1. Copy `.env.example` to `.env`
+2. Edit values as needed (e.g., `PORT`, `CORS_ORIGINS`, SMTP creds)
+
+```powershell
+Copy-Item .env.example .env
+$env:PORT=3001
+$env:CORS_ORIGINS="http://localhost:4173"
+```
 
 ## API Endpoints
 
@@ -98,11 +110,16 @@ curl http://localhost:3001/api/search?q=mango
 - **Express** - Web framework
 - **CORS** - Cross-origin support
 - **JSON** - Data storage
+- **Helmet** - Security headers
+- **express-rate-limit** - Basic API throttling
+- **morgan** - Request logging
+- **dotenv** - Env config
 
 ## Environment
 
 - Node.js >= 16.0.0
 - Port: 3001 (configurable via PORT env var)
+- CORS allowlist: `CORS_ORIGINS` (comma-separated)
 
 ## Development
 

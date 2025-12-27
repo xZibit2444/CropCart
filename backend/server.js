@@ -1,24 +1,73 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
+const nodemailer = require('nodemailer');
+const cookieParser = require('cookie-parser');
+const helmet = require('helmet');
+const morgan = require('morgan');
+const rateLimit = require('express-rate-limit');
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = Number(process.env.PORT) || 3001;
 
 // Middleware
-app.use(cors());
-app.use(express.json());
+// Security headers
+app.use(helmet());
 
-// Load data
-const produceData = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'produce.json'), 'utf8'));
-const farmsData = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'farms.json'), 'utf8'));
-const faqData = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'faqs.json'), 'utf8'));
+// Basic request logging
+app.use(morgan('dev'));
+
+// JSON parsing
+app.use(express.json());
+app.use(cookieParser());
+
+// CORS allowlist
+const defaultOrigins = ['http://localhost:4173'];
+const envOrigins = (process.env.CORS_ORIGINS || '').split(',').map(o => o.trim()).filter(Boolean);
+const allowedOrigins = [...new Set([...defaultOrigins, ...envOrigins])];
+
+app.use(cors({
+  origin: (origin, cb) => {
+    // Allow non-browser clients or same-origin
+    if (!origin || allowedOrigins.includes(origin)) return cb(null, true);
+    return cb(new Error('CORS: Origin not allowed'));
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  credentials: false
+}));
+
+// Rate limiting for API
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 200,
+  standardHeaders: true,
+  legacyHeaders: false
+});
+app.use('/api', apiLimiter);
+
+// Load data (safe)
+function safeLoadJSON(filePath, fallback) {
+  try {
+    if (fs.existsSync(filePath)) {
+      return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+    }
+  } catch (e) {
+    console.error(`Failed to parse JSON: ${filePath}`, e.message);
+  }
+  return fallback;
+}
+
+const produceData = safeLoadJSON(path.join(__dirname, 'data', 'produce.json'), { categories: [] });
+const farmsData = safeLoadJSON(path.join(__dirname, 'data', 'farms.json'), { farms: [] });
+const faqData = safeLoadJSON(path.join(__dirname, 'data', 'faqs.json'), { categories: [], faqs: [] });
 
 // In-memory storage for applications and submissions (in production, use a database)
 const farmApplicationsFile = path.join(__dirname, 'data', 'farm-applications.json');
 const newsletterFile = path.join(__dirname, 'data', 'newsletter.json');
 const waitlistFile = path.join(__dirname, 'data', 'waitlist.json');
+const earlyAccessFile = path.join(__dirname, 'data', 'early-access.json');
 
 // Helper functions for data persistence
 function loadJSON(filePath, defaultValue = []) {
@@ -42,6 +91,57 @@ function saveJSON(filePath, data) {
   }
 }
 
+// Email notifications
+const NOTIFY_EMAIL = process.env.NOTIFY_EMAIL || 'tiekujason@gmail.com';
+let mailTransporter = null;
+
+function createTransporter() {
+  const host = process.env.SMTP_HOST;
+  const port = process.env.SMTP_PORT ? parseInt(process.env.SMTP_PORT, 10) : 587;
+  const user = process.env.SMTP_USER;
+  const pass = process.env.SMTP_PASS;
+  const secure = process.env.SMTP_SECURE === 'true';
+
+  if (!host || !user || !pass) {
+    console.warn('Email notifications disabled: SMTP credentials not set.');
+    return null;
+  }
+
+  try {
+    return nodemailer.createTransport({
+      host,
+      port,
+      secure,
+      auth: { user, pass }
+    });
+  } catch (err) {
+    console.error('Failed to create mail transporter:', err);
+    return null;
+  }
+}
+
+async function sendEmail({ subject, text, html }) {
+  if (!mailTransporter) {
+    mailTransporter = createTransporter();
+  }
+
+  if (!mailTransporter) return;
+
+  const fromAddress = process.env.FROM_EMAIL || process.env.SMTP_USER || 'no-reply@cropcartgh.local';
+
+  try {
+    await mailTransporter.sendMail({
+      from: fromAddress,
+      to: NOTIFY_EMAIL,
+      subject,
+      text,
+      html: html || undefined
+    });
+  } catch (err) {
+    console.error('Failed to send notification email:', err);
+  }
+}
+
 // Routes
 app.get('/', (req, res) => {
   res.json({
@@ -55,6 +155,8 @@ app.get('/', (req, res) => {
       farmApplications: '/api/farm-applications',
       newsletter: '/api/newsletter',
       waitlist: '/api/waitlist',
+      earlyAccess: '/api/early-access',
+      cookieDemo: '/api/cookie-demo',
       health: '/health'
     }
   });
@@ -62,7 +164,40 @@ app.get('/', (req, res) => {
 
 // Health check
 app.get('/health', (req, res) => {
-  res.json({ status: 'healthy', timestamp: new Date().toISOString() });
+  res.json({
+    status: 'healthy',
+    version: '1.0.0',
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime(),
+    memory: process.memoryUsage(),
+    categories: produceData.categories?.length || 0,
+    farms: farmsData.farms?.length || 0
+  });
+});
+
+// Cookie demo: sets a signed, HttpOnly cookie and echoes visible cookies
+app.get('/api/cookie-demo', (req, res) => {
+  // Basic demo cookie (HttpOnly so JS can't read it)
+  res.cookie('cc_demo', 'early-bird', {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production', // set true when behind HTTPS
+    sameSite: 'Lax',
+    maxAge: 1000 * 60 * 60 * 24 * 7 // 7 days
+  });
+
+  // Non-HttpOnly cookie for client-side reads (example only)
+  res.cookie('cc_pref', 'newsletter-optin', {
+    httpOnly: false,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'Lax',
+    maxAge: 1000 * 60 * 60 * 24 * 30 // 30 days
+  });
+
+  res.json({
+    success: true,
+    message: 'Cookies set. Check browser devtools > Application > Cookies.',
+    visibleCookies: req.cookies || {}
+  });
 });
 
 // Get all produce categories
@@ -264,6 +399,11 @@ app.post('/api/farm-applications', (req, res) => {
   applications.push(application);
   
   if (saveJSON(farmApplicationsFile, applications)) {
+    sendEmail({
+      subject: `New farm application: ${farmName}`,
+      text: `Farm: ${farmName}\nLocation: ${location}\nSize: ${farmSize} acres\nSpecialties: ${specialties}\nCertifications: ${certifications || 'N/A'}\nContact: ${contactName}\nPhone: ${phone}\nEmail: ${email}\nExperience: ${experience}\nMessage: ${message || ''}`
+    });
+
     res.status(201).json({
       success: true,
       message: 'Application submitted successfully',
@@ -304,6 +444,11 @@ app.post('/api/newsletter', (req, res) => {
   subscribers.push(subscriber);
   
   if (saveJSON(newsletterFile, subscribers)) {
+    sendEmail({
+      subject: `New newsletter signup: ${email}`,
+      text: `Email: ${email}\nName: ${name || 'N/A'}`
+    });
+
     res.status(201).json({
       success: true,
       message: 'Successfully subscribed to newsletter'
@@ -315,7 +460,7 @@ app.post('/api/newsletter', (req, res) => {
 
 // Waitlist signup
 app.post('/api/waitlist', (req, res) => {
-  const { email, name, businessType, location } = req.body;
+  const { email, name, businessType, location, newsletterConsent } = req.body;
   
   if (!email) {
     return res.status(400).json({ error: 'Email is required' });
@@ -339,12 +484,18 @@ app.post('/api/waitlist', (req, res) => {
     name: name || '',
     businessType: businessType || '',
     location: location || '',
+    newsletterConsent: Boolean(newsletterConsent),
     joinedAt: new Date().toISOString()
   };
 
   waitlist.push(entry);
   
   if (saveJSON(waitlistFile, waitlist)) {
+    sendEmail({
+      subject: `New waitlist signup: ${name || 'Someone new'}`,
+      text: `Name: ${name || 'N/A'}\nEmail: ${email}\nBusiness Type: ${businessType || 'N/A'}\nLocation: ${location || 'N/A'}\nPosition: ${waitlist.length}\nNewsletter consent: ${entry.newsletterConsent ? 'Yes' : 'No'}`
+    });
+
     res.status(201).json({
       success: true,
       message: 'Successfully joined waitlist',
@@ -355,11 +506,60 @@ app.post('/api/waitlist', (req, res) => {
   }
 });
 
+// Early access signup
+app.post('/api/early-access', (req, res) => {
+  const { email, name, businessType, location, phone, notes } = req.body;
+
+  if (!email || !name || !businessType || !location) {
+    return res.status(400).json({ error: 'Missing required fields' });
+  }
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    return res.status(400).json({ error: 'Invalid email address' });
+  }
+
+  const entries = loadJSON(earlyAccessFile, []);
+
+  if (entries.some(e => e.email.toLowerCase() === email.toLowerCase())) {
+    return res.status(400).json({ error: 'Email already requested early access' });
+  }
+
+  const entry = {
+    id: `ea_${Date.now()}`,
+    email,
+    name,
+    businessType,
+    location,
+    phone: phone || '',
+    notes: notes || '',
+    requestedAt: new Date().toISOString()
+  };
+
+  entries.push(entry);
+
+  if (saveJSON(earlyAccessFile, entries)) {
+    sendEmail({
+      subject: `New early access request: ${name}`,
+      text: `Name: ${name}\nEmail: ${email}\nBusiness Type: ${businessType}\nLocation: ${location}\nPhone: ${phone || 'N/A'}\nNotes: ${notes || 'N/A'}\nPosition: ${entries.length}`
+    });
+
+    res.status(201).json({
+      success: true,
+      message: 'Early access requested successfully',
+      position: entries.length
+    });
+  } else {
+    res.status(500).json({ error: 'Failed to save early access request' });
+  }
+});
+
 // Get waitlist stats (admin endpoint)
 app.get('/api/admin/stats', (req, res) => {
   const applications = loadJSON(farmApplicationsFile, []);
   const newsletter = loadJSON(newsletterFile, []);
   const waitlist = loadJSON(waitlistFile, []);
+  const earlyAccess = loadJSON(earlyAccessFile, []);
 
   res.json({
     farmApplications: {
@@ -374,7 +574,41 @@ app.get('/api/admin/stats', (req, res) => {
     waitlist: {
       total: waitlist.length
     }
+    ,
+    earlyAccess: {
+      total: earlyAccess.length
+    }
   });
+});
+
+// Simple CSV export for admin use
+app.get('/api/admin/export/:type', (req, res) => {
+  const { type } = req.params;
+  const sources = {
+    waitlist: { file: waitlistFile, headers: ['id', 'name', 'email', 'businessType', 'location', 'phone', 'notes', 'newsletterConsent', 'position', 'createdAt'] },
+    early: { file: earlyAccessFile, headers: ['id', 'name', 'email', 'businessType', 'location', 'phone', 'notes', 'requestedAt'] },
+    newsletter: { file: newsletterFile, headers: ['id', 'email', 'createdAt'] }
+  };
+
+  const source = sources[type];
+  if (!source) return res.status(400).json({ error: 'Unsupported export type. Use waitlist, early, or newsletter.' });
+
+  const rows = loadJSON(source.file, []);
+  const { headers } = source;
+
+  const escape = (val) => {
+    if (val === undefined || val === null) return '';
+    const str = String(val).replace(/"/g, '""');
+    return str.includes(',') || str.includes('\n') ? `"${str}"` : str;
+  };
+
+  const csv = [headers.join(',')]
+    .concat(rows.map(r => headers.map(h => escape(r[h])).join(',')))
+    .join('\n');
+
+  res.setHeader('Content-Type', 'text/csv');
+  res.setHeader('Content-Disposition', `attachment; filename=${type}-export.csv`);
+  res.send(csv);
 });
 
 // Store chat messages
@@ -433,5 +667,14 @@ app.use((err, req, res, next) => {
 // Start server
 app.listen(PORT, () => {
   console.log(`🌱 CropCart GH API running on http://localhost:${PORT}`);
-  console.log(`📊 Serving ${produceData.categories.length} categories and ${farmsData.farms.length} farms`);
+  console.log(`📊 Serving ${(produceData.categories || []).length} categories and ${(farmsData.farms || []).length} farms`);
+  console.log(`🔐 CORS allowlist: ${allowedOrigins.join(', ')}`);
+});
+
+process.on('unhandledRejection', (reason) => {
+  console.error('Unhandled promise rejection:', reason);
+});
+
+process.on('uncaughtException', (err) => {
+  console.error('Uncaught exception:', err);
 });

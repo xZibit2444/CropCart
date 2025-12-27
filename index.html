@@ -3,6 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="CropCart GH links verified Ghanaian farms to buyers in Accra and Kumasi with sealed cold-chain delivery under 12 hours." />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="CropCart GH | Local produce, delivered" />
+  <meta property="og:description" content="Farm-direct produce with sealed cold-chain, traceability, and Q1 2025 launch access." />
+  <meta property="og:image" content="favicon-180.png" />
+  <meta property="og:url" content="https://cropcartgh.com/" />
+  <link rel="canonical" href="https://cropcartgh.com/" />
+  <meta name="api-base" content="http://localhost:3001" />
   <title>CropCart GH | Local produce, delivered</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="mask-icon" href="favicon.svg" color="#22c55e" />
@@ -29,7 +37,11 @@
       --radius: 16px;
       --radius-sm: 12px;
       --header-height: 80px;
+      --success: #166534;
+      --error: #b91c1c;
     }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
 
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
@@ -44,6 +56,45 @@
       -webkit-font-smoothing: antialiased;
       position: relative;
       font-size: 16px;
+    }
+
+    .toast {
+      position: fixed;
+      right: 20px;
+      bottom: 24px;
+      padding: 14px 16px;
+      border-radius: 12px;
+      background: #0f172a;
+      color: #f8fafc;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.16);
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      z-index: 120;
+      pointer-events: none;
+      min-width: 240px;
+      font-weight: 700;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .toast.error { background: #991b1b; }
+    .toast.success { background: #166534; }
+
+    .field-error {
+      display: none;
+      color: var(--error);
+      font-size: 13px;
+      margin-top: 6px;
+      font-weight: 600;
+    }
+
+    .input-error {
+      border-color: #f87171 !important;
+      background: #fff7f7;
     }
     
     .crop-bg {
@@ -225,6 +276,60 @@
       }
     }
 
+    /* Cookie banner */
+    .cookie-banner {
+      position: fixed;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(960px, calc(100% - 24px));
+      background: #0f172a;
+      color: #f8fafc;
+      border-radius: 14px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+      padding: 16px 18px;
+      display: none;
+      gap: 14px;
+      align-items: center;
+      z-index: 50;
+    }
+
+    .cookie-banner p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.5;
+      color: #e2e8f0;
+    }
+
+    .cookie-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-left: auto;
+    }
+
+    .cookie-btn {
+      border: 1px solid #22c55e;
+      background: #0f172a;
+      color: #22c55e;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .cookie-btn.primary {
+      background: linear-gradient(135deg, #16a34a, #22c55e);
+      color: #0f172a;
+      border: none;
+      box-shadow: 0 8px 22px rgba(34, 197, 94, 0.35);
+    }
+
+    @media (max-width: 640px) {
+      .cookie-banner { flex-direction: column; align-items: flex-start; }
+      .cookie-actions { width: 100%; justify-content: flex-start; }
+    }
+
     /* Chat widget */
     .chat-launcher {
       position: fixed;
@@ -241,6 +346,7 @@
       place-items: center;
       cursor: pointer;
       z-index: 10;
+      animation: chat-throb 2s ease-in-out infinite;
     }
 
     .chat-launcher:hover {
@@ -273,6 +379,17 @@
       50% {
         transform: scale(1.1);
         opacity: 0.8;
+      }
+    }
+
+    @keyframes chat-throb {
+      0%, 100% {
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.18), 0 0 0 0 rgba(34, 197, 94, 0.7);
+        transform: scale(1);
+      }
+      50% {
+        box-shadow: 0 15px 50px rgba(34, 197, 94, 0.45), 0 0 0 8px rgba(34, 197, 94, 0);
+        transform: scale(1.05);
       }
     }
 
@@ -1003,23 +1120,58 @@
     @media (max-width: 900px) {
       .hero { grid-template-columns: 1fr; }
       .cta-wide { grid-template-columns: 1fr; }
-      nav { flex-wrap: wrap; }
-      .nav-links { flex-wrap: wrap; justify-content: flex-end; }
+      nav { flex-wrap: wrap; gap: 12px; padding: 0 16px; }
+      .nav-links { flex-wrap: wrap; justify-content: flex-start; gap: 8px; }
+      .nav-links a { padding: 6px 4px; font-size: 14px; }
+      .cta-btn { padding: 10px 16px; font-size: 14px; }
       .footer-top { flex-direction: column; align-items: flex-start; }
       .newsletter { width: 100%; }
       .newsletter input[type="email"] { flex: 1; min-width: 0; width: 100%; }
       .footer-content { grid-template-columns: 1fr; }
     }
+    @media (max-width: 768px) {
+      .cta-form { grid-template-columns: 1fr; }
+      .cta-form input, .cta-form select, .cta-form textarea {
+        width: 100%;
+        font-size: 16px;
+        padding: 14px;
+        min-height: 48px;
+      }
+      .cta-btn { min-height: 48px; padding: 14px 20px; }
+      .cookie-actions { flex-direction: column; width: 100%; }
+      .cookie-btn { width: 100%; }
+    }
     @media (max-width: 620px) {
-      nav { padding: 0 16px; }
-      .hero { padding-top: 10px; }
-      .section { margin-top: 52px; }
-      main { padding: 40px 20px 80px; }
+      nav { padding: 0 12px; height: auto; min-height: var(--header-height); }
       .brand-mark { width: 220px; height: 48px; }
       .brand-mark text { font-size: 36px; }
+      .nav-links { width: 100%; flex-wrap: wrap; justify-content: space-between; gap: 6px; }
+      .nav-links a { font-size: 12px; padding: 4px 2px; }
+      .cta-btn { padding: 10px 14px; font-size: 13px; min-height: 44px; }
       h1 { font-size: 32px !important; }
       h2 { font-size: 24px; }
       .grid { grid-template-columns: 1fr; }
+      .hero { padding-top: 10px; }
+      .section { margin-top: 52px; }
+      main { padding: 40px 16px 80px; }
+      .hero-actions { flex-direction: column; gap: 10px; }
+      .hero-actions button { width: 100%; }
+      .cta-form { display: grid; grid-template-columns: 1fr; gap: 12px; }
+      .cta-form input, .cta-form select, .cta-form textarea {
+        width: 100%;
+        font-size: 16px;
+        padding: 14px;
+        min-height: 48px;
+      }
+      .cta-btn, .ghost-btn { width: 100%; min-height: 48px; }
+      .chat-launcher { right: 12px; bottom: 12px; width: 52px; height: 52px; }
+      .chat-panel { right: 8px; left: 8px; width: auto; bottom: 70px; }
+      .newsletter { width: 100%; padding: 14px; }
+      .newsletter input, .newsletter button { font-size: 16px; }
+      .cookie-banner { width: calc(100% - 16px); padding: 12px 12px; font-size: 12px; }
+      .cookie-banner p { font-size: 12px; }
+      .cookie-actions { flex-direction: column; width: 100%; }
+      .cookie-btn { width: 100%; min-height: 44px; }
     }
   </style>
 </head>
@@ -1152,9 +1304,11 @@
       </div>
       <div class="nav-links">
         <a href="how-it-works.html">How it works</a>
-        <a href="#wholesale">For wholesale</a>
+        <a href="blog.html">Blog</a>
         <a href="farms.html">Partner farms</a>
-        <button class="cta-btn">Join waitlist</button>
+        <a href="faq.html">FAQ</a>
+        <a href="waitlist.html">Waitlist</a>
+        <button class="cta-btn" onclick="window.location.href='waitlist.html'">Join waitlist</button>
       </div>
     </nav>
   </header>
@@ -1166,7 +1320,7 @@
         <h1>From Ghana's fields to city doors in hours.</h1>
         <p class="lead">CropCart GH links verified Ghanaian farms to buyers in Accra and Kumasi with sealed cold chain and tracked loads. We're building the network now and opening to early buyers soon.</p>
         <div class="hero-actions">
-          <button class="cta-btn">Join early access</button>
+          <button class="cta-btn" onclick="window.location.href='early-access.html'">Join early access</button>
           <button class="ghost-btn" onclick="window.location.href='faq.html'">Learn more</button>
         </div>
         <div class="stats">
@@ -1303,30 +1457,33 @@
       </div>
     </section>
 
-    <section id="wholesale" class="section">
-      <div class="cta-wide">
+    <section id="blog" class="section">
+      <div class="section-header" style="align-items: flex-start; gap: 16px;">
         <div>
-          <h3>Get early access to wholesale</h3>
-          <p>Be among the first restaurants and food businesses to order. We're onboarding launch partners in January and February.</p>
-          <div class="pill-row">
-            <span class="pill">First-month discounts</span>
-            <span class="pill">Dedicated support</span>
-            <span class="pill">Custom sourcing</span>
-            <span class="pill">Guaranteed cold-chain</span>
-          </div>
+          <h2>From the CropCart blog</h2>
+          <p>Cold-chain learnings, partner farm spotlights, and launch updates for buyers and growers.</p>
         </div>
-        <form class="cta-form">
-          <input type="text" placeholder="Business name" required />
-          <input type="email" placeholder="Work email" required />
-          <select>
-            <option>I'm interested in: Wholesale volumes</option>
-            <option>I'm interested in: Weekly orders</option>
-            <option>I'm interested in: Being a farm partner</option>
-            <option>I'm interested in: Learning more</option>
-          </select>
-          <textarea placeholder="Tell us about your business or farm"></textarea>
-          <button class="cta-btn" type="submit">Request early access</button>
-        </form>
+        <button class="ghost-btn" onclick="window.location.href='waitlist.html'">Join the waitlist</button>
+      </div>
+      <div class="blog-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;align-items:stretch;">
+        <article class="card-hover" style="background:var(--card);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-soft);display:flex;flex-direction:column;gap:12px;">
+          <span class="pill" style="width:max-content;">Cold chain</span>
+          <h3 style="margin:0;">How we keep produce at peak freshness</h3>
+          <p style="margin:0;color:var(--muted);">A look at our sealed crates, GPS-enabled reefer routes, and temperature logging from farm gate to kitchen door.</p>
+          <button class="ghost-btn" style="width:max-content;" onclick="window.location.href='faq.html'">Read more</button>
+        </article>
+        <article class="card-hover" style="background:var(--card);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-soft);display:flex;flex-direction:column;gap:12px;">
+          <span class="pill" style="width:max-content;">Farm spotlight</span>
+          <h3 style="margin:0;">Inside our partner network</h3>
+          <p style="margin:0;color:var(--muted);">Meet the growers supplying Accra and Kumasi—audits, soil practices, and harvest standards that set the bar.</p>
+          <button class="ghost-btn" style="width:max-content;" onclick="window.location.href='farms.html'">Read more</button>
+        </article>
+        <article class="card-hover" style="background:var(--card);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-soft);display:flex;flex-direction:column;gap:12px;">
+          <span class="pill" style="width:max-content;">Launch</span>
+          <h3 style="margin:0;">Q1 rollout roadmap</h3>
+          <p style="margin:0;color:var(--muted);">Where we're opening first, how to get early access, and what to expect from pricing and delivery windows.</p>
+          <button class="ghost-btn" style="width:max-content;" onclick="window.location.href='waitlist.html'">Read more</button>
+        </article>
       </div>
     </section>
 
@@ -1337,7 +1494,7 @@
           <p>We're selecting early partners now—restaurants, markets, and food businesses ready to source smarter.</p>
         </div>
         <div class="hero-actions" style="margin: 0; justify-content: flex-end;">
-          <button class="ghost-btn">Get early access</button>
+          <button class="ghost-btn" onclick="window.location.href='early-access.html'">Get early access</button>
           <button class="cta-btn">Start an order</button>
         </div>
       </div>
@@ -1389,6 +1546,45 @@
         </div>
       </div>
     </section>
+
+    <!-- Need-based wizard -->
+    <section class="card" style="margin-top: 16px;">
+      <h2 style="margin:0 0 12px">What do you need today?</h2>
+      <div class="wizard" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:14px;">
+        <button class="wizard-card" data-action="farms" style="padding:18px; border:2px solid var(--stroke); border-radius:12px; background:var(--card); text-align:left; cursor:pointer;">
+          <strong style="display:block; font-size:16px;">Browse partner farms</strong>
+          <span style="color:var(--muted); font-size:13px;">See specialties, certifications, and contact options</span>
+        </button>
+        <button class="wizard-card" data-action="delivery" style="padding:18px; border:2px solid var(--stroke); border-radius:12px; background:var(--card); text-align:left; cursor:pointer;">
+          <strong style="display:block; font-size:16px;">Delivery details</strong>
+          <span style="color:var(--muted); font-size:13px;">Cold-chain timing and regions we serve</span>
+        </button>
+        <button class="wizard-card" data-action="early" style="padding:18px; border:2px solid var(--stroke); border-radius:12px; background:var(--card); text-align:left; cursor:pointer;">
+          <strong style="display:block; font-size:16px;">Get early access</strong>
+          <span style="color:var(--muted); font-size:13px;">Priority onboarding for restaurants and retailers</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="card" style="margin-top: 16px;">
+      <h2 style="margin:0 0 12px">Trusted by Ghanaian kitchens</h2>
+      <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center;">
+        <span class="cert-badge">Traceability Reports</span>
+        <span class="cert-badge">Cold-chain Proof</span>
+        <span class="cert-badge">Verified Partners</span>
+      </div>
+      <div style="margin-top:14px; display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:12px;">
+        <div style="background:var(--bg); border:1px solid var(--stroke); border-radius:12px; padding:14px;">
+          <strong>Chef Ama, Osu</strong>
+          <p style="margin:6px 0 0; color:var(--muted); font-size:14px;">“Consistent freshness and documented cold-chain. Our greens last longer.”</p>
+        </div>
+        <div style="background:var(--bg); border:1px solid var(--stroke); border-radius:12px; padding:14px;">
+          <strong>Kofi, Grocer – East Legon</strong>
+          <p style="margin:6px 0 0; color:var(--muted); font-size:14px;">“Transparent sourcing and easy recurring deliveries. Customers noticed.”</p>
+        </div>
+      </div>
+    </section>
   </main>
 
   <button class="chat-launcher" aria-label="Open chat">
@@ -1428,6 +1624,7 @@
       <form class="newsletter" id="newsletter-form" novalidate>
         <input type="email" id="newsletter-email" name="email" placeholder="Your email" aria-label="Email" required />
         <button class="cta-btn" type="submit">Join waitlist</button>
+        <div class="field-error" id="newsletter-error" aria-live="polite"></div>
       </form>
     </div>
     <div class="footer-content">
@@ -1445,7 +1642,7 @@
         <h4>Products</h4>
         <ul>
           <li><a href="how-it-works.html">How It Works</a></li>
-          <li><a href="#wholesale">Wholesale</a></li>
+          <li><a href="blog.html">Blog</a></li>
           <li><a href="#">Pricing</a></li>
           <li><a href="#">Produce Catalog</a></li>
           <li><a href="#">Seasonal Availability</a></li>
@@ -1485,6 +1682,30 @@
       </div>
     </div>
   </footer>
+
+  <div class="cookie-banner" id="cookie-banner" role="dialog" aria-live="polite" aria-label="Cookie consent">
+    <p><strong>We use cookies</strong> to keep essential features running and, if you allow, to understand usage (analytics). You can change this later.</p>
+    <div class="cookie-actions">
+      <button class="cookie-btn" id="cookie-essentials">Essential only</button>
+      <button class="cookie-btn primary" id="cookie-accept">Accept all</button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <!-- Quick contact drawer -->
+  <div id="contact-drawer" style="position:fixed; right:0; bottom:0; top:auto; width:min(420px, 100%); transform: translateY(110%); transition: transform .3s ease; background:#fff; border-top-left-radius:16px; border-top-right-radius:16px; box-shadow: 0 -20px 60px rgba(0,0,0,.18); border:1px solid var(--stroke); z-index: 200;">
+    <div style="padding:14px 16px; border-bottom:1px solid var(--stroke); display:flex; justify-content:space-between; align-items:center;">
+      <strong>Quick contact</strong>
+      <button id="contact-close" style="border:none; background:transparent; font-size:18px; cursor:pointer">&times;</button>
+    </div>
+    <form id="contact-form" style="padding:16px; display:grid; gap:10px;">
+      <input type="text" id="contact-name" placeholder="Your name" style="padding:12px 14px; border:2px solid var(--stroke); border-radius:12px;" />
+      <input type="email" id="contact-email" placeholder="Email" style="padding:12px 14px; border:2px solid var(--stroke); border-radius:12px;" />
+      <textarea id="contact-message" placeholder="How can we help?" style="min-height:90px; padding:12px 14px; border:2px solid var(--stroke); border-radius:12px;"></textarea>
+      <button type="submit" class="cta-btn">Send</button>
+    </form>
+  </div>
 
   <script>
     // Header shadow on scroll
@@ -1674,9 +1895,41 @@
       observer.observe(el);
     });
 
-    // Newsletter form submission
+    // Newsletter form submission + inline validation
     const newsletterForm = document.getElementById('newsletter-form');
-    const API_BASE = 'http://localhost:3001';
+    const toastEl = document.getElementById('toast');
+    const API_BASE = (document.querySelector('meta[name="api-base"]')?.content || window.API_BASE || 'http://localhost:3001');
+    window.API_BASE = API_BASE;
+
+    const showToast = (message, type = 'success') => {
+      if (!toastEl) return;
+      toastEl.textContent = message;
+      toastEl.className = `toast ${type}`;
+      requestAnimationFrame(() => {
+        toastEl.classList.add('show');
+        setTimeout(() => toastEl.classList.remove('show'), 3200);
+      });
+    };
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    const setFieldError = (input, message) => {
+      if (!input) return;
+      const errorEl = input.parentElement?.querySelector('.field-error');
+      if (message) {
+        input.classList.add('input-error');
+        if (errorEl) {
+          errorEl.textContent = message;
+          errorEl.style.display = 'block';
+        }
+      } else {
+        input.classList.remove('input-error');
+        if (errorEl) {
+          errorEl.textContent = '';
+          errorEl.style.display = 'none';
+        }
+      }
+    };
 
     if (newsletterForm) {
       newsletterForm.addEventListener('submit', async (e) => {
@@ -1685,16 +1938,27 @@
         const emailInput = document.getElementById('newsletter-email');
         const submitBtn = newsletterForm.querySelector('button[type="submit"]');
         const email = emailInput.value.trim();
-        
+
+        setFieldError(emailInput, '');
+
         if (!email) {
-          alert('Please enter your email address');
+          setFieldError(emailInput, 'Email is required.');
+          showToast('Enter your email to join the waitlist.', 'error');
+          return;
+        }
+
+        if (!emailPattern.test(email)) {
+          setFieldError(emailInput, 'Use a valid email like name@example.com.');
+          showToast('Email looks invalid.', 'error');
           return;
         }
 
         submitBtn.disabled = true;
-        submitBtn.textContent = 'Joining...';
+        submitBtn.innerHTML = '<span class="spinner" style="width:14px;height:14px;border:2px solid rgba(255,255,255,0.6);border-top-color:#fff;border-radius:50%;display:inline-block;margin-right:8px;vertical-align:middle;animation:spin 0.8s linear infinite;"></span>Joining...';
 
         try {
+          await new Promise((resolve) => setTimeout(resolve, 300));
+
           const response = await fetch(`${API_BASE}/api/waitlist`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -1704,20 +1968,121 @@
           const data = await response.json();
 
           if (data.success) {
-            alert(`Welcome to the CropCart GH waitlist!\n\nYou're #${data.position} on the list.\n\nWe'll email you at ${email} when we launch in Q1 2025.`);
+            showToast(`You're #${data.position} on the waitlist. We'll email ${email} when slots open.`, 'success');
             emailInput.value = '';
           } else {
-            alert(`Error: ${data.error || 'Failed to join waitlist'}`);
+            showToast(data.error || 'Failed to join waitlist.', 'error');
           }
         } catch (error) {
           console.error('Error joining waitlist:', error);
-          alert('Network error. Please check that the backend server is running and try again.');
+          showToast('Network error. Start backend on port 3001 and retry.', 'error');
         } finally {
           submitBtn.disabled = false;
           submitBtn.textContent = 'Join waitlist';
         }
       });
     }
+
+    // Cookie consent
+    const cookieBanner = document.getElementById('cookie-banner');
+    const cookieAccept = document.getElementById('cookie-accept');
+    const cookieEssentials = document.getElementById('cookie-essentials');
+    const CONSENT_KEY = 'cc-cookie-consent';
+
+    // Replace with your GA measurement ID when ready (kept inert until set)
+    const GA_MEASUREMENT_ID = 'G-XXXXXXX';
+    let analyticsLoaded = false;
+
+    const getConsent = () => {
+      try { return JSON.parse(localStorage.getItem(CONSENT_KEY) || 'null'); } catch { return null; }
+    };
+
+    const setConsent = (consent) => {
+      localStorage.setItem(CONSENT_KEY, JSON.stringify({ ...consent, updatedAt: new Date().toISOString(), v: 1 }));
+    };
+
+    const loadAnalytics = () => {
+      if (analyticsLoaded) return;
+      if (!GA_MEASUREMENT_ID || GA_MEASUREMENT_ID === 'G-XXXXXXX') return;
+      const script = document.createElement('script');
+      script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
+      script.async = true;
+      document.head.appendChild(script);
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      gtag('js', new Date());
+      gtag('config', GA_MEASUREMENT_ID, { anonymize_ip: true });
+      analyticsLoaded = true;
+    };
+
+    const applyConsent = (consent) => {
+      if (consent?.analytics) {
+        loadAnalytics();
+      }
+    };
+
+    const initConsent = () => {
+      const saved = getConsent();
+      if (!saved) {
+        if (cookieBanner) cookieBanner.style.display = 'flex';
+        return;
+      }
+      applyConsent(saved);
+    };
+
+    cookieAccept?.addEventListener('click', () => {
+      const consent = { essential: true, analytics: true };
+      setConsent(consent);
+      applyConsent(consent);
+      if (cookieBanner) cookieBanner.style.display = 'none';
+    });
+
+    cookieEssentials?.addEventListener('click', () => {
+      const consent = { essential: true, analytics: false };
+      setConsent(consent);
+      applyConsent(consent);
+      if (cookieBanner) cookieBanner.style.display = 'none';
+    });
+
+    // Wizard actions
+    document.querySelectorAll('.wizard-card')?.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const act = btn.getAttribute('data-action');
+        if (act === 'farms') window.location.href = 'farms.html';
+        if (act === 'delivery') window.location.href = 'how-it-works.html#delivery';
+        if (act === 'early') window.location.href = 'early-access.html';
+      });
+    });
+
+    // Contact drawer
+    const drawer = document.getElementById('contact-drawer');
+    const contactClose = document.getElementById('contact-close');
+    const contactForm = document.getElementById('contact-form');
+    const openDrawer = () => { if (drawer) drawer.style.transform = 'translateY(0)'; };
+    const closeDrawer = () => { if (drawer) drawer.style.transform = 'translateY(110%)'; };
+    contactClose?.addEventListener('click', closeDrawer);
+    // Attach drawer to any "Start an order" button
+    document.querySelectorAll('.cta-btn, .ghost-btn')?.forEach(b => {
+      const label = (b.textContent || '').toLowerCase();
+      if (label.includes('start an order')) {
+        b.addEventListener('click', (e) => {
+          if (!drawer) return;
+          e.preventDefault();
+          openDrawer();
+        });
+      }
+    });
+    contactForm?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('contact-name')?.value?.trim();
+      const email = document.getElementById('contact-email')?.value?.trim();
+      const msg = document.getElementById('contact-message')?.value?.trim();
+      if (!name || !email || !msg) { showToast('Please complete name, email, and message.', 'error'); return; }
+      showToast('Thanks! We will get back shortly.', 'success');
+      closeDrawer();
+    });
+
+    initConsent();
   </script>
 </body>
 </html>

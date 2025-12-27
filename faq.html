@@ -3,6 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Answers about CropCart GH cold-chain delivery, ordering, payments, and launch timeline in Ghana." />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="FAQ | CropCart GH" />
+  <meta property="og:description" content="Everything about sourcing with CropCart GH: delivery windows, payments, and quality assurance." />
+  <meta property="og:image" content="favicon-180.png" />
+  <meta property="og:url" content="https://cropcartgh.com/faq" />
+  <link rel="canonical" href="https://cropcartgh.com/faq" />
+  <meta name="api-base" content="http://localhost:3001" />
   <title>FAQ | CropCart GH</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="mask-icon" href="favicon.svg" color="#22c55e" />
@@ -290,15 +298,26 @@
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
     }
 
+    @media (max-width: 900px) {
+      nav { flex-wrap: wrap; gap: 12px; padding: 0 16px; }
+      .nav-links { flex-wrap: wrap; justify-content: flex-start; gap: 8px; }
+      .nav-links a { padding: 6px 4px; font-size: 14px; }
+      .cta-btn { padding: 10px 16px; font-size: 14px; }
+      .faq-grid { grid-template-columns: 1fr; }
+    }
+
     @media (max-width: 620px) {
-      nav { padding: 0 16px; }
-      main { padding: 40px 20px 80px; }
+      nav { padding: 0 12px; height: auto; min-height: var(--header-height); }
+      main { padding: 40px 16px 80px; }
       .brand-mark { width: 220px; height: 45px; }
-      .page-header h1 { font-size: 32px; }
-      .faq-question { font-size: 16px; padding: 20px; }
-      .faq-answer p { font-size: 15px; }
-      .cta-section { padding: 32px 24px; }
-      .cta-section h2 { font-size: 24px; }
+      .nav-links { width: 100%; flex-wrap: wrap; justify-content: space-between; gap: 6px; }
+      .nav-links a { font-size: 12px; padding: 4px 2px; }
+      .cta-btn { padding: 10px 14px; font-size: 13px; min-height: 44px; }
+      .page-header h1 { font-size: 28px; }
+      .faq-question { font-size: 15px; padding: 16px; min-height: 48px; }
+      .faq-answer p { font-size: 14px; }
+      .cta-section { padding: 24px 16px; }
+      .cta-section h2 { font-size: 22px; }
     }
   </style>
 </head>
@@ -314,10 +333,11 @@
       </a>
       <div class="nav-links">
         <a href="how-it-works.html">How it works</a>
-        <a href="index.html#wholesale">For wholesale</a>
+        <a href="blog.html">Blog</a>
         <a href="farms.html">Partner farms</a>
         <a href="faq.html" aria-current="page">FAQ</a>
-        <button class="cta-btn" onclick="window.location.href='index.html#wholesale'">Join waitlist</button>
+        <a href="waitlist.html">Waitlist</a>
+        <button class="cta-btn" onclick="window.location.href='waitlist.html'">Join waitlist</button>
       </div>
     </nav>
   </header>
@@ -578,12 +598,13 @@
     <div class="cta-section">
       <h2>Still have questions?</h2>
       <p>Join our waitlist and our team will reach out with more details</p>
-      <button class="cta-btn" onclick="window.location.href='index.html#wholesale'">Join Early Access</button>
+      <button class="cta-btn" onclick="window.location.href='waitlist.html'">Join Early Access</button>
     </div>
   </main>
 
   <script>
-    const API_BASE = 'http://localhost:3001';
+    const API_BASE = (document.querySelector('meta[name="api-base"]')?.content || window.API_BASE || 'http://localhost:3001');
+    window.API_BASE = API_BASE;
 
     // Load FAQs from backend
     async function loadFAQs() {

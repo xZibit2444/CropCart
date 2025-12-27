@@ -3,6 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Meet CropCart GH partner farms across Ghana with verified quality, cold-chain readiness, and fair pricing." />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Partner Farms | CropCart GH" />
+  <meta property="og:description" content="Verified farms supplying Accra and Kumasi with traceable, cold-chain produce." />
+  <meta property="og:image" content="favicon-180.png" />
+  <meta property="og:url" content="https://cropcartgh.com/farms" />
+  <link rel="canonical" href="https://cropcartgh.com/farms" />
+  <meta name="api-base" content="http://localhost:3001" />
   <title>Partner Farms | CropCart GH</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="mask-icon" href="favicon.svg" color="#22c55e" />
@@ -29,6 +37,8 @@
       --radius: 16px;
       --radius-sm: 12px;
       --header-height: 80px;
+      --success: #166534;
+      --error: #b91c1c;
     }
 
     * { box-sizing: border-box; }
@@ -41,6 +51,41 @@
       line-height: 1.7;
       min-height: 100vh;
       -webkit-font-smoothing: antialiased;
+    }
+
+    .toast {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      padding: 14px 16px;
+      border-radius: 12px;
+      background: #0f172a;
+      color: #f8fafc;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.16);
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      z-index: 140;
+      pointer-events: none;
+      min-width: 240px;
+      font-weight: 700;
+    }
+
+    .toast.show { opacity: 1; transform: translateY(0); }
+    .toast.error { background: #991b1b; }
+    .toast.success { background: #166534; }
+
+    .field-error {
+      display: none;
+      color: var(--error);
+      font-size: 13px;
+      margin-top: 6px;
+      font-weight: 600;
+    }
+
+    .input-error {
+      border-color: #f87171 !important;
+      background: #fff7f7;
     }
 
     header {
@@ -108,6 +153,8 @@
     }
     .cta-btn:hover { background: var(--accent-strong); transform: translateY(-2px); box-shadow: var(--shadow); }
 
+    @keyframes spin { to { transform: rotate(360deg); } }
+
     main {
       max-width: var(--max-width);
       margin: 0 auto;
@@ -139,6 +186,25 @@
       justify-content: center;
       margin: 32px 0;
       flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .filter-bar {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .search-input, .select-filter {
+      padding: 12px 14px;
+      border: 2px solid var(--stroke);
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      background: var(--card);
+      width: 100%;
     }
 
     .filter-btn {
@@ -151,6 +217,13 @@
       cursor: pointer;
       transition: all 0.2s ease;
       font-size: 14px;
+    }
+
+    .filter-buttons {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
     }
 
     .filter-btn:hover {
@@ -416,17 +489,23 @@
     }
 
     @media (max-width: 900px) {
-      nav { flex-wrap: wrap; }
-      .nav-links { flex-wrap: wrap; justify-content: flex-end; }
+      nav { flex-wrap: wrap; gap: 12px; padding: 0 16px; }
+      .nav-links { flex-wrap: wrap; justify-content: flex-start; gap: 8px; }
+      .nav-links a { padding: 6px 4px; font-size: 14px; }
+      .cta-btn { padding: 10px 16px; font-size: 14px; }
       .farms-grid { grid-template-columns: 1fr; }
       .stats-bar { flex-direction: column; gap: 16px; }
     }
 
     @media (max-width: 620px) {
-      nav { padding: 0 16px; }
-      main { padding: 40px 20px 80px; }
+      nav { padding: 0 12px; height: auto; min-height: var(--header-height); }
+      main { padding: 40px 16px 80px; }
       .brand-mark { width: 220px; height: 45px; }
-      h1 { font-size: 32px !important; }
+      .nav-links { width: 100%; flex-wrap: wrap; justify-content: space-between; gap: 6px; }
+      .nav-links a { font-size: 12px; padding: 4px 2px; }
+      .cta-btn { padding: 10px 14px; font-size: 13px; min-height: 44px; }
+      h1 { font-size: 28px !important; }
+      .stats-bar { padding: 0 16px; }
     }
 
     /* Become a Partner Section */
@@ -692,10 +771,11 @@
       </a>
       <div class="nav-links">
         <a href="how-it-works.html">How it works</a>
-        <a href="index.html#wholesale">For wholesale</a>
+        <a href="blog.html">Blog</a>
         <a href="farms.html">Partner farms</a>
         <a href="faq.html">FAQ</a>
-        <button class="cta-btn" onclick="window.location.href='index.html#wholesale'">Join waitlist</button>
+        <a href="waitlist.html">Waitlist</a>
+        <button class="cta-btn" onclick="window.location.href='waitlist.html'">Join waitlist</button>
       </div>
     </nav>
   </header>
@@ -704,6 +784,12 @@
     <div class="page-header">
       <h1>Our Partner Farms</h1>
       <p>Verified growers across Ghana committed to quality, sustainability, and fair pricing. Each farm is audited quarterly and tracked for cold-chain compliance.</p>
+    </div>
+
+    <div id="location-hint" style="background:var(--card); border:2px solid var(--stroke); border-radius:12px; padding:14px; display:flex; gap:10px; align-items:center; justify-content:center;">
+      <span style="font-weight:700;">Your area:</span>
+      <input id="user-area" type="text" placeholder="e.g., East Legon" style="padding:10px 12px; border:2px solid var(--stroke); border-radius:10px; max-width:220px;" />
+      <span id="dispatch-text" style="color:var(--muted);">We deliver Mon/Wed/Fri in Greater Accra</span>
     </div>
 
     <div class="stats-bar" id="stats-bar">
@@ -721,12 +807,15 @@
       </div>
     </div>
 
-    <div class="filters" id="filters">
-      <button class="filter-btn active" data-location="all">All Locations</button>
-    </div>
+    <div class="filters" id="filters"></div>
 
     <div class="farms-grid" id="farms-grid">
       <div class="loading">Loading farms...</div>
+    </div>
+
+    <!-- Mobile sticky filter button -->
+    <div id="mobile-sticky" style="position:fixed; bottom:12px; left:50%; transform:translateX(-50%); z-index:150; display:none;">
+      <button id="open-filters" class="cta-btn" style="box-shadow:0 12px 30px rgba(34,197,94,.25);">Filters</button>
     </div>
 
     <!-- Become a Partner Section -->
@@ -780,22 +869,26 @@
           <div class="form-group">
             <label for="farm-name">Farm Name *</label>
             <input type="text" id="farm-name" name="farmName" required placeholder="e.g., Green Valley Farms">
+            <div class="field-error" data-error-for="farm-name"></div>
           </div>
 
           <div class="form-group">
             <label for="location">Location *</label>
             <input type="text" id="location" name="location" required placeholder="e.g., Accra, Greater Accra Region">
+            <div class="field-error" data-error-for="location"></div>
           </div>
 
           <div class="form-group">
             <label for="farm-size">Farm Size (acres) *</label>
             <input type="number" id="farm-size" name="farmSize" required placeholder="e.g., 50">
+            <div class="field-error" data-error-for="farm-size"></div>
           </div>
 
           <div class="form-group">
             <label for="specialties">Main Crops/Specialties *</label>
             <textarea id="specialties" name="specialties" required placeholder="e.g., Tomatoes, Peppers, Leafy Greens"></textarea>
             <small>List the main produce you grow</small>
+            <div class="field-error" data-error-for="specialties"></div>
           </div>
 
           <div class="form-group">
@@ -806,16 +899,19 @@
           <div class="form-group">
             <label for="contact-name">Contact Person Name *</label>
             <input type="text" id="contact-name" name="contactName" required placeholder="Full name">
+            <div class="field-error" data-error-for="contact-name"></div>
           </div>
 
           <div class="form-group">
             <label for="phone">Phone Number *</label>
             <input type="tel" id="phone" name="phone" required placeholder="e.g., +233 XX XXX XXXX">
+            <div class="field-error" data-error-for="phone"></div>
           </div>
 
           <div class="form-group">
             <label for="email">Email Address *</label>
             <input type="email" id="email" name="email" required placeholder="your@email.com">
+            <div class="field-error" data-error-for="email"></div>
           </div>
 
           <div class="form-group">
@@ -827,6 +923,7 @@
               <option value="6-10">6-10 years</option>
               <option value="10+">10+ years</option>
             </select>
+            <div class="field-error" data-error-for="experience"></div>
           </div>
 
           <div class="form-group">
@@ -840,10 +937,44 @@
     </div>
   </div>
 
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
   <script>
-    const API_BASE = 'http://localhost:3001';
+    const API_BASE = (document.querySelector('meta[name="api-base"]')?.content || window.API_BASE || 'http://localhost:3001');
+    window.API_BASE = API_BASE;
     let allFarms = [];
-    let currentFilter = 'all';
+    let activeLocation = 'all';
+    let activeSpecialty = 'all';
+    let searchTerm = '';
+    const toastEl = document.getElementById('toast');
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    const showToast = (message, type = 'success') => {
+      if (!toastEl) return;
+      toastEl.textContent = message;
+      toastEl.className = `toast ${type}`;
+      requestAnimationFrame(() => {
+        toastEl.classList.add('show');
+        setTimeout(() => toastEl.classList.remove('show'), 3200);
+      });
+    };
+
+    const clearFieldErrors = (formEl) => {
+      formEl.querySelectorAll('.field-error').forEach(el => { el.textContent = ''; el.style.display = 'none'; });
+      formEl.querySelectorAll('.input-error').forEach(el => el.classList.remove('input-error'));
+    };
+
+    const setFieldError = (formEl, id, message) => {
+      const input = formEl.querySelector(`#${id}`);
+      const errorEl = formEl.querySelector(`.field-error[data-error-for="${id}"]`);
+      if (message) {
+        input?.classList.add('input-error');
+        if (errorEl) { errorEl.textContent = message; errorEl.style.display = 'block'; }
+      } else {
+        input?.classList.remove('input-error');
+        if (errorEl) { errorEl.textContent = ''; errorEl.style.display = 'none'; }
+      }
+    };
 
     async function loadFarms() {
       try {
@@ -853,7 +984,7 @@
         
         updateStats();
         createFilters();
-        renderFarms(allFarms);
+        applyFilters();
       } catch (error) {
         console.error('Error loading farms:', error);
         document.getElementById('farms-grid').innerHTML = `
@@ -876,31 +1007,77 @@
     }
 
     function createFilters() {
-      const locations = new Set(allFarms.map(f => f.location));
+      const locations = Array.from(new Set(allFarms.map(f => f.location)));
+      const specialties = Array.from(new Set(allFarms.flatMap(f => f.specialties || [])));
+
       const filtersHTML = `
-        <button class="filter-btn active" data-location="all">All Locations</button>
-        ${Array.from(locations).map(loc => 
-          `<button class="filter-btn" data-location="${loc}">${loc}</button>`
-        ).join('')}
+        <div class="filter-bar">
+          <input id="farm-search" class="search-input" type="search" placeholder="Search by farm, crop, or certification" />
+          <select id="specialty-filter" class="select-filter">
+            <option value="all">All specialties</option>
+            ${specialties.map(s => `<option value="${s}">${s}</option>`).join('')}
+          </select>
+          <select id="location-filter" class="select-filter">
+            <option value="all">All locations</option>
+            ${locations.map(loc => `<option value="${loc}">${loc}</option>`).join('')}
+          </select>
+        </div>
+        <div class="filter-buttons">
+          <button class="filter-btn active" data-location="all">All Locations</button>
+          ${locations.map(loc => `<button class="filter-btn" data-location="${loc}">${loc}</button>`).join('')}
+        </div>
       `;
-      
+
       document.getElementById('filters').innerHTML = filtersHTML;
-      
+
       document.querySelectorAll('.filter-btn').forEach(btn => {
         btn.addEventListener('click', () => {
           document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
           btn.classList.add('active');
-          
-          const location = btn.dataset.location;
-          currentFilter = location;
-          
-          const filtered = location === 'all' 
-            ? allFarms 
-            : allFarms.filter(f => f.location === location);
-          
-          renderFarms(filtered);
+          activeLocation = btn.dataset.location;
+          applyFilters();
         });
       });
+
+      document.getElementById('location-filter').addEventListener('change', (e) => {
+        activeLocation = e.target.value;
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        const match = Array.from(document.querySelectorAll('.filter-btn')).find(b => b.dataset.location === activeLocation);
+        if (match) match.classList.add('active');
+        applyFilters();
+      });
+
+      document.getElementById('specialty-filter').addEventListener('change', (e) => {
+        activeSpecialty = e.target.value;
+        applyFilters();
+      });
+
+      document.getElementById('farm-search').addEventListener('input', (e) => {
+        searchTerm = e.target.value.toLowerCase();
+        applyFilters();
+      });
+    }
+
+    function applyFilters() {
+      let filtered = [...allFarms];
+
+      if (activeLocation !== 'all') {
+        filtered = filtered.filter(f => f.location === activeLocation);
+      }
+
+      if (activeSpecialty !== 'all') {
+        filtered = filtered.filter(f => (f.specialties || []).includes(activeSpecialty));
+      }
+
+      if (searchTerm) {
+        filtered = filtered.filter(f => {
+          const haystack = [f.name, f.location, ...(f.specialties || []), ...(f.certifications || []), ...(f.features || [])]
+            .join(' ')?.toLowerCase() || '';
+          return haystack.includes(searchTerm);
+        });
+      }
+
+      renderFarms(filtered);
     }
 
     function renderFarms(farms) {
@@ -949,6 +1126,10 @@
             <span class="capacity">${farm.capacity}</span>
             <span class="established">Est. ${farm.established}</span>
           </div>
+          <div style="display:flex; gap:8px; margin-top:10px;">
+            <span class="feature-pill">Availability: Contact for season</span>
+            <span class="feature-pill">Dispatch: Mon/Wed/Fri</span>
+          </div>
 
           <button class="contact-btn" onclick="contactFarm('${farm.id}', '${farm.name}')">
             Contact Farm
@@ -962,12 +1143,49 @@
     function contactFarm(id, name) {
       const farm = allFarms.find(f => f.id === id);
       if (farm && farm.contact) {
-        alert(`Contact ${name}:\n\nPhone: ${farm.contact.phone}\nEmail: ${farm.contact.email}\n\nWe'll enable direct contact forms in the full launch!`);
+        showToast(`Contact ${name}: ${farm.contact.phone} · ${farm.contact.email}`, 'success');
+      } else {
+        showToast('Contact details not available yet.', 'error');
       }
     }
 
     // Load farms on page load
     loadFarms();
+    // Location hint
+    function updateDispatchText() {
+      const area = (localStorage.getItem('cc_area') || '').trim();
+      const el = document.getElementById('dispatch-text');
+      if (!el) return;
+      if (area) {
+        el.textContent = `We deliver to ${area} on Mon/Wed/Fri; cut-off 5pm prior day.`;
+      } else {
+        el.textContent = 'We deliver Mon/Wed/Fri in Greater Accra';
+      }
+    }
+    updateDispatchText();
+    const areaInput = document.getElementById('user-area');
+    areaInput?.addEventListener('input', (e) => {
+      const val = e.target.value || '';
+      localStorage.setItem('cc_area', val);
+      updateDispatchText();
+    });
+
+    // Mobile sticky filter button behavior
+    function setStickyVisibility() {
+      const sticky = document.getElementById('mobile-sticky');
+      if (!sticky) return;
+      sticky.style.display = (window.innerWidth <= 620) ? 'block' : 'none';
+    }
+    setStickyVisibility();
+    window.addEventListener('resize', setStickyVisibility);
+    document.getElementById('open-filters')?.addEventListener('click', () => {
+      const el = document.getElementById('filters');
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        el.style.boxShadow = '0 10px 30px rgba(0,0,0,0.12)';
+        setTimeout(() => { el.style.boxShadow = ''; }, 900);
+      }
+    });
 
     // Header shadow on scroll
     const headerEl = document.querySelector('header');
@@ -1010,39 +1228,59 @@
     });
 
     // Handle form submission
-    function submitApplication(event) {
+    async function submitApplication(event) {
       event.preventDefault();
-      
-      const formData = new FormData(event.target);
+      const formEl = event.target;
+      clearFieldErrors(formEl);
+      const formData = new FormData(formEl);
       const applicationData = Object.fromEntries(formData.entries());
-      
-      const submitBtn = event.target.querySelector('.submit-btn');
+      const submitBtn = formEl.querySelector('.submit-btn');
+
+      let hasError = false;
+      const requiredIds = ['farm-name', 'location', 'farm-size', 'specialties', 'contact-name', 'phone', 'email', 'experience'];
+      requiredIds.forEach(id => {
+        if (!formEl.querySelector(`#${id}`)?.value.trim()) {
+          setFieldError(formEl, id, 'This field is required.');
+          hasError = true;
+        }
+      });
+
+      if (applicationData.email && !emailPattern.test(applicationData.email)) {
+        setFieldError(formEl, 'email', 'Use a valid email.');
+        hasError = true;
+      }
+
+      if (hasError) {
+        showToast('Fix the highlighted fields to submit.', 'error');
+        return;
+      }
+
       submitBtn.disabled = true;
-      submitBtn.textContent = 'Submitting...';
-      
-      // Submit to backend API
-      fetch(`${API_BASE}/api/farm-applications`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(applicationData)
-      })
-      .then(response => response.json())
-      .then(data => {
+      submitBtn.innerHTML = '<span style="width:16px;height:16px;border:2px solid rgba(255,255,255,0.6);border-top-color:#fff;border-radius:50%;display:inline-block;margin-right:8px;vertical-align:middle;animation:spin 0.8s linear infinite;"></span>Submitting...';
+
+      try {
+        await new Promise((resolve) => setTimeout(resolve, 300));
+        const response = await fetch(`${API_BASE}/api/farm-applications`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(applicationData)
+        });
+        const data = await response.json();
+
         if (data.success) {
-          alert(`Thank you for your interest in partnering with CropCart GH!\n\nWe've received your application for ${applicationData.farmName}.\n\nOur team will review your submission and contact you at ${applicationData.email} within 2-3 business days.\n\nExpected review timeline: January 2025`);
+          showToast(`Application received for ${applicationData.farmName}. We'll reply to ${applicationData.email}.`, 'success');
           closeApplicationModal();
         } else {
-          alert(`Error: ${data.error || 'Failed to submit application. Please try again.'}`);
+          showToast(data.error || 'Failed to submit application.', 'error');
           submitBtn.disabled = false;
           submitBtn.textContent = 'Submit Application';
         }
-      })
-      .catch(error => {
+      } catch (error) {
         console.error('Error submitting application:', error);
-        alert('Network error. Please check that the backend server is running and try again.');
+        showToast('Network error. Start backend on port 3001.', 'error');
         submitBtn.disabled = false;
         submitBtn.textContent = 'Submit Application';
-      });
+      }
     }
   </script>
 </body>

@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Join the CropCart GH waitlist for early access to farm-direct, cold-chain produce in Accra and Kumasi." />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Join Waitlist | CropCart GH" />
+  <meta property="og:description" content="Be first to get Ghana-grown produce with sealed cold-chain delivery under 12 hours." />
+  <meta property="og:image" content="favicon-180.png" />
+  <meta property="og:url" content="https://cropcartgh.com/waitlist" />
+  <link rel="canonical" href="https://cropcartgh.com/waitlist" />
+  <meta name="api-base" content="http://localhost:3001" />
+  <title>Join Waitlist | CropCart GH</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="mask-icon" href="favicon.svg" color="#22c55e" />
+  <link rel="icon" sizes="32x32" href="favicon-32.png" />
+  <link rel="icon" sizes="16x16" href="favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #fafbfa;
+      --fg: #1a1a1a;
+      --muted: #6b7280;
+      --accent: #22c55e;
+      --accent-strong: #16a34a;
+      --accent-light: #dcfce7;
+      --card: #ffffff;
+      --stroke: #e5e7eb;
+      --shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+      --shadow-soft: 0 4px 16px rgba(0, 0, 0, 0.06);
+      --max-width: 1100px;
+      --radius: 16px;
+      --radius-sm: 12px;
+      --header-height: 80px;
+      --success: #166534;
+      --error: #b91c1c;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: 'Manrope', 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.7;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .toast {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      padding: 14px 16px;
+      border-radius: 12px;
+      background: #0f172a;
+      color: #f8fafc;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.16);
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      z-index: 120;
+      pointer-events: none;
+      min-width: 240px;
+      font-weight: 700;
+    }
+
+    .toast.show { opacity: 1; transform: translateY(0); }
+    .toast.error { background: #991b1b; }
+    .toast.success { background: #166534; }
+
+    .field-error {
+      display: none;
+      color: var(--error);
+      font-size: 13px;
+      margin-top: 6px;
+      font-weight: 600;
+    }
+
+    .input-error {
+      border-color: #f87171 !important;
+      background: #fff7f7;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--stroke);
+      transition: box-shadow 0.3s ease;
+    }
+
+    nav {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      height: var(--header-height);
+    }
+
+    .brand-mark { width: 260px; height: 60px; display: block; }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+    }
+
+    .nav-links a {
+      color: var(--fg);
+      font-weight: 600;
+      font-size: 15px;
+      text-decoration: none;
+      position: relative;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -6px;
+      width: 100%;
+      height: 2px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.25s ease;
+    }
+
+    .nav-links a:hover { color: var(--accent-strong); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+    .nav-links a[aria-current="page"]::after { transform: scaleX(1); }
+
+    .cta-btn {
+      padding: 12px 22px;
+      border-radius: var(--radius-sm);
+      border: none;
+      background: linear-gradient(135deg, #16a34a, #22c55e);
+      color: white;
+      font-weight: 800;
+      font-size: 15px;
+      font-family: 'Manrope', sans-serif;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 30px rgba(34, 197, 94, 0.25);
+    }
+
+    .cta-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255, 255, 255, 0.6);
+      border-top-color: white;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 8px;
+      animation: spin 0.8s linear infinite;
+      vertical-align: middle;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    main {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 56px 20px 96px;
+    }
+
+    .hero-card {
+      background: linear-gradient(135deg, #16a34a 0%, #22c55e 100%);
+      color: white;
+      border-radius: var(--radius);
+      padding: 48px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 32px;
+    }
+
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.12), transparent 35%),
+                  radial-gradient(circle at 80% 0%, rgba(255,255,255,0.12), transparent 30%);
+      pointer-events: none;
+    }
+
+    .hero-card h1 {
+      margin: 0 0 12px;
+      font-size: 40px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    .hero-card p {
+      margin: 0 0 16px;
+      font-size: 17px;
+      max-width: 720px;
+      opacity: 0.95;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      background: rgba(255,255,255,0.16);
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.02em;
+      margin-bottom: 12px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-soft);
+      padding: 28px;
+    }
+
+    .form-group { margin-bottom: 16px; }
+    .form-group label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--fg);
+      font-size: 14px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border: 2px solid var(--stroke);
+      border-radius: var(--radius-sm);
+      font-family: 'Manrope', sans-serif;
+      font-size: 15px;
+      color: var(--fg);
+      transition: border-color 0.2s ease;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .form-group textarea { min-height: 110px; resize: vertical; }
+
+    .helper { color: var(--muted); font-size: 13px; margin-top: 6px; }
+
+    .inline { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+
+    .status {
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      display: none;
+    }
+
+    .status.success { background: #ecfdf3; color: #166534; border: 1px solid #bbf7d0; }
+    .status.error { background: #fef2f2; color: #991b1b; border: 1px solid #fecdd3; }
+
+    .benefits {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+
+    .benefit {
+      background: var(--card);
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius-sm);
+      padding: 18px;
+      font-weight: 700;
+      color: var(--fg);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .mini-list { margin: 0; padding-left: 18px; color: var(--muted); }
+    .mini-list li { margin-bottom: 6px; }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin: 20px 0 8px;
+    }
+
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      text-align: center;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .stat-card strong { display: block; font-size: 28px; color: var(--accent); }
+    .stat-card span { color: var(--muted); font-size: 14px; }
+
+    @media (max-width: 900px) {
+      .grid { grid-template-columns: 1fr; }
+      .hero-card { padding: 32px; }
+      .hero-card h1 { font-size: 32px; }
+      nav { flex-wrap: wrap; gap: 12px; padding: 0 16px; }
+      .nav-links { flex-wrap: wrap; justify-content: flex-start; gap: 8px; }
+      .nav-links a { padding: 6px 4px; font-size: 14px; }
+      .cta-btn { padding: 10px 16px; font-size: 14px; }
+    }
+
+    @media (max-width: 600px) {
+      nav { padding: 0 12px; height: auto; min-height: var(--header-height); }
+      .brand-mark { width: 220px; height: 48px; }
+      .nav-links { width: 100%; flex-wrap: wrap; justify-content: space-between; gap: 6px; }
+      .nav-links a { font-size: 12px; padding: 4px 2px; }
+      .cta-btn { padding: 10px 14px; font-size: 13px; min-height: 44px; }
+      main { padding: 40px 16px 72px; }
+      .inline { grid-template-columns: 1fr; }
+      .hero-card { border-radius: 12px; padding: 24px; }
+      .hero-card h1 { font-size: 28px; }
+      .form-group input, .form-group select, .form-group textarea { font-size: 16px; padding: 14px; min-height: 48px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="index.html" class="brand" aria-label="CropCart GH">
+        <svg class="brand-mark" width="280" height="60" viewBox="0 0 280 60" xmlns="http://www.w3.org/2000/svg">
+          <text x="0" y="45" font-family="Manrope, Arial, sans-serif" font-size="48" font-weight="800" fill="#1a1a1a" letter-spacing="-1">Crop</text>
+          <text x="105" y="45" font-family="Manrope, Arial, sans-serif" font-size="48" font-weight="800" fill="#22c55e" letter-spacing="-1">Cart</text>
+          <text x="198" y="45" font-family="Manrope, Arial, sans-serif" font-size="48" font-weight="800" fill="#22c55e" letter-spacing="-1">GH</text>
+        </svg>
+      </a>
+      <div class="nav-links">
+        <a href="how-it-works.html">How it works</a>
+        <a href="blog.html">Blog</a>
+        <a href="farms.html">Partner farms</a>
+        <a href="faq.html">FAQ</a>
+        <a href="waitlist.html" aria-current="page">Waitlist</a>
+        <button class="cta-btn" onclick="window.location.href='waitlist.html'">Join waitlist</button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div class="hero-card">
+      <div class="pill">Early Access · Q1 2025</div>
+      <h1>Join the CropCart GH waitlist</h1>
+      <p>Be the first to secure Ghana-grown produce with cold-chain delivery under 12 hours. Restaurants, hotels, retailers, and distributors get priority onboarding.</p>
+      <div class="stats">
+        <div class="stat-card">
+          <strong>500+</strong>
+          <span>Waitlist signups</span>
+        </div>
+        <div class="stat-card">
+          <strong><12h</strong>
+          <span>Harvest-to-door target</span>
+        </div>
+        <div class="stat-card">
+          <strong>4</strong>
+          <span>Verified Accra farms</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h2 style="margin:0 0 16px">Tell us about you</h2>
+        <form id="waitlist-form" novalidate>
+          <div class="inline">
+            <div class="form-group">
+              <label for="name">Your name *</label>
+              <input type="text" id="name" name="name" required placeholder="Full name" />
+              <div class="field-error" data-error-for="name"></div>
+            </div>
+            <div class="form-group">
+              <label for="email">Email *</label>
+              <input type="email" id="email" name="email" required placeholder="you@example.com" />
+              <div class="field-error" data-error-for="email"></div>
+            </div>
+          </div>
+
+          <div class="inline">
+            <div class="form-group">
+              <label for="businessType">Business type *</label>
+              <select id="businessType" name="businessType" required>
+                <option value="">Select...</option>
+                <option>Restaurant / Cafe</option>
+                <option>Hotel / Resort</option>
+                <option>Grocer / Retail</option>
+                <option>School / Institution</option>
+                <option>Distributor / Processor</option>
+                <option>Other</option>
+              </select>
+              <div class="field-error" data-error-for="businessType"></div>
+            </div>
+            <div class="form-group">
+              <label for="location">Location *</label>
+              <input type="text" id="location" name="location" required placeholder="Accra, Ghana" />
+              <div class="field-error" data-error-for="location"></div>
+            </div>
+          </div>
+
+          <div class="inline">
+            <div class="form-group">
+              <label for="phone">Phone (optional)</label>
+              <input type="tel" id="phone" name="phone" placeholder="+233 XX XXX XXXX" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="notes">What do you want from CropCart GH?</label>
+            <textarea id="notes" name="notes" placeholder="e.g., Leafy greens twice weekly, traceability reports, cold-chain proof..."></textarea>
+          </div>
+
+          <div class="form-group" style="display:flex; align-items:flex-start; gap:10px;">
+            <input type="checkbox" id="newsletterConsent" name="newsletterConsent" required style="width:auto; margin-top:4px;" />
+            <div>
+              <label for="newsletterConsent" style="margin-bottom:4px;">I acknowledge I'm also signing up for CropCart GH updates/newsletter.</label>
+              <div class="helper">We send launch timing, pricing, farm adds, and delivery slot alerts. You can unsubscribe anytime.</div>
+            </div>
+            <div class="field-error" data-error-for="newsletterConsent"></div>
+          </div>
+
+          <button class="cta-btn" type="submit" id="submit-btn">Join waitlist</button>
+          <div class="status" id="status"></div>
+        </form>
+      </div>
+
+      <div class="card">
+        <h3 style="margin:0 0 12px">Why join early</h3>
+        <div class="benefits" style="margin-bottom:16px">
+          <div class="benefit">Priority delivery windows</div>
+          <div class="benefit">Transparent farm sourcing</div>
+          <div class="benefit">Cold-chain proof + GPS</div>
+          <div class="benefit">Volume-based pricing</div>
+          <div class="benefit">Dedicated account support</div>
+          <div class="benefit">Flexible recurring schedules</div>
+        </div>
+        <p style="margin:0 0 12px; color:var(--muted)">What happens next?</p>
+        <ol class="mini-list">
+          <li>We confirm your spot and typical volumes</li>
+          <li>We match you with nearby verified farms</li>
+          <li>You pick your delivery cadence (morning/afternoon)</li>
+          <li>We share first-ship date and tracking access</li>
+        </ol>
+      </div>
+    </div>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const API_BASE = (document.querySelector('meta[name="api-base"]')?.content || window.API_BASE || 'http://localhost:3001');
+    window.API_BASE = API_BASE;
+
+    const form = document.getElementById('waitlist-form');
+    const statusEl = document.getElementById('status');
+    const submitBtn = document.getElementById('submit-btn');
+    const toastEl = document.getElementById('toast');
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    let redirecting = false;
+
+    const showToast = (message, type = 'success') => {
+      if (!toastEl) return;
+      toastEl.textContent = message;
+      toastEl.className = `toast ${type}`;
+      requestAnimationFrame(() => {
+        toastEl.classList.add('show');
+        setTimeout(() => toastEl.classList.remove('show'), 3200);
+      });
+    };
+
+    const clearFieldErrors = () => {
+      form.querySelectorAll('.field-error').forEach(el => { el.textContent = ''; el.style.display = 'none'; });
+      form.querySelectorAll('.input-error').forEach(el => el.classList.remove('input-error'));
+    };
+
+    const setFieldError = (id, message) => {
+      const input = document.getElementById(id);
+      const errorEl = form.querySelector(`.field-error[data-error-for="${id}"]`);
+      if (message) {
+        input?.classList.add('input-error');
+        if (errorEl) { errorEl.textContent = message; errorEl.style.display = 'block'; }
+      } else {
+        input?.classList.remove('input-error');
+        if (errorEl) { errorEl.textContent = ''; errorEl.style.display = 'none'; }
+      }
+    };
+
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      clearFieldErrors();
+
+      const formData = new FormData(form);
+      const payload = Object.fromEntries(formData.entries());
+      payload.newsletterConsent = document.getElementById('newsletterConsent').checked;
+
+      let hasError = false;
+
+      if (!payload.name) { setFieldError('name', 'Name is required.'); hasError = true; }
+      if (!payload.email) { setFieldError('email', 'Email is required.'); hasError = true; }
+      else if (!emailPattern.test(payload.email)) { setFieldError('email', 'Use a valid email.'); hasError = true; }
+      if (!payload.businessType) { setFieldError('businessType', 'Choose a business type.'); hasError = true; }
+      if (!payload.location) { setFieldError('location', 'Add your city/region.'); hasError = true; }
+      if (!payload.newsletterConsent) { setFieldError('newsletterConsent', 'Please acknowledge updates.'); hasError = true; }
+
+      if (hasError) {
+        statusEl.textContent = 'Fix the highlighted fields to continue.';
+        statusEl.className = 'status error';
+        statusEl.style.display = 'block';
+        showToast('Please complete the required fields.', 'error');
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span class="spinner" aria-hidden="true"></span>Submitting...';
+      statusEl.style.display = 'none';
+
+      try {
+        await new Promise((resolve) => setTimeout(resolve, 300));
+
+        const res = await fetch(`${API_BASE}/api/waitlist`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+          statusEl.textContent = `Success! Current position: ${data.position}. Redirecting to the homepage...`;
+          statusEl.className = 'status success';
+          statusEl.style.display = 'block';
+          form.reset();
+          redirecting = true;
+          submitBtn.innerHTML = '<span class="spinner" aria-hidden="true"></span>Redirecting...';
+          showToast(`You're #${data.position} on the waitlist.`, 'success');
+          setTimeout(() => {
+            window.location.href = 'index.html';
+          }, 800);
+        } else {
+          statusEl.textContent = data.error || 'Unable to join waitlist. Please try again.';
+          statusEl.className = 'status error';
+          statusEl.style.display = 'block';
+          showToast(data.error || 'Unable to join waitlist.', 'error');
+        }
+      } catch (err) {
+        console.error('Waitlist error', err);
+        statusEl.textContent = 'Network error. Ensure backend is running on port 3001.';
+        statusEl.className = 'status error';
+        statusEl.style.display = 'block';
+        showToast('Network error. Start backend on port 3001.', 'error');
+      } finally {
+        if (!redirecting) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Join waitlist';
+        }
+      }
+    });
+  </script>
+</body>
+</html>
