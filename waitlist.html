@@ -10,12 +10,12 @@
   <meta property="og:image" content="favicon-180.png" />
   <meta property="og:url" content="https://cropcartgh.com/waitlist" />
   <link rel="canonical" href="https://cropcartgh.com/waitlist" />
-  <meta name="api-base" content="http://localhost:3001" />
+  <meta name="api-base" content="/api" />
   <title>Join Waitlist | CropCart GH</title>
-  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-  <link rel="mask-icon" href="favicon.svg" color="#22c55e" />
-  <link rel="icon" sizes="32x32" href="favicon-32.png" />
-  <link rel="icon" sizes="16x16" href="favicon-16.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon.png" />
+  <link rel="shortcut icon" href="favicon.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="favicon.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -98,8 +98,9 @@
     }
 
     nav {
-      max-width: var(--max-width);
-      margin: 0 auto;
+      width: 100%;
+      max-width: none;
+      margin: 0;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -107,7 +108,9 @@
       height: var(--header-height);
     }
 
-    .brand-mark { width: 260px; height: 60px; display: block; }
+    .brand-mark { width: 100%; height: 100%; display: block; object-fit: contain; }
+
+    .brand { height: 250px; display: flex; align-items: center; }
 
     .nav-links {
       display: flex;
@@ -339,7 +342,7 @@
 
     @media (max-width: 600px) {
       nav { padding: 0 12px; height: auto; min-height: var(--header-height); }
-      .brand-mark { width: 220px; height: 48px; }
+      .brand-mark { width: 100%; height: 100%; object-fit: contain; }
       .nav-links { width: 100%; flex-wrap: wrap; justify-content: space-between; gap: 6px; }
       .nav-links a { font-size: 12px; padding: 4px 2px; }
       .cta-btn { padding: 10px 14px; font-size: 13px; min-height: 44px; }
@@ -355,18 +358,14 @@
   <header>
     <nav>
       <a href="index.html" class="brand" aria-label="CropCart GH">
-        <svg class="brand-mark" width="280" height="60" viewBox="0 0 280 60" xmlns="http://www.w3.org/2000/svg">
-          <text x="0" y="45" font-family="Manrope, Arial, sans-serif" font-size="48" font-weight="800" fill="#1a1a1a" letter-spacing="-1">Crop</text>
-          <text x="105" y="45" font-family="Manrope, Arial, sans-serif" font-size="48" font-weight="800" fill="#22c55e" letter-spacing="-1">Cart</text>
-          <text x="198" y="45" font-family="Manrope, Arial, sans-serif" font-size="48" font-weight="800" fill="#22c55e" letter-spacing="-1">GH</text>
-        </svg>
+        <img class="brand-mark" src="logo.png" alt="CropCart GH" />
       </a>
       <div class="nav-links">
         <a href="how-it-works.html">How it works</a>
-        <a href="blog.html">Blog</a>
         <a href="farms.html">Partner farms</a>
         <a href="faq.html">FAQ</a>
         <a href="waitlist.html" aria-current="page">Waitlist</a>
+        <a href="blog.html">Blog</a>
         <button class="cta-btn" onclick="window.location.href='waitlist.html'">Join waitlist</button>
       </div>
     </nav>
@@ -374,7 +373,7 @@
 
   <main>
     <div class="hero-card">
-      <div class="pill">Early Access · Q1 2025</div>
+      <div class="pill">Early Access · Q2 2026</div>
       <h1>Join the CropCart GH waitlist</h1>
       <p>Be the first to secure Ghana-grown produce with cold-chain delivery under 12 hours. Restaurants, hotels, retailers, and distributors get priority onboarding.</p>
       <div class="stats">
@@ -480,9 +479,16 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-  <script>
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+    
     const API_BASE = (document.querySelector('meta[name="api-base"]')?.content || window.API_BASE || 'http://localhost:3001');
     window.API_BASE = API_BASE;
+
+    // Supabase client
+    const SUPABASE_URL = 'https://djuvkrjotiowrngcjqrm.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_IAdc3pEESUgbCt_sKAE5nQ_9zLGO3Kg';
+    const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
     const form = document.getElementById('waitlist-form');
     const statusEl = document.getElementById('status');
@@ -550,37 +556,49 @@
       try {
         await new Promise((resolve) => setTimeout(resolve, 300));
 
-        const res = await fetch(`${API_BASE}/api/waitlist`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
+        // Add to waitlist table with all form fields
+        const { data, error } = await supabase
+          .from('waitlist')
+          .insert([{ 
+            name: payload.name,
+            email: payload.email,
+            business_type: payload.businessType,
+            location: payload.location,
+            newsletter_consent: payload.newsletterConsent
+          }])
+          .select();
 
-        const data = await res.json();
+        if (error) throw error;
 
-        if (data.success) {
-          statusEl.textContent = `Success! Current position: ${data.position}. Redirecting to the homepage...`;
-          statusEl.className = 'status success';
-          statusEl.style.display = 'block';
-          form.reset();
-          redirecting = true;
-          submitBtn.innerHTML = '<span class="spinner" aria-hidden="true"></span>Redirecting...';
-          showToast(`You're #${data.position} on the waitlist.`, 'success');
-          setTimeout(() => {
-            window.location.href = 'index.html';
-          }, 800);
-        } else {
-          statusEl.textContent = data.error || 'Unable to join waitlist. Please try again.';
-          statusEl.className = 'status error';
-          statusEl.style.display = 'block';
-          showToast(data.error || 'Unable to join waitlist.', 'error');
+        // Also add to newsletter if they consented
+        if (payload.newsletterConsent) {
+          await supabase
+            .from('newsletter')
+            .insert([{ email: payload.email }])
+            .select();
         }
+
+        statusEl.textContent = 'Success! Redirecting to the homepage...';
+        statusEl.className = 'status success';
+        statusEl.style.display = 'block';
+        form.reset();
+        redirecting = true;
+        submitBtn.innerHTML = '<span class="spinner" aria-hidden="true"></span>Redirecting...';
+        showToast('You\'re on the waitlist. Check your email for updates!', 'success');
+        setTimeout(() => {
+          window.location.href = 'index.html';
+        }, 800);
       } catch (err) {
         console.error('Waitlist error', err);
-        statusEl.textContent = 'Network error. Ensure backend is running on port 3001.';
+        if (err.message.includes('duplicate')) {
+          statusEl.textContent = 'This email is already on our waitlist!';
+          showToast('Email already registered.', 'error');
+        } else {
+          statusEl.textContent = 'Unable to join waitlist. Please try again.';
+          showToast('Unable to join waitlist. Try again later.', 'error');
+        }
         statusEl.className = 'status error';
         statusEl.style.display = 'block';
-        showToast('Network error. Start backend on port 3001.', 'error');
       } finally {
         if (!redirecting) {
           submitBtn.disabled = false;

@@ -10,12 +10,12 @@
   <meta property="og:image" content="favicon-180.png" />
   <meta property="og:url" content="https://cropcartgh.com/faq" />
   <link rel="canonical" href="https://cropcartgh.com/faq" />
-  <meta name="api-base" content="http://localhost:3001" />
+  <meta name="api-base" content="/api" />
   <title>FAQ | CropCart GH</title>
-  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-  <link rel="mask-icon" href="favicon.svg" color="#22c55e" />
-  <link rel="icon" sizes="32x32" href="favicon-32.png" />
-  <link rel="icon" sizes="16x16" href="favicon-16.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon.png" />
+  <link rel="shortcut icon" href="favicon.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="favicon.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -62,8 +62,9 @@
     }
 
     nav {
-      max-width: var(--max-width);
-      margin: 0 auto;
+      width: 100%;
+      max-width: none;
+      margin: 0;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -71,7 +72,9 @@
       height: var(--header-height);
     }
 
-    .brand-mark { width: 280px; height: 60px; display: block; }
+    .brand-mark { width: 100%; height: 100%; display: block; object-fit: contain; }
+    
+    .brand { height: 250px; display: flex; align-items: center; }
     
     .nav-links {
       display: flex;
@@ -325,18 +328,14 @@
   <header>
     <nav>
       <a href="index.html" class="brand" aria-label="CropCart GH">
-        <svg class="brand-mark" width="280" height="60" viewBox="0 0 280 60" xmlns="http://www.w3.org/2000/svg">
-          <text x="0" y="45" font-family="Manrope, Arial, sans-serif" font-size="48" font-weight="800" fill="#1a1a1a" letter-spacing="-1">Crop</text>
-          <text x="105" y="45" font-family="Manrope, Arial, sans-serif" font-size="48" font-weight="800" fill="#22c55e" letter-spacing="-1">Cart</text>
-          <text x="198" y="45" font-family="Manrope, Arial, sans-serif" font-size="48" font-weight="800" fill="#22c55e" letter-spacing="-1">GH</text>
-        </svg>
+        <img class="brand-mark" src="logo.png" alt="CropCart GH" />
       </a>
       <div class="nav-links">
         <a href="how-it-works.html">How it works</a>
-        <a href="blog.html">Blog</a>
         <a href="farms.html">Partner farms</a>
         <a href="faq.html" aria-current="page">FAQ</a>
         <a href="waitlist.html">Waitlist</a>
+        <a href="blog.html">Blog</a>
         <button class="cta-btn" onclick="window.location.href='waitlist.html'">Join waitlist</button>
       </div>
     </nav>

@@ -6,16 +6,16 @@
   <meta name="description" content="CropCart GH links verified Ghanaian farms to buyers in Accra and Kumasi with sealed cold-chain delivery under 12 hours." />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="CropCart GH | Local produce, delivered" />
-  <meta property="og:description" content="Farm-direct produce with sealed cold-chain, traceability, and Q1 2025 launch access." />
+  <meta property="og:description" content="Farm-direct produce with sealed cold-chain, traceability, and Q2 2026 launch access." />
   <meta property="og:image" content="favicon-180.png" />
   <meta property="og:url" content="https://cropcartgh.com/" />
   <link rel="canonical" href="https://cropcartgh.com/" />
-  <meta name="api-base" content="http://localhost:3001" />
+  <meta name="api-base" content="/api" />
   <title>CropCart GH | Local produce, delivered</title>
-  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-  <link rel="mask-icon" href="favicon.svg" color="#22c55e" />
-  <link rel="icon" sizes="32x32" href="favicon-32.png" />
-  <link rel="icon" sizes="16x16" href="favicon-16.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon.png" />
+  <link rel="shortcut icon" href="favicon.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="favicon.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -556,12 +556,13 @@
       gap: 20px;
       font-family: inherit;
     }
-    .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; letter-spacing: 0.01em; font-family: 'Manrope', 'Segoe UI', sans-serif; cursor: pointer; transition: opacity 0.3s ease; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; letter-spacing: 0.01em; font-family: 'Manrope', 'Segoe UI', sans-serif; cursor: pointer; transition: opacity 0.3s ease; height: 250px; }
     .brand:hover { opacity: 0.9; }
     .brand-mark {
-      width: 280px;
-      height: 60px;
+      width: 100%;
+      height: 100%;
       display: block;
+      object-fit: contain;
     }
     .brand-crop { color: var(--fg); }
     .brand-cart { color: var(--accent); }
@@ -1143,7 +1144,7 @@
     }
     @media (max-width: 620px) {
       nav { padding: 0 12px; height: auto; min-height: var(--header-height); }
-      .brand-mark { width: 220px; height: 48px; }
+      .brand-mark { width: 100%; height: 100%; object-fit: contain; }
       .brand-mark text { font-size: 36px; }
       .nav-links { width: 100%; flex-wrap: wrap; justify-content: space-between; gap: 6px; }
       .nav-links a { font-size: 12px; padding: 4px 2px; }
@@ -1296,18 +1297,14 @@
   <header>
     <nav>
       <div class="brand" aria-label="CropCart GH">
-        <svg class="brand-mark" width="280" height="60" viewBox="0 0 280 60" xmlns="http://www.w3.org/2000/svg">
-          <text x="0" y="45" font-family="Manrope, Arial, sans-serif" font-size="48" font-weight="800" fill="#1a1a1a" letter-spacing="-1">Crop</text>
-          <text x="105" y="45" font-family="Manrope, Arial, sans-serif" font-size="48" font-weight="800" fill="#22c55e" letter-spacing="-1">Cart</text>
-          <text x="198" y="45" font-family="Manrope, Arial, sans-serif" font-size="48" font-weight="800" fill="#22c55e" letter-spacing="-1">GH</text>
-        </svg>
+        <img class="brand-mark" src="logo.png" alt="CropCart GH" />
       </div>
       <div class="nav-links">
         <a href="how-it-works.html">How it works</a>
-        <a href="blog.html">Blog</a>
         <a href="farms.html">Partner farms</a>
         <a href="faq.html">FAQ</a>
         <a href="waitlist.html">Waitlist</a>
+        <a href="blog.html">Blog</a>
         <button class="cta-btn" onclick="window.location.href='waitlist.html'">Join waitlist</button>
       </div>
     </nav>
@@ -1316,7 +1313,7 @@
   <main>
     <section class="hero">
       <div>
-        <div class="eyebrow">Launching Q1 2025 · Ghana-grown · Fresh · Fast</div>
+        <div class="eyebrow">Launching Q2 2026 · Ghana-grown · Fresh · Fast</div>
         <h1>From Ghana's fields to city doors in hours.</h1>
         <p class="lead">CropCart GH links verified Ghanaian farms to buyers in Accra and Kumasi with sealed cold chain and tracked loads. We're building the network now and opening to early buyers soon.</p>
         <div class="hero-actions">
@@ -1343,7 +1340,7 @@
           <div class="quote card-hover">
             "Built for chefs who demand field-fresh quality and kitchens that run on precision."
             <strong>Our Vision for Restaurants</strong>
-            <span>Coming Q1 2025</span>
+            <span>Coming Q2 2026</span>
           </div>
           <div class="quote card-hover">
             "Fair pricing and predictable offtake so farms can plan ahead and grow sustainably."
@@ -1480,7 +1477,7 @@
         </article>
         <article class="card-hover" style="background:var(--card);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-soft);display:flex;flex-direction:column;gap:12px;">
           <span class="pill" style="width:max-content;">Launch</span>
-          <h3 style="margin:0;">Q1 rollout roadmap</h3>
+          <h3 style="margin:0;">Q2 2026 rollout roadmap</h3>
           <p style="margin:0;color:var(--muted);">Where we're opening first, how to get early access, and what to expect from pricing and delivery windows.</p>
           <button class="ghost-btn" style="width:max-content;" onclick="window.location.href='waitlist.html'">Read more</button>
         </article>
@@ -1707,7 +1704,12 @@
     </form>
   </div>
 
-  <script>
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+    const SUPABASE_URL = 'https://djuvkrjotiowrngcjqrm.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_IAdc3pEESUgbCt_sKAE5nQ_9zLGO3Kg';
+    const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+    
     // Header shadow on scroll
     const headerEl = document.querySelector('header');
     let lastScrollY = 0;
@@ -1898,8 +1900,6 @@
     // Newsletter form submission + inline validation
     const newsletterForm = document.getElementById('newsletter-form');
     const toastEl = document.getElementById('toast');
-    const API_BASE = (document.querySelector('meta[name="api-base"]')?.content || window.API_BASE || 'http://localhost:3001');
-    window.API_BASE = API_BASE;
 
     const showToast = (message, type = 'success') => {
       if (!toastEl) return;
@@ -1959,20 +1959,22 @@
         try {
           await new Promise((resolve) => setTimeout(resolve, 300));
 
-          const response = await fetch(`${API_BASE}/api/waitlist`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email })
-          });
+          const { data, error } = await supabase
+            .from('waitlist')
+            .insert([{ email }])
+            .select();
 
-          const data = await response.json();
+          if (error) throw error;
 
-          if (data.success) {
-            showToast(`You're #${data.position} on the waitlist. We'll email ${email} when slots open.`, 'success');
-            emailInput.value = '';
+          showToast(`Success! Check your email ${email} for updates.`, 'success');
+          emailInput.value = '';
+        } catch (err) {
+          if (err.message.includes('duplicate')) {
+            showToast('Email already on the waitlist.', 'error');
           } else {
-            showToast(data.error || 'Failed to join waitlist.', 'error');
+            showToast('Failed to join waitlist. Try again.', 'error');
           }
+
         } catch (error) {
           console.error('Error joining waitlist:', error);
           showToast('Network error. Start backend on port 3001 and retry.', 'error');

@@ -10,12 +10,12 @@
   <meta property="og:image" content="favicon-180.png" />
   <meta property="og:url" content="https://cropcartgh.com/farms" />
   <link rel="canonical" href="https://cropcartgh.com/farms" />
-  <meta name="api-base" content="http://localhost:3001" />
+  <meta name="api-base" content="/api" />
   <title>Partner Farms | CropCart GH</title>
-  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-  <link rel="mask-icon" href="favicon.svg" color="#22c55e" />
-  <link rel="icon" sizes="32x32" href="favicon-32.png" />
-  <link rel="icon" sizes="16x16" href="favicon-16.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon.png" />
+  <link rel="shortcut icon" href="favicon.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="favicon.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -99,8 +99,9 @@
     }
 
     nav {
-      max-width: var(--max-width);
-      margin: 0 auto;
+      width: 100%;
+      max-width: none;
+      margin: 0;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -108,7 +109,9 @@
       height: var(--header-height);
     }
 
-    .brand-mark { width: 280px; height: 60px; display: block; }
+    .brand-mark { width: 100%; height: 100%; display: block; object-fit: contain; }
+    
+    .brand { height: 250px; display: flex; align-items: center; }
     
     .nav-links {
       display: flex;
@@ -763,18 +766,14 @@
   <header>
     <nav>
       <a href="index.html" class="brand" aria-label="CropCart GH">
-        <svg class="brand-mark" width="280" height="60" viewBox="0 0 280 60" xmlns="http://www.w3.org/2000/svg">
-          <text x="0" y="45" font-family="Manrope, Arial, sans-serif" font-size="48" font-weight="800" fill="#1a1a1a" letter-spacing="-1">Crop</text>
-          <text x="105" y="45" font-family="Manrope, Arial, sans-serif" font-size="48" font-weight="800" fill="#22c55e" letter-spacing="-1">Cart</text>
-          <text x="198" y="45" font-family="Manrope, Arial, sans-serif" font-size="48" font-weight="800" fill="#22c55e" letter-spacing="-1">GH</text>
-        </svg>
+        <img class="brand-mark" src="logo.png" alt="CropCart GH" />
       </a>
       <div class="nav-links">
         <a href="how-it-works.html">How it works</a>
-        <a href="blog.html">Blog</a>
-        <a href="farms.html">Partner farms</a>
+        <a href="farms.html" aria-current="page">Partner farms</a>
         <a href="faq.html">FAQ</a>
         <a href="waitlist.html">Waitlist</a>
+        <a href="blog.html">Blog</a>
         <button class="cta-btn" onclick="window.location.href='waitlist.html'">Join waitlist</button>
       </div>
     </nav>
@@ -784,12 +783,6 @@
     <div class="page-header">
       <h1>Our Partner Farms</h1>
       <p>Verified growers across Ghana committed to quality, sustainability, and fair pricing. Each farm is audited quarterly and tracked for cold-chain compliance.</p>
-    </div>
-
-    <div id="location-hint" style="background:var(--card); border:2px solid var(--stroke); border-radius:12px; padding:14px; display:flex; gap:10px; align-items:center; justify-content:center;">
-      <span style="font-weight:700;">Your area:</span>
-      <input id="user-area" type="text" placeholder="e.g., East Legon" style="padding:10px 12px; border:2px solid var(--stroke); border-radius:10px; max-width:220px;" />
-      <span id="dispatch-text" style="color:var(--muted);">We deliver Mon/Wed/Fri in Greater Accra</span>
     </div>
 
     <div class="stats-bar" id="stats-bar">
@@ -939,7 +932,24 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-  <script>
+  <script type="module">
+    // Supabase client - import from CDN
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+    const SUPABASE_URL = 'https://djuvkrjotiowrngcjqrm.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_IAdc3pEESUgbCt_sKAE5nQ_9zLGO3Kg';
+    const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    // API helper for farms
+    const api = {
+      getFarms: async () => {
+        const { data, error } = await supabase
+          .from('farms')
+          .select('*')
+          .order('created_at', { ascending: false });
+        return { data, error };
+      }
+    };
+
     const API_BASE = (document.querySelector('meta[name="api-base"]')?.content || window.API_BASE || 'http://localhost:3001');
     window.API_BASE = API_BASE;
     let allFarms = [];
@@ -978,9 +988,27 @@
 
     async function loadFarms() {
       try {
-        const response = await fetch(`${API_BASE}/api/farms`);
-        const data = await response.json();
-        allFarms = data.farms;
+        console.log('Starting to load farms...');
+        console.log('API object:', api);
+        
+        // Fetch farms from Supabase
+        const { data, error } = await api.getFarms();
+        
+        console.log('Supabase response:', { data, error });
+        
+        if (error) {
+          throw error;
+        }
+
+        if (!data || data.length === 0) {
+          document.getElementById('farms-grid').innerHTML = `
+            <div class="loading">No farms available yet. Please run the setup SQL in Supabase.</div>
+          `;
+          return;
+        }
+
+        console.log('Loaded farms from Supabase:', data);
+        allFarms = data;
         
         updateStats();
         createFilters();
@@ -989,12 +1017,61 @@
         console.error('Error loading farms:', error);
         document.getElementById('farms-grid').innerHTML = `
           <div class="error">
-            Unable to load farms. Make sure the backend server is running on port 3001.
-            <br><br>
-            <code>cd backend && npm start</code>
+            Unable to load farms: ${error.message}
           </div>
         `;
       }
+    }
+
+    function generateMockFarms() {
+      const farmNames = [
+        'Green Valley Farms', 'Sunrise Agriculture', 'Fertile Fields Co', 'Harvest Haven', 'Golden Produce Growers',
+        'Community Gardens Accra', 'Fresh Roots Farm', 'Sustainable Growth', 'Urban Harvest', 'Heritage Farms Ghana'
+      ];
+      const locations = ['Accra', 'Kumasi', 'Tema', 'Cape Coast', 'Takoradi', 'Greater Accra Region'];
+      const crops = [
+        'Tomatoes', 'Peppers', 'Leafy Greens', 'Cucumber', 'Carrots', 'Lettuce', 'Spinach', 'Kale',
+        'Eggplant', 'Okra', 'Maize', 'Cassava', 'Yam', 'Plantain'
+      ];
+      const certifications = ['Organic', 'GlobalGAP', 'Fair Trade', 'ISO 9001'];
+      const features = ['Cold Storage', 'GPS Tracking', 'Eco-Friendly', 'Certified Organic', 'Direct to Consumer'];
+
+      const farms = [];
+      for (let i = 0; i < 12; i++) {
+        const farmSpecialties = [];
+        for (let j = 0; j < Math.floor(Math.random() * 3) + 2; j++) {
+          const crop = crops[Math.floor(Math.random() * crops.length)];
+          if (!farmSpecialties.includes(crop)) farmSpecialties.push(crop);
+        }
+
+        const farmCertifications = [];
+        for (let j = 0; j < Math.floor(Math.random() * 2) + 1; j++) {
+          const cert = certifications[Math.floor(Math.random() * certifications.length)];
+          if (!farmCertifications.includes(cert)) farmCertifications.push(cert);
+        }
+
+        const farmFeatures = [];
+        for (let j = 0; j < Math.floor(Math.random() * 2) + 1; j++) {
+          const feature = features[Math.floor(Math.random() * features.length)];
+          if (!farmFeatures.includes(feature)) farmFeatures.push(feature);
+        }
+
+        farms.push({
+          id: `farm-${i + 1}`,
+          name: farmNames[i % farmNames.length],
+          location: locations[Math.floor(Math.random() * locations.length)],
+          specialties: farmSpecialties,
+          certifications: farmCertifications,
+          features: farmFeatures,
+          capacity: `${20 + Math.floor(Math.random() * 80)} cases/week`,
+          established: 2015 + Math.floor(Math.random() * 8),
+          contact: {
+            phone: `+233 ${String(Math.floor(Math.random() * 9000000000)).padStart(10, '0')}`,
+            email: `info@${farmNames[i % farmNames.length].toLowerCase().replace(/\s+/g, '')}.com`
+          }
+        });
+      }
+      return farms;
     }
 
     function updateStats() {
@@ -1260,24 +1337,25 @@
 
       try {
         await new Promise((resolve) => setTimeout(resolve, 300));
-        const response = await fetch(`${API_BASE}/api/farm-applications`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(applicationData)
-        });
-        const data = await response.json();
+        
+        const { data, error } = await supabase
+          .from('farm_applications')
+          .insert([{
+            name: applicationData.contactName,
+            email: applicationData.email,
+            farm_name: applicationData.farmName,
+            location: applicationData.location,
+            products: applicationData.specialties
+          }])
+          .select();
 
-        if (data.success) {
-          showToast(`Application received for ${applicationData.farmName}. We'll reply to ${applicationData.email}.`, 'success');
-          closeApplicationModal();
-        } else {
-          showToast(data.error || 'Failed to submit application.', 'error');
-          submitBtn.disabled = false;
-          submitBtn.textContent = 'Submit Application';
-        }
+        if (error) throw error;
+
+        showToast(`Application received for ${applicationData.farmName}. We'll reply to ${applicationData.email}.`, 'success');
+        closeApplicationModal();
       } catch (error) {
         console.error('Error submitting application:', error);
-        showToast('Network error. Start backend on port 3001.', 'error');
+        showToast('Failed to submit application. Please try again.', 'error');
         submitBtn.disabled = false;
         submitBtn.textContent = 'Submit Application';
       }
