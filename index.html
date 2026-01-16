@@ -542,42 +542,46 @@
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--stroke);
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      overflow-x: hidden;
     }
     nav {
       width: 100%;
       max-width: none;
       margin: 0;
       height: var(--header-height);
-      padding: 0 24px 0 0;
+      padding: 0 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 24px;
+      gap: 16px;
     }
     .brand {
       display: flex;
       align-items: center;
-      height: 200px;
+      height: 50px;
       text-decoration: none;
+      flex-shrink: 0;
     }
     .brand:hover { opacity: 0.9; }
     .brand-mark {
-      height: 200px;
-      width: 1300px;
+      height: 50px;
+      width: auto;
+      max-width: 280px;
       display: block;
       object-fit: contain;
       object-position: left;
     }
 
-    .nav-links { display: flex; gap: 24px; align-items: center; }
+    .nav-links { display: flex; gap: 16px; align-items: center; flex-shrink: 0; }
     .nav-links a {
       position: relative;
       font-weight: 600;
-      font-size: 15px;
+      font-size: 14px;
       color: var(--muted);
       text-decoration: none;
-      padding: 8px 0;
+      padding: 6px 0;
       transition: color 0.2s ease;
+      white-space: nowrap;
     }
     .nav-links a::after {
       content: "";
