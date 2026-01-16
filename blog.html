@@ -52,55 +52,69 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--stroke);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     }
 
     nav {
       width: 100%;
-      max-width: none;
-      margin: 0;
+      max-width: var(--max-width);
+      margin: 0 auto;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 20px;
+      padding: 0 24px;
       height: var(--header-height);
-      gap: 12px;
     }
 
-    .brand-mark { width: 100%; height: 100%; display: block; object-fit: contain; }
-    
-    .brand { height: 60px; display: flex; align-items: center; }
+    .brand {
       display: flex;
       align-items: center;
-      gap: 26px;
-      flex-wrap: wrap;
+      height: 48px;
+      text-decoration: none;
+    }
+    .brand:hover { opacity: 0.9; }
+    .brand-mark {
+      height: 100%;
+      width: auto;
+      display: block;
+      object-fit: contain;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
     }
 
     .nav-links a {
-      color: var(--fg);
-      font-weight: 700;
-      font-size: 15px;
-      text-decoration: none;
       position: relative;
+      font-weight: 600;
+      font-size: 15px;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 8px 0;
+      transition: color 0.2s ease;
     }
 
     .nav-links a::after {
       content: "";
       position: absolute;
       left: 0;
-      bottom: -6px;
+      bottom: 0;
       width: 100%;
       height: 2px;
       background: var(--accent);
       transform: scaleX(0);
       transform-origin: left;
-      transition: transform 0.25s ease;
+      transition: transform 0.2s ease;
     }
 
-    .nav-links a:hover { color: var(--accent-strong); }
+    .nav-links a:hover { color: var(--fg); }
     .nav-links a:hover::after, .nav-links a[aria-current="page"]::after { transform: scaleX(1); }
+    .nav-links a[aria-current="page"] { color: var(--fg); }
 
     .cta-btn {
       padding: 12px 22px;
@@ -284,11 +298,11 @@
     }
 
     @media (max-width: 620px) {
-      nav { padding: 8px 12px; height: auto; min-height: 60px; }
-      .brand { height: 100px; }
-      .brand-mark { width: 500px; height: 100px; }
-      .nav-links { width: 100%; flex-wrap: wrap; justify-content: space-between; gap: 6px; }
-      .nav-links a { font-size: 12px; padding: 4px 2px; }
+      nav { padding: 8px 16px; height: auto; min-height: 60px; }
+      .brand { height: 36px; }
+      .brand-mark { height: 100%; width: auto; }
+      .nav-links { width: 100%; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 8px; }
+      .nav-links a { font-size: 13px; padding: 4px 6px; }
       .cta-btn { padding: 10px 14px; font-size: 13px; min-height: 44px; }
       main { padding: 40px 16px 72px; }
       .hero { border-radius: 12px; padding: 24px; }
