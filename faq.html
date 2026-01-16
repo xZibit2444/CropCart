@@ -70,23 +70,26 @@
       align-items: center;
       justify-content: space-between;
       padding: 0 24px;
-      height: 100px;
+      height: 200px;
       gap: 16px;
     }
 
     .brand {
       display: flex;
       align-items: center;
-      height: 80px;
+      height: 200px;
       text-decoration: none;
-      flex-shrink: 0;
+      flex-shrink: 1;
+      min-width: 0;
     }
     .brand:hover { opacity: 0.9; }
     .brand-mark {
-      height: 80px;
-      width: auto;
+      width: 1100px;
+      height: 200px;
+      max-width: 100%;
       display: block;
       object-fit: contain;
+      object-position: left;
     }
 
     .nav-links {
