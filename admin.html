@@ -448,6 +448,49 @@
     const BLOG_API = '/.netlify/functions/blog-post';
     const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
+    // Admin API key - should be set in localStorage for authenticated admins
+    let ADMIN_API_KEY = localStorage.getItem('ADMIN_API_KEY') || '';
+    let currentUserId = null;
+
+    // UUID validation
+    function isValidUUID(str) {
+      const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+      return uuidRegex.test(str);
+    }
+
+    // Generate UUID v4
+    function generateUUID() {
+      return crypto.randomUUID();
+    }
+
+    // Check admin authentication on load
+    async function checkAuth() {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        currentUserId = user.id;
+      }
+      
+      if (!ADMIN_API_KEY) {
+        const key = prompt('Enter Admin API Key:');
+        if (key) {
+          ADMIN_API_KEY = key;
+          localStorage.setItem('ADMIN_API_KEY', key);
+        } else {
+          document.body.innerHTML = '<div style="padding: 40px; text-align: center;"><h2>Access Denied</h2><p>Admin API key required.</p></div>';
+          return false;
+        }
+      }
+      return true;
+    }
+
+    // Get auth headers for API calls
+    function getAuthHeaders() {
+      return {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${ADMIN_API_KEY}`
+      };
+    }
+
     window.switchTab = (tab) => {
       document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
       document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
@@ -487,6 +530,7 @@
             <div class="submission-header">
               <div>
                 <span class="submission-type">${sub.type}</span>
+                <span style="margin-left: 8px; font-size: 11px; color: var(--muted);">ID: ${sub.id}</span>
               </div>
               <div class="submission-meta">${new Date(sub.created_at).toLocaleString()}</div>
             </div>
@@ -497,6 +541,7 @@
               ${sub.location ? `<div class="submission-field"><strong>Location</strong>${sub.location}</div>` : ''}
               ${sub.farm_name ? `<div class="submission-field"><strong>Farm Name</strong>${sub.farm_name}</div>` : ''}
               ${sub.products ? `<div class="submission-field"><strong>Products</strong>${sub.products}</div>` : ''}
+              ${sub.owner_id ? `<div class="submission-field"><strong>Owner ID</strong>${sub.owner_id}</div>` : ''}
             </div>
           </div>
         `).join('');
@@ -521,15 +566,17 @@
         }
 
         container.innerHTML = data.map(post => `
-          <div class="post-item">
+          <div class="post-item" data-id="${post.id}">
             <div class="post-info">
               <h3>${post.title}</h3>
-              <p>${post.category} • ${new Date(post.created_at).toLocaleDateString()} • ${post.read_time}</p>
+              <p>${post.category} • ${new Date(post.created_at).toLocaleDateString()} • ${post.read_time || 'N/A'}</p>
+              <p style="margin-top: 4px; font-size: 11px; color: var(--muted);">ID: ${post.id}</p>
+              ${post.owner_id ? `<p style="font-size: 11px; color: var(--muted);">Owner: ${post.owner_id}</p>` : ''}
               <p style="margin-top: 8px; color: var(--fg); font-size: 14px; line-height: 1.5;">${post.content.substring(0, 150)}...</p>
             </div>
             <div class="post-actions">
-              <button class="btn btn-secondary" onclick="editPost(${post.id})">Edit</button>
-              <button class="btn btn-danger" onclick="deletePost(${post.id})">Delete</button>
+              <button class="btn btn-secondary" onclick="editPost('${post.id}')">Edit</button>
+              <button class="btn btn-danger" onclick="deletePost('${post.id}')">Delete</button>
             </div>
           </div>
         `).join('');
@@ -540,18 +587,24 @@
     }
 
     window.deletePost = async (id) => {
+      // Validate UUID
+      if (!isValidUUID(id)) {
+        showAlert('Invalid post ID format', 'error');
+        return;
+      }
+
       if (!confirm('Delete this post?')) return;
 
       try {
         const res = await fetch(BLOG_API, {
           method: 'DELETE',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ id })
+          headers: getAuthHeaders(),
+          body: JSON.stringify({ id, owner_id: currentUserId })
         });
 
         if (!res.ok) {
-          const details = await res.text();
-          throw new Error(details || 'Delete failed');
+          const details = await res.json().catch(() => ({ error: 'Delete failed' }));
+          throw new Error(details.error || 'Delete failed');
         }
 
         showAlert('Post deleted!', 'success');
@@ -562,7 +615,16 @@
     };
 
     window.editPost = (id) => {
-      alert('Edit feature coming soon!');
+      if (!isValidUUID(id)) {
+        showAlert('Invalid post ID format', 'error');
+        return;
+      }
+      alert('Edit feature coming soon! Post ID: ' + id);
+    };
+
+    window.logout = () => {
+      localStorage.removeItem('ADMIN_API_KEY');
+      window.location.reload();
     };
 
     function showAlert(message, type) {
@@ -583,13 +645,19 @@
       try {
         const res = await fetch(BLOG_API, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ title, category, content, read_time: readTime })
+          headers: getAuthHeaders(),
+          body: JSON.stringify({ 
+            title, 
+            category, 
+            content, 
+            read_time: readTime,
+            owner_id: currentUserId 
+          })
         });
 
         if (!res.ok) {
-          const details = await res.text();
-          throw new Error(details || 'Create failed');
+          const details = await res.json().catch(() => ({ error: 'Create failed' }));
+          throw new Error(details.error || 'Create failed');
         }
 
         e.target.reset();
@@ -600,7 +668,12 @@
       }
     });
 
-    loadSubmissions();
+    // Initialize with auth check
+    checkAuth().then(authenticated => {
+      if (authenticated) {
+        loadSubmissions();
+      }
+    });
   </script>
 </body>
 </html>
