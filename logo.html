@@ -3,7 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex,nofollow" />
   <title>CropCart Logo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
@@ -13,7 +17,7 @@
       flex-direction: column;
       gap: 40px;
       align-items: center;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-family: 'Manrope', 'Segoe UI', sans-serif;
     }
     .logo-container {
       display: flex;
@@ -30,33 +34,22 @@
 <div class="logo-container">
   <h2>Logo Option 1: Horizontal with Text</h2>
   <svg width="320" height="100" viewBox="0 0 320 100" xmlns="http://www.w3.org/2000/svg">
-    <!-- Cart -->
     <g>
-      <!-- Cart body -->
       <rect x="20" y="35" width="50" height="35" fill="none" stroke="#22c55e" stroke-width="2.5" rx="3"/>
-      <!-- Cart handle -->
       <path d="M 25 35 Q 35 15 50 35" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"/>
-      <!-- Wheels -->
       <circle cx="28" cy="72" r="4" fill="#22c55e"/>
       <circle cx="60" cy="72" r="4" fill="#22c55e"/>
-      <!-- Cart axle -->
       <line x1="28" y1="72" x2="60" y2="72" stroke="#22c55e" stroke-width="1"/>
-      
-      <!-- Produce in cart -->
       <!-- Tomato -->
       <circle cx="32" cy="48" r="6" fill="#ef4444"/>
       <line x1="32" y1="42" x2="35" y2="40" stroke="#22c55e" stroke-width="1.5" stroke-linecap="round"/>
-      <!-- Lettuce -->
       <path d="M 45 55 Q 42 50 45 45 Q 48 50 45 55" fill="#22c55e" opacity="0.8"/>
       <path d="M 48 53 Q 46 49 48 44 Q 50 49 48 53" fill="#16a34a"/>
-      <!-- Carrot -->
       <circle cx="38" cy="55" r="4" fill="#ea580c"/>
       <line x1="38" y1="51" x2="40" y2="46" stroke="#22c55e" stroke-width="1.5"/>
     </g>
-    
-    <!-- Text -->
-    <text x="90" y="35" font-size="32" font-weight="800" font-family="Arial, sans-serif" fill="#1a1a1a" letter-spacing="-0.5">Crop</text>
-    <text x="90" y="70" font-size="32" font-weight="800" font-family="Arial, sans-serif" fill="#22c55e" letter-spacing="-0.5">Cart</text>
+    <text x="90" y="35" font-size="32" font-weight="800" font-family="Manrope, 'Segoe UI', sans-serif" fill="#1a1a1a" letter-spacing="-0.5">Crop</text>
+    <text x="90" y="70" font-size="32" font-weight="800" font-family="Manrope, 'Segoe UI', sans-serif" fill="#22c55e" letter-spacing="-0.5">Cart</text>
   </svg>
   <p>Horizontal layout - good for headers</p>
 </div>
@@ -64,26 +57,16 @@
 <div class="logo-container">
   <h2>Logo Option 2: Icon Only (Square)</h2>
   <svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
-    <!-- Background circle -->
     <circle cx="60" cy="60" r="55" fill="#dcfce7" opacity="0.5"/>
-    
-    <!-- Cart -->
     <g transform="translate(60, 60) scale(1.2)">
-      <!-- Cart body -->
       <rect x="-20" y="-15" width="40" height="28" fill="none" stroke="#22c55e" stroke-width="2" rx="2"/>
-      <!-- Cart handle -->
       <path d="M -15 -15 Q -5 -30 15 -15" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round"/>
-      <!-- Wheels -->
       <circle cx="-13" cy="15" r="3.5" fill="#22c55e"/>
       <circle cx="13" cy="15" r="3.5" fill="#22c55e"/>
-      
-      <!-- Produce -->
       <!-- Tomato -->
       <circle cx="-8" cy="-5" r="5" fill="#ef4444"/>
       <line x1="-8" y1="-10" x2="-5" y2="-13" stroke="#22c55e" stroke-width="1.2"/>
-      <!-- Lettuce -->
       <path d="M 5 0 Q 3 -4 5 -8 Q 7 -4 5 0" fill="#22c55e" opacity="0.9"/>
-      <!-- Carrot -->
       <circle cx="0" cy="6" r="3.5" fill="#ea580c"/>
     </g>
   </svg>
@@ -93,30 +76,22 @@
 <div class="logo-container">
   <h2>Logo Option 3: Stacked (Vertical)</h2>
   <svg width="200" height="220" viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg">
-    <!-- Cart -->
     <g transform="translate(100, 60)">
-      <!-- Cart body -->
       <rect x="-25" y="-15" width="50" height="35" fill="none" stroke="#22c55e" stroke-width="2.5" rx="3"/>
-      <!-- Cart handle -->
       <path d="M -20 -15 Q 0 -35 20 -15" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"/>
-      <!-- Wheels -->
       <circle cx="-16" cy="22" r="4.5" fill="#22c55e"/>
       <circle cx="16" cy="22" r="4.5" fill="#22c55e"/>
-      
-      <!-- Produce -->
       <!-- Tomato -->
       <circle cx="-10" cy="0" r="6" fill="#ef4444"/>
       <line x1="-10" y1="-6" x2="-7" y2="-11" stroke="#22c55e" stroke-width="1.5"/>
-      <!-- Lettuce -->
       <path d="M 8 5 Q 5 0 8 -5 Q 11 0 8 5" fill="#22c55e" opacity="0.8"/>
       <path d="M 12 3 Q 10 -1 12 -6 Q 14 -1 12 3" fill="#16a34a"/>
-      <!-- Carrot -->
       <circle cx="2" cy="10" r="4" fill="#ea580c"/>
     </g>
     
     <!-- Text below -->
-    <text x="100" y="155" font-size="42" font-weight="800" font-family="Arial, sans-serif" fill="#1a1a1a" letter-spacing="-1" text-anchor="middle">Crop</text>
-    <text x="100" y="200" font-size="42" font-weight="800" font-family="Arial, sans-serif" fill="#22c55e" letter-spacing="-1" text-anchor="middle">Cart</text>
+    <text x="100" y="155" font-size="42" font-weight="800" font-family="Manrope, 'Segoe UI', sans-serif" fill="#1a1a1a" letter-spacing="-1" text-anchor="middle">Crop</text>
+    <text x="100" y="200" font-size="42" font-weight="800" font-family="Manrope, 'Segoe UI', sans-serif" fill="#22c55e" letter-spacing="-1" text-anchor="middle">Cart</text>
   </svg>
   <p>Stacked layout - good for social media profiles</p>
 </div>

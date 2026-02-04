@@ -10,6 +10,13 @@
   <meta property="og:image" content="favicon-180.png" />
   <meta property="og:url" content="https://cropcartgh.com/farms" />
   <link rel="canonical" href="https://cropcartgh.com/farms" />
+  <meta property="og:site_name" content="CropCart GH" />
+  <meta name="robots" content="index,follow" />
+  <meta name="theme-color" content="#22c55e" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Partner Farms | CropCart GH" />
+  <meta name="twitter:description" content="Verified farms supplying Accra and Kumasi with traceable, cold-chain produce." />
+  <meta name="twitter:image" content="https://cropcartgh.com/favicon-180.png" />
   <meta name="api-base" content="/api" />
   <title>Partner Farms | CropCart GH</title>
   <link rel="icon" type="image/png" sizes="32x32" href="favicon.png" />
@@ -20,6 +27,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="config.js"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-5EFXTJV25C"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-5EFXTJV25C');
+  </script>
   <style>
     :root {
       --bg: #fafbfa;
@@ -524,7 +539,7 @@
     @media (max-width: 620px) {
       nav { padding: 8px 16px; height: auto; min-height: 60px; }
       main { padding: 40px 16px 80px; }
-      .brand { height: 36px; }
+      .brand { height: 48px; }
       .brand-mark { height: 100%; width: auto; }
       .nav-links { width: 100%; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 8px; }
       .nav-links a { font-size: 13px; padding: 4px 6px; }
@@ -603,7 +618,7 @@
       border-radius: var(--radius-sm);
       font-size: 16px;
       font-weight: 700;
-      font-family: 'Manrope', sans-serif;
+      font-family: 'Manrope', 'Segoe UI', sans-serif;
       cursor: pointer;
       transition: all 0.3s ease;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
@@ -715,7 +730,7 @@
       padding: 12px 16px;
       border: 2px solid var(--stroke);
       border-radius: var(--radius-sm);
-      font-family: 'Manrope', sans-serif;
+      font-family: 'Manrope', 'Segoe UI', sans-serif;
       font-size: 15px;
       color: var(--fg);
       transition: border-color 0.2s ease;
@@ -749,7 +764,7 @@
       border-radius: var(--radius-sm);
       font-size: 16px;
       font-weight: 700;
-      font-family: 'Manrope', sans-serif;
+      font-family: 'Manrope', 'Segoe UI', sans-serif;
       cursor: pointer;
       transition: all 0.3s ease;
     }
@@ -787,16 +802,16 @@
 <body>
   <header>
     <nav>
-      <a href="index.html" class="brand" aria-label="CropCart GH">
+      <a href="/" class="brand" aria-label="CropCart GH">
         <img class="brand-mark" src="logo.png" alt="CropCart GH" />
       </a>
       <div class="nav-links">
-        <a href="how-it-works.html">How it works</a>
-        <a href="farms.html" aria-current="page">Partner farms</a>
-        <a href="faq.html">FAQ</a>
-        <a href="waitlist.html">Waitlist</a>
-        <a href="blog.html">Blog</a>
-        <button class="cta-btn" onclick="window.location.href='waitlist.html'">Join waitlist</button>
+        <a href="/how-it-works">How it works</a>
+        <a href="/farms" aria-current="page">Partner farms</a>
+        <a href="/faq">FAQ</a>
+        <a href="/waitlist">Waitlist</a>
+        <a href="/blog">Blog</a>
+        <button class="cta-btn" onclick="window.location.href='/waitlist'">Join waitlist</button>
       </div>
     </nav>
   </header>
@@ -830,7 +845,6 @@
 
 
 
-    <!-- Become a Partner Section -->
     <div class="partner-cta">
       <h2>Become a Partner Farm</h2>
       <p>Join our network of verified farms supplying fresh produce across Ghana. Get access to wholesale buyers and premium pricing.</p>
@@ -869,7 +883,6 @@
     </div>
   </main>
 
-  <!-- Application Modal -->
   <div class="modal" id="application-modal">
     <div class="modal-content">
       <div class="modal-header">
@@ -952,13 +965,11 @@
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <script type="module">
-    // Supabase client - import from CDN
     import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
     const SUPABASE_URL = 'https://djuvkrjotiowrngcjqrm.supabase.co';
     const SUPABASE_KEY = 'sb_publishable_IAdc3pEESUgbCt_sKAE5nQ_9zLGO3Kg';
     const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-    // API helper for farms
     const api = {
       getFarms: async () => {
         const { data, error } = await supabase
@@ -969,7 +980,7 @@
       }
     };
 
-    const API_BASE = (document.querySelector('meta[name="api-base"]')?.content || window.API_BASE || 'http://localhost:3001');
+    const API_BASE = (document.querySelector('meta[name="api-base"]')?.content || window.API_BASE || 'https://cropcartgh.com/api');
     window.API_BASE = API_BASE;
     let allFarms = [];
     let activeLocation = 'all';
@@ -1005,16 +1016,17 @@
       }
     };
 
+    function normalizeList(value) {
+      if (Array.isArray(value)) return value.filter(Boolean);
+      if (typeof value === 'string' && value.trim()) {
+        return value.split(',').map(v => v.trim()).filter(Boolean);
+      }
+      return [];
+    }
+
     async function loadFarms() {
       try {
-        console.log('Starting to load farms...');
-        console.log('API object:', api);
-        
-        // Fetch farms from Supabase
         const { data, error } = await api.getFarms();
-        
-        console.log('Supabase response:', { data, error });
-        
         if (error) {
           throw error;
         }
@@ -1026,14 +1038,17 @@
           return;
         }
 
-        console.log('Loaded farms from Supabase:', data);
-        allFarms = data;
+        allFarms = data.map(farm => ({
+          ...farm,
+          specialties: normalizeList(farm.specialties),
+          certifications: normalizeList(farm.certifications),
+          features: normalizeList(farm.features)
+        }));
         
         updateStats();
         createFilters();
         applyFilters();
       } catch (error) {
-        console.error('Error loading farms:', error);
         document.getElementById('farms-grid').innerHTML = `
           <div class="error">
             Unable to load farms: ${error.message}
@@ -1093,13 +1108,26 @@
       return farms;
     }
 
+    function parseCapacityValue(value) {
+      if (value === null || value === undefined) return null;
+      if (typeof value === 'number' && Number.isFinite(value)) return value;
+      if (typeof value !== 'string') return null;
+      const match = value.replace(/,/g, '').match(/(\d+(?:\.\d+)?)/);
+      return match ? Number(match[1]) : null;
+    }
+
     function updateStats() {
       const regions = new Set(allFarms.map(f => f.location)).size;
-      const totalCapacity = allFarms.length * 60; // Approximate
-      
+      const capacities = allFarms
+        .map(f => parseCapacityValue(f.capacity))
+        .filter(v => typeof v === 'number' && Number.isFinite(v));
+      const totalCapacity = capacities.reduce((sum, v) => sum + v, 0);
+
       document.getElementById('total-farms').textContent = allFarms.length;
       document.getElementById('total-regions').textContent = regions;
-      document.getElementById('total-capacity').textContent = `${totalCapacity}+ cases`;
+      document.getElementById('total-capacity').textContent = totalCapacity > 0
+        ? `${Math.round(totalCapacity)}+ cases/week`
+        : 'Varies by farm';
     }
 
     function createFilters() {
@@ -1227,27 +1255,15 @@
             <span class="feature-pill">Dispatch: Mon/Wed/Fri</span>
           </div>
 
-          <button class="contact-btn" onclick="contactFarm('${farm.id}', '${farm.name}')">
-            Contact Farm
+          <button class="contact-btn" onclick="window.location.href='mailto:info@cropcartgh.com?subject=Order%20from%20${farm.name}'">
+            Request Order
           </button>
         </div>
       `).join('');
 
       document.getElementById('farms-grid').innerHTML = farmsHTML;
     }
-
-    function contactFarm(id, name) {
-      const farm = allFarms.find(f => f.id === id);
-      if (farm && farm.contact) {
-        showToast(`Contact ${name}: ${farm.contact.phone} · ${farm.contact.email}`, 'success');
-      } else {
-        showToast('Contact details not available yet.', 'error');
-      }
-    }
-
-    // Load farms on page load
     loadFarms();
-    // Location hint
     function updateDispatchText() {
       const area = (localStorage.getItem('cc_area') || '').trim();
       const el = document.getElementById('dispatch-text');
@@ -1266,7 +1282,6 @@
       updateDispatchText();
     });
 
-    // Mobile sticky filter button behavior
     function setStickyVisibility() {
       const sticky = document.getElementById('mobile-sticky');
       if (!sticky) return;
@@ -1283,7 +1298,6 @@
       }
     });
 
-    // Header shadow on scroll
     const headerEl = document.querySelector('header');
     let lastScrollY = 0;
     window.addEventListener('scroll', () => {
@@ -1297,7 +1311,6 @@
       lastScrollY = y;
     });
 
-    // Modal functions
     function openApplicationModal() {
       document.getElementById('application-modal').classList.add('active');
       document.body.style.overflow = 'hidden';
@@ -1316,14 +1329,12 @@
       }
     });
 
-    // Close modal on Escape key
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
         closeApplicationModal();
       }
     });
 
-    // Handle form submission
     async function submitApplication(event) {
       event.preventDefault();
       const formEl = event.target;
@@ -1355,7 +1366,6 @@
       submitBtn.innerHTML = '<span style="width:16px;height:16px;border:2px solid rgba(255,255,255,0.6);border-top-color:#fff;border-radius:50%;display:inline-block;margin-right:8px;vertical-align:middle;animation:spin 0.8s linear infinite;"></span>Submitting...';
 
       try {
-        await new Promise((resolve) => setTimeout(resolve, 300));
         
         const { data, error } = await supabase
           .from('farm_applications')
@@ -1372,13 +1382,24 @@
 
         showToast(`Application received for ${applicationData.farmName}. We'll reply to ${applicationData.email}.`, 'success');
         closeApplicationModal();
-      } catch (error) {
-        console.error('Error submitting application:', error);
-        showToast('Failed to submit application. Please try again.', 'error');
+      } catch (error) {        showToast('Failed to submit application. Please try again.', 'error');
         submitBtn.disabled = false;
         submitBtn.textContent = 'Submit Application';
       }
     }
   </script>
+  <!--Start of Tawk.to Script-->
+  <script type="text/javascript">
+  var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+  (function(){
+  var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+  s1.async=true;
+  s1.src='https://embed.tawk.to/6981a1fc3c76db1c37e38a4d/1jgh61gmi';
+  s1.charset='UTF-8';
+  s1.setAttribute('crossorigin','*');
+  s0.parentNode.insertBefore(s1,s0);
+  })();
+  </script>
+  <!--End of Tawk.to Script-->
 </body>
 </html>

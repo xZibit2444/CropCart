@@ -10,6 +10,13 @@
   <meta property="og:image" content="favicon-180.png" />
   <meta property="og:url" content="https://cropcartgh.com/blog" />
   <link rel="canonical" href="https://cropcartgh.com/blog" />
+  <meta property="og:site_name" content="CropCart GH" />
+  <meta name="robots" content="index,follow" />
+  <meta name="theme-color" content="#22c55e" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Blog | CropCart GH" />
+  <meta name="twitter:description" content="Cold-chain learnings, partner farm spotlights, and launch updates from CropCart GH." />
+  <meta name="twitter:image" content="https://cropcartgh.com/favicon-180.png" />
   <meta name="api-base" content="/api" />
   <title>Blog | CropCart GH</title>
   <link rel="icon" type="image/png" sizes="32x32" href="favicon.png" />
@@ -20,6 +27,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-5EFXTJV25C"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-5EFXTJV25C');
+  </script>
   <style>
     :root {
       --bg: #fafbfa;
@@ -130,7 +144,7 @@
       color: white;
       font-weight: 800;
       font-size: 15px;
-      font-family: 'Manrope', sans-serif;
+      font-family: 'Manrope', 'Segoe UI', sans-serif;
       cursor: pointer;
       transition: all 0.3s ease;
       box-shadow: 0 10px 30px rgba(34, 197, 94, 0.25);
@@ -305,7 +319,7 @@
 
     @media (max-width: 620px) {
       nav { padding: 8px 16px; height: auto; min-height: 60px; }
-      .brand { height: 36px; }
+      .brand { height: 48px; }
       .brand-mark { height: 100%; width: auto; }
       .nav-links { width: 100%; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 8px; }
       .nav-links a { font-size: 13px; padding: 4px 6px; }
@@ -319,16 +333,16 @@
 <body>
   <header>
     <nav>
-      <a href="index.html" class="brand" aria-label="CropCart GH">
+      <a href="/" class="brand" aria-label="CropCart GH">
         <img class="brand-mark" src="logo.png" alt="CropCart GH" />
       </a>
       <div class="nav-links">
-        <a href="how-it-works.html">How it works</a>
-        <a href="farms.html">Partner farms</a>
-        <a href="faq.html">FAQ</a>
-        <a href="waitlist.html">Waitlist</a>
-        <a href="blog.html" aria-current="page">Blog</a>
-        <button class="cta-btn" onclick="window.location.href='waitlist.html'">Join waitlist</button>
+        <a href="/how-it-works">How it works</a>
+        <a href="/farms">Partner farms</a>
+        <a href="/faq">FAQ</a>
+        <a href="/waitlist">Waitlist</a>
+        <a href="/blog" aria-current="page">Blog</a>
+        <button class="cta-btn" onclick="window.location.href='/waitlist'">Join waitlist</button>
       </div>
     </nav>
   </header>
@@ -339,8 +353,8 @@
       <h1>CropCart GH Blog</h1>
       <p>Stories from our partner farms, how we keep produce cold and traceable, and the rollout roadmap for Accra and Kumasi.</p>
       <div class="cta-row">
-        <button class="cta-btn" onclick="window.location.href='waitlist.html'">Join the waitlist</button>
-        <button class="cta-btn" style="background:#ffffff; color:#15803d; box-shadow:none;" onclick="window.location.href='faq.html'">Visit FAQ</button>
+        <button class="cta-btn" onclick="window.location.href='/waitlist'">Join the waitlist</button>
+        <button class="cta-btn" style="background:#ffffff; color:#15803d; box-shadow:none;" onclick="window.location.href='/faq'">Visit FAQ</button>
       </div>
     </section>
 
@@ -351,7 +365,7 @@
           <h3>How we keep produce at peak freshness</h3>
           <p>Sealed crates, GPS-enabled reefer routes, and temperature logging from farm gate to kitchen door—here’s our cold-chain blueprint.</p>
           <div class="cta-row">
-            <button class="cta-btn" style="background:#ecfdf3; color:#166534; box-shadow:none;" onclick="window.location.href='faq.html'">Read more</button>
+            <button class="cta-btn" style="background:#ecfdf3; color:#166534; box-shadow:none;" onclick="window.location.href='/faq'">Read more</button>
           </div>
         </article>
         <article class="post-card">
@@ -359,7 +373,7 @@
           <h3>Inside our partner network</h3>
           <p>Meet the growers supplying Accra and Kumasi—audits, soil practices, and harvest standards that set the bar for freshness.</p>
           <div class="cta-row">
-            <button class="cta-btn" style="background:#ecfdf3; color:#166534; box-shadow:none;" onclick="window.location.href='farms.html'">Read more</button>
+            <button class="cta-btn" style="background:#ecfdf3; color:#166534; box-shadow:none;" onclick="window.location.href='/farms'">Read more</button>
           </div>
         </article>
         <article class="post-card">
@@ -367,7 +381,7 @@
           <h3>Q1 rollout roadmap</h3>
           <p>Where we’re opening first, how to get early access, and what to expect from pricing and delivery windows.</p>
           <div class="cta-row">
-            <button class="cta-btn" style="background:#ecfdf3; color:#166534; box-shadow:none;" onclick="window.location.href='waitlist.html'">Read more</button>
+            <button class="cta-btn" style="background:#ecfdf3; color:#166534; box-shadow:none;" onclick="window.location.href='/waitlist'">Read more</button>
           </div>
         </article>
         <article class="post-card">
@@ -375,7 +389,7 @@
           <h3>Grading and traceability 101</h3>
           <p>How we grade produce at source, tag lots, and keep traceability intact across hubs so chefs know exactly what they’re plating.</p>
           <div class="cta-row">
-            <button class="cta-btn" style="background:#ecfdf3; color:#166534; box-shadow:none;" onclick="window.location.href='faq.html#quality'">Read more</button>
+            <button class="cta-btn" style="background:#ecfdf3; color:#166534; box-shadow:none;" onclick="window.location.href='/faq#quality'">Read more</button>
           </div>
         </article>
         <article class="post-card">
@@ -383,7 +397,7 @@
           <h3>Chef playbook: ordering for consistency</h3>
           <p>Order cadence, buffer planning, and substitutions—how to use CropCart GH to keep menus consistent even in peak season swings.</p>
           <div class="cta-row">
-            <button class="cta-btn" style="background:#ecfdf3; color:#166534; box-shadow:none;" onclick="window.location.href='how-it-works.html'">Read more</button>
+            <button class="cta-btn" style="background:#ecfdf3; color:#166534; box-shadow:none;" onclick="window.location.href='/how-it-works'">Read more</button>
           </div>
         </article>
       </div>
@@ -403,9 +417,7 @@
           .select('*')
           .order('created_at', { ascending: false });
 
-        if (error) {
-          console.error('Error loading posts:', error);
-          return;
+        if (error) {          return;
         }
 
         if (!data || data.length === 0) {
@@ -428,12 +440,23 @@
         }).join('');
 
         document.querySelector('.blog-grid').innerHTML = postsHTML;
-      } catch (error) {
-        console.error('Error:', error);
-      }
+      } catch (error) {      }
     }
 
     loadBlogPosts();
   </script>
+  <!--Start of Tawk.to Script-->
+  <script type="text/javascript">
+  var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+  (function(){
+  var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+  s1.async=true;
+  s1.src='https://embed.tawk.to/6981a1fc3c76db1c37e38a4d/1jgh61gmi';
+  s1.charset='UTF-8';
+  s1.setAttribute('crossorigin','*');
+  s0.parentNode.insertBefore(s1,s0);
+  })();
+  </script>
+  <!--End of Tawk.to Script-->
 </body>
 </html>

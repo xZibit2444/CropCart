@@ -10,6 +10,13 @@
   <meta property="og:image" content="favicon-180.png" />
   <meta property="og:url" content="https://cropcartgh.com/waitlist" />
   <link rel="canonical" href="https://cropcartgh.com/waitlist" />
+  <meta property="og:site_name" content="CropCart GH" />
+  <meta name="robots" content="index,follow" />
+  <meta name="theme-color" content="#22c55e" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Join Waitlist | CropCart GH" />
+  <meta name="twitter:description" content="Join the CropCart GH waitlist for early access to farm-direct, cold-chain produce in Accra and Kumasi." />
+  <meta name="twitter:image" content="https://cropcartgh.com/favicon-180.png" />
   <meta name="api-base" content="/api" />
   <title>Join Waitlist | CropCart GH</title>
   <link rel="icon" type="image/png" sizes="32x32" href="favicon.png" />
@@ -20,6 +27,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="config.js"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-5EFXTJV25C"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-5EFXTJV25C');
+  </script>
   <style>
     :root {
       --bg: #fafbfa;
@@ -170,7 +185,7 @@
       color: white;
       font-weight: 800;
       font-size: 15px;
-      font-family: 'Manrope', sans-serif;
+      font-family: 'Manrope', 'Segoe UI', sans-serif;
       cursor: pointer;
       transition: all 0.3s ease;
       box-shadow: 0 10px 30px rgba(34, 197, 94, 0.25);
@@ -280,7 +295,7 @@
       padding: 12px 14px;
       border: 2px solid var(--stroke);
       border-radius: var(--radius-sm);
-      font-family: 'Manrope', sans-serif;
+      font-family: 'Manrope', 'Segoe UI', sans-serif;
       font-size: 15px;
       color: var(--fg);
       transition: border-color 0.2s ease;
@@ -360,7 +375,7 @@
 
     @media (max-width: 600px) {
       nav { padding: 8px 16px; height: auto; min-height: 60px; }
-      .brand { height: 36px; }
+      .brand { height: 48px; }
       .brand-mark { height: 100%; width: auto; }
       .nav-links { width: 100%; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 8px; }
       .nav-links a { font-size: 13px; padding: 4px 6px; }
@@ -376,16 +391,16 @@
 <body>
   <header>
     <nav>
-      <a href="index.html" class="brand" aria-label="CropCart GH">
+      <a href="/" class="brand" aria-label="CropCart GH">
         <img class="brand-mark" src="logo.png" alt="CropCart GH" />
       </a>
       <div class="nav-links">
-        <a href="how-it-works.html">How it works</a>
-        <a href="farms.html">Partner farms</a>
-        <a href="faq.html">FAQ</a>
-        <a href="waitlist.html" aria-current="page">Waitlist</a>
-        <a href="blog.html">Blog</a>
-        <button class="cta-btn" onclick="window.location.href='waitlist.html'">Join waitlist</button>
+        <a href="/how-it-works">How it works</a>
+        <a href="/farms">Partner farms</a>
+        <a href="/faq">FAQ</a>
+        <a href="/waitlist" aria-current="page">Waitlist</a>
+        <a href="/blog">Blog</a>
+        <button class="cta-btn" onclick="window.location.href='/waitlist'">Join waitlist</button>
       </div>
     </nav>
   </header>
@@ -423,7 +438,7 @@
             </div>
             <div class="form-group">
               <label for="email">Email *</label>
-              <input type="email" id="email" name="email" required placeholder="you@example.com" />
+              <input type="email" id="email" name="email" required placeholder="you@cropcartgh.com" />
               <div class="field-error" data-error-for="email"></div>
             </div>
           </div>
@@ -501,10 +516,9 @@
   <script type="module">
     import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
     
-    const API_BASE = (document.querySelector('meta[name="api-base"]')?.content || window.API_BASE || 'http://localhost:3001');
+    const API_BASE = (document.querySelector('meta[name="api-base"]')?.content || window.API_BASE || 'https://cropcartgh.com/api');
     window.API_BASE = API_BASE;
 
-    // Supabase client
     const SUPABASE_URL = 'https://djuvkrjotiowrngcjqrm.supabase.co';
     const SUPABASE_KEY = 'sb_publishable_IAdc3pEESUgbCt_sKAE5nQ_9zLGO3Kg';
     const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -573,9 +587,7 @@
       statusEl.style.display = 'none';
 
       try {
-        await new Promise((resolve) => setTimeout(resolve, 300));
 
-        // Add to waitlist table with all form fields
         const { data, error } = await supabase
           .from('waitlist')
           .insert([{ 
@@ -589,7 +601,6 @@
 
         if (error) throw error;
 
-        // Also add to newsletter if they consented
         if (payload.newsletterConsent) {
           await supabase
             .from('newsletter')
@@ -605,11 +616,9 @@
         submitBtn.innerHTML = '<span class="spinner" aria-hidden="true"></span>Redirecting...';
         showToast('You\'re on the waitlist. Check your email for updates!', 'success');
         setTimeout(() => {
-          window.location.href = 'index.html';
+          window.location.href = '/';
         }, 800);
-      } catch (err) {
-        console.error('Waitlist error', err);
-        if (err.message.includes('duplicate')) {
+      } catch (err) {        if (err.message.includes('duplicate')) {
           statusEl.textContent = 'This email is already on our waitlist!';
           showToast('Email already registered.', 'error');
         } else {
@@ -626,5 +635,18 @@
       }
     });
   </script>
+  <!--Start of Tawk.to Script-->
+  <script type="text/javascript">
+  var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+  (function(){
+  var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+  s1.async=true;
+  s1.src='https://embed.tawk.to/6981a1fc3c76db1c37e38a4d/1jgh61gmi';
+  s1.charset='UTF-8';
+  s1.setAttribute('crossorigin','*');
+  s0.parentNode.insertBefore(s1,s0);
+  })();
+  </script>
+  <!--End of Tawk.to Script-->
 </body>
 </html>

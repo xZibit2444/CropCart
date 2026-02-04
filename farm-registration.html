@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Join CropCart as a farm partner. Pre-register your farm to grow with us." />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Farm Registration | CropCart GH" />
+  <meta property="og:description" content="Pre-register your farm as a CropCart partner." />
+  <meta property="og:url" content="https://cropcartgh.com/farm-registration" />
+  <link rel="canonical" href="https://cropcartgh.com/farm-registration" />
+  <meta property="og:site_name" content="CropCart GH" />
+  <meta name="robots" content="index,follow" />
+  <meta name="theme-color" content="#22c55e" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Farm Registration | CropCart GH" />
+  <meta name="twitter:description" content="Pre-register your farm as a CropCart partner." />
+  <meta name="twitter:image" content="https://cropcartgh.com/favicon-180.png" />
+  <meta name="api-base" content="/api" />
+  <title>Farm Registration | CropCart GH</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="config.js"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-5EFXTJV25C"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-5EFXTJV25C');
+  </script>
+  <style>
+    :root {
+      --bg: #fafbfa;
+      --fg: #1a1a1a;
+      --muted: #6b7280;
+      --accent: #22c55e;
+      --accent-strong: #16a34a;
+      --accent-light: #dcfce7;
+      --card: #ffffff;
+      --stroke: #e5e7eb;
+      --shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+      --shadow-soft: 0 4px 16px rgba(0, 0, 0, 0.06);
+      --max-width: 800px;
+      --radius: 16px;
+      --radius-sm: 12px;
+      --header-height: 80px;
+      --success: #166534;
+      --error: #b91c1c;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: 'Manrope', 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.6;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      height: var(--header-height);
+      background: rgba(250, 251, 250, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--stroke);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      z-index: 1000;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      height: 100px;
+      text-decoration: none;
+      flex-shrink: 1;
+      min-width: 0;
+    }
+    .brand-mark {
+      width: 1100px;
+      height: 300px;
+      max-width: 100%;
+      display: block;
+      object-fit: contain;
+      object-position: left;
+    }
+    .brand:hover { opacity: 0.9; }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--fg);
+      font-weight: 500;
+      font-size: 15px;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+
+    .cta-btn {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background 0.2s;
+    }
+
+    .cta-btn:hover { background: var(--accent-strong); }
+
+    main {
+      margin-top: var(--header-height);
+      padding: 64px 24px 80px;
+      max-width: var(--max-width);
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .form-header {
+      text-align: center;
+      margin-bottom: 56px;
+      padding-bottom: 32px;
+      border-bottom: 2px solid var(--stroke);
+    }
+
+    .form-header h1 {
+      margin: 0;
+      font-size: 56px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, var(--fg) 0%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .form-header p {
+      font-size: 19px;
+      color: var(--muted);
+      margin: 0;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.7;
+    }
+
+    .form-section {
+      background: var(--card);
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+      padding: 40px;
+      margin-bottom: 28px;
+      box-shadow: var(--shadow-soft);
+      transition: box-shadow 0.3s, transform 0.3s;
+    }
+
+    .form-section:hover {
+      box-shadow: var(--shadow);
+      transform: translateY(-2px);
+    }
+
+    .section-title {
+      font-size: 20px;
+      font-weight: 800;
+      margin: 0 0 28px 0;
+      color: var(--fg);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-title::before {
+      content: '';
+      width: 4px;
+      height: 24px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .form-row.full {
+      grid-template-columns: 1fr;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 10px;
+      font-size: 14px;
+      color: var(--fg);
+    }
+
+    input, select, textarea {
+      padding: 14px 16px;
+      border: 2px solid var(--stroke);
+      border-radius: var(--radius-sm);
+      font-family: 'Manrope', 'Segoe UI', sans-serif;
+      font-size: 15px;
+      transition: all 0.2s;
+      background: var(--bg);
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.12);
+      background: var(--card);
+      transform: translateY(-1px);
+    }
+
+    input:hover, select:hover, textarea:hover {
+      border-color: #d1d5db;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .field-error {
+      display: none;
+      color: var(--error);
+      font-size: 12px;
+      margin-top: 6px;
+    }
+
+    .input-error {
+      border-color: var(--error) !important;
+    }
+
+    .checkbox-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .checkbox-item input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+
+    .checkbox-item label {
+      margin: 0;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 16px;
+      margin-top: 32px;
+    }
+
+    .submit-btn {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 16px 32px;
+      border-radius: var(--radius-sm);
+      font-weight: 700;
+      font-size: 17px;
+      cursor: pointer;
+      transition: all 0.3s;
+      flex: 1;
+      box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .submit-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .submit-btn:hover {
+      background: var(--accent-strong);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(34, 197, 94, 0.4);
+    }
+
+    .submit-btn:hover::before {
+      left: 100%;
+    }
+
+    .submit-btn:active {
+      transform: translateY(0);
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }32px;
+      transition: all 0.3s;
+      padding: 8px 12px;
+      border-radius: 8px;
+    }
+
+    .back-link:hover {
+      gap: 12px;
+      background: var(--accent-light);
+      padding-left: 8px;
+   
+    }
+
+    .submit-btn.loading::after {
+      content: '';
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      top: 50%;
+      left: 50%;
+      margin-left: -8px;
+      margin-top: -8px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 0.6s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+      margin-bottom: 24px;
+      transition: gap 0.2s;
+    }
+
+    .back-link:hover { gap: 12px; }
+
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--fg);
+      color: white;
+      padding: 16px 24px;
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow);
+      display: none;
+      z-index: 2000;
+      max-width: 400px;
+    }
+
+    .toast.show { display: block; }
+    .toast.success { background: var(--success); }
+    .toast.error { background: var(--error); }
+
+    @media (max-width: 900px) {
+      nav { padding: 0 20px; }
+      .nav-links { gap: 16px; }
+      main { padding: 32px 16px; }
+      .form-header h1 { font-size: 36px; }
+    }
+4px 16px 60px; }
+      .form-header { margin-bottom: 40px; padding-bottom: 24px; }
+      .form-header h1 { font-size: 32px; }
+      .form-header p { font-size: 16px; }
+      .form-section { padding: 24px 20px; margin-bottom: 20px; }
+      .section-title { font-size: 18px; }
+      .form-row { grid-template-columns: 1fr; gap: 16px; }
+      input, select, textarea { font-size: 16px; min-height: 48px; }
+      .form-actions { flex-direction: column; }
+      .submit-btn { width: 100%; padding: 18px 32px; }
+      .form-header h1 { font-size: 28px; }
+      .form-section { padding: 20px; }
+      .form-row { grid-template-columns: 1fr; }
+      input, select, textarea { font-size: 16px; min-height: 48px; }
+      .form-actions { flex-direction: column; }
+      .submit-btn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="/" class="brand">
+      <img class="brand-mark" src="logo.png" alt="CropCart GH" />
+    </a>
+  </nav>
+
+  <main>
+    <a href="/" class="back-link">← Back to home</a>
+
+    <div class="form-header">
+      <h1>Become a Farm Partner</h1>
+      <p>Join our network of verified farms. Fill out the form below and we'll contact you soon.</p>
+    </div>
+
+    <form id="farm-registration-form" novalidate>
+      <div class="form-section">
+        <h3 class="section-title">Farm Information</h3>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="farm-name">Farm Name *</label>
+            <input type="text" id="farm-name" name="farm_name" required placeholder="e.g., Max Pines Farm" />
+            <div class="field-error" data-error-for="farm_name"></div>
+          </div>
+          <div class="form-group">
+            <label for="location">Location/District *</label>
+            <input type="text" id="location" name="location" required placeholder="e.g., Aburi" />
+            <div class="field-error" data-error-for="location"></div>
+          </div>
+        </div>
+
+        <div class="form-row full">
+          <div class="form-group">
+            <label for="products">What do you grow/produce? *</label>
+            <input type="text" id="products" name="products" required placeholder="e.g., Pineapples, Poultry, Peppers" />
+            <div class="field-error" data-error-for="products"></div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="scale">Farm Scale *</label>
+            <select id="scale" name="scale" required>
+              <option value="">Select scale</option>
+              <option value="Small Scale">Small Scale</option>
+              <option value="Medium Scale">Medium Scale</option>
+              <option value="Medium - Large Scale">Medium - Large Scale</option>
+              <option value="Large Scale">Large Scale</option>
+            </select>
+            <div class="field-error" data-error-for="scale"></div>
+          </div>
+          <div class="form-group">
+            <label for="monthly-capacity">Monthly Capacity (kg)</label>
+            <input type="text" id="monthly-capacity" name="monthly_capacity" placeholder="e.g., 5000" />
+            <div class="field-error" data-error-for="monthly_capacity"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3 class="section-title">Contact Information</h3>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="contact-name">Your Name *</label>
+            <input type="text" id="contact-name" name="contact_name" required placeholder="Full name" />
+            <div class="field-error" data-error-for="contact_name"></div>
+          </div>
+          <div class="form-group">
+            <label for="contact-phone">Phone Number *</label>
+            <input type="tel" id="contact-phone" name="contact_phone" required placeholder="0594599213" />
+            <div class="field-error" data-error-for="contact_phone"></div>
+          </div>
+        </div>
+
+        <div class="form-row full">
+          <div class="form-group">
+            <label for="contact-email">Email Address *</label>
+            <input type="email" id="contact-email" name="contact_email" required placeholder="you@cropcartgh.com" />
+            <div class="field-error" data-error-for="contact_email"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3 class="section-title">Additional Information</h3>
+
+        <div class="form-row full">
+          <div class="form-group">
+            <label for="certifications">Do you have any certifications? (Optional)</label>
+            <input type="text" id="certifications" name="certifications" placeholder="e.g., Organic, Fair Trade, etc." />
+            <div class="field-error" data-error-for="certifications"></div>
+          </div>
+        </div>
+
+        <div class="form-row full">
+          <div class="form-group">
+            <label for="message">Tell us about your farm (Optional)</label>
+            <textarea id="message" name="message" placeholder="Any additional information you'd like to share..."></textarea>
+            <div class="field-error" data-error-for="message"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="submit-btn" id="submit-btn">Submit Application</button>
+      </div>
+    </form>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+    const supabase = createClient(window.VITE_SUPABASE_URL, window.VITE_SUPABASE_ANON_KEY);
+
+    const form = document.getElementById('farm-registration-form');
+    const submitBtn = document.getElementById('submit-btn');
+    const toast = document.getElementById('toast');
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    function setFieldError(fieldName, message) {
+      const errorEl = document.querySelector(`[data-error-for="${fieldName}"]`);
+      const input = document.querySelector(`[name="${fieldName}"]`);
+      if (message) {
+        input?.classList.add('input-error');
+        if (errorEl) { errorEl.textContent = message; errorEl.style.display = 'block'; }
+      } else {
+        input?.classList.remove('input-error');
+        if (errorEl) { errorEl.textContent = ''; errorEl.style.display = 'none'; }
+      }
+    }
+
+    function showToast(message, type = 'success') {
+      toast.textContent = message;
+      toast.className = `toast show ${type}`;
+      setTimeout(() => toast.classList.remove('show'), 4000);
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      document.querySelectorAll('.field-error').forEach(el => {
+        el.textContent = '';
+        el.style.display = 'none';
+      });
+      document.querySelectorAll('.input-error').forEach(el => el.classList.remove('input-error'));
+
+      const farmName = document.getElementById('farm-name').value.trim();
+      const location = document.getElementById('location').value.trim();
+      const products = document.getElementById('products').value.trim();
+      const scale = document.getElementById('scale').value.trim();
+      const contactName = document.getElementById('contact-name').value.trim();
+      const contactPhone = document.getElementById('contact-phone').value.trim();
+      const contactEmail = document.getElementById('contact-email').value.trim();
+
+      let hasError = false;
+
+      if (!farmName) { setFieldError('farm_name', 'Farm name is required.'); hasError = true; }
+      if (!location) { setFieldError('location', 'Location is required.'); hasError = true; }
+      if (!products) { setFieldError('products', 'Please tell us what you produce.'); hasError = true; }
+      if (!scale) { setFieldError('scale', 'Please select a farm scale.'); hasError = true; }
+      if (!contactName) { setFieldError('contact_name', 'Name is required.'); hasError = true; }
+      if (!contactPhone) { setFieldError('contact_phone', 'Phone number is required.'); hasError = true; }
+      if (!contactEmail) { setFieldError('contact_email', 'Email is required.'); hasError = true; }
+      if (!emailPattern.test(contactEmail)) { setFieldError('contact_email', 'Please enter a valid email.'); hasError = true; }
+
+      if (hasError) return;
+
+      submitBtn.disabled = true;
+      submitBtn.classList.add('loading');
+
+      try {
+        const { data, error } = await supabase
+          .from('farm_applications')
+          .insert([{
+            farm_name: farmName,
+            location: location,
+            products: products,
+            scale: scale,
+            monthly_capacity: document.getElementById('monthly-capacity').value.trim() || null,
+            contact_name: contactName,
+            contact_phone: contactPhone,
+            contact_email: contactEmail,
+            certifications: document.getElementById('certifications').value.trim() || null,
+            message: document.getElementById('message').value.trim() || null,
+            created_at: new Date().toISOString()
+          }])
+          .select();
+
+        if (error) throw error;
+
+        showToast('Thank you! We received your application. We\'ll contact you soon.', 'success');
+        form.reset();
+        document.querySelectorAll('.input-error').forEach(el => el.classList.remove('input-error'));
+      } catch (error) {        showToast('Error submitting application. Please try again.', 'error');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.classList.remove('loading');
+      }
+    });
+  </script>
+  <!--Start of Tawk.to Script-->
+  <script type="text/javascript">
+  var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+  (function(){
+  var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+  s1.async=true;
+  s1.src='https://embed.tawk.to/6981a1fc3c76db1c37e38a4d/1jgh61gmi';
+  s1.charset='UTF-8';
+  s1.setAttribute('crossorigin','*');
+  s0.parentNode.insertBefore(s1,s0);
+  })();
+  </script>
+  <!--End of Tawk.to Script-->
+</body>
+</html>

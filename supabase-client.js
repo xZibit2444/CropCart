@@ -1,8 +1,8 @@
 // Supabase client initialization
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
 
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || localStorage.getItem('SUPABASE_URL');
-const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || localStorage.getItem('SUPABASE_ANON_KEY');
+const SUPABASE_URL = window.VITE_SUPABASE_URL || import.meta.env.VITE_SUPABASE_URL || localStorage.getItem('SUPABASE_URL');
+const SUPABASE_ANON_KEY = window.VITE_SUPABASE_ANON_KEY || import.meta.env.VITE_SUPABASE_ANON_KEY || localStorage.getItem('SUPABASE_ANON_KEY');
 
 if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
   console.warn('Supabase credentials not configured. Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY');

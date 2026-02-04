@@ -10,6 +10,13 @@
   <meta property="og:image" content="favicon-180.png" />
   <meta property="og:url" content="https://cropcartgh.com/faq" />
   <link rel="canonical" href="https://cropcartgh.com/faq" />
+  <meta property="og:site_name" content="CropCart GH" />
+  <meta name="robots" content="index,follow" />
+  <meta name="theme-color" content="#22c55e" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="FAQ | CropCart GH" />
+  <meta name="twitter:description" content="Answers to common questions about CropCart GH's farm-direct cold-chain delivery." />
+  <meta name="twitter:image" content="https://cropcartgh.com/favicon-180.png" />
   <meta name="api-base" content="/api" />
   <title>FAQ | CropCart GH</title>
   <link rel="icon" type="image/png" sizes="32x32" href="favicon.png" />
@@ -20,6 +27,54 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="config.js"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-5EFXTJV25C"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-5EFXTJV25C');
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is CropCart GH?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "CropCart GH connects verified farms directly to wholesale buyers, restaurants, and institutions in Accra and Kumasi, delivering fresh produce within 12 hours of harvest with GPS tracking and temperature monitoring."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "When does CropCart GH launch?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We're launching in Q2 2026 with early access for waitlist members."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which areas do you serve?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "At launch, we focus on Accra and surrounding areas within 200km of verified farms, with expansion to Kumasi and other regions planned." 
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What's the minimum order size?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Minimum order sizes vary by buyer type and delivery route. We'll confirm the minimum for your location when you request a quote."
+          }
+        }
+      ]
+    }
+  </script>
   <style>
     :root {
       --bg: #fafbfa;
@@ -133,7 +188,7 @@
       color: white;
       font-weight: 700;
       font-size: 15px;
-      font-family: 'Manrope', sans-serif;
+      font-family: 'Manrope', 'Segoe UI', sans-serif;
       cursor: pointer;
       transition: all 0.3s ease;
     }
@@ -181,7 +236,7 @@
       border: 2px solid var(--stroke);
       background: white;
       border-radius: 999px;
-      font-family: 'Manrope', sans-serif;
+      font-family: 'Manrope', 'Segoe UI', sans-serif;
       font-size: 14px;
       font-weight: 600;
       color: var(--fg);
@@ -225,7 +280,7 @@
       background: none;
       border: none;
       text-align: left;
-      font-family: 'Manrope', sans-serif;
+      font-family: 'Manrope', 'Segoe UI', sans-serif;
       font-size: 18px;
       font-weight: 700;
       color: var(--fg);
@@ -329,7 +384,7 @@
     @media (max-width: 620px) {
       nav { padding: 8px 16px; height: auto; min-height: 60px; }
       main { padding: 40px 16px 80px; }
-      .brand { height: 36px; }
+      .brand { height: 48px; }
       .brand-mark { height: 100%; width: auto; }
       .nav-links { width: 100%; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 8px; }
       .nav-links a { font-size: 13px; padding: 4px 6px; }
@@ -345,16 +400,16 @@
 <body>
   <header>
     <nav>
-      <a href="index.html" class="brand" aria-label="CropCart GH">
+      <a href="/" class="brand" aria-label="CropCart GH">
         <img class="brand-mark" src="logo.png" alt="CropCart GH" />
       </a>
       <div class="nav-links">
-        <a href="how-it-works.html">How it works</a>
-        <a href="farms.html">Partner farms</a>
-        <a href="faq.html" aria-current="page">FAQ</a>
-        <a href="waitlist.html">Waitlist</a>
-        <a href="blog.html">Blog</a>
-        <button class="cta-btn" onclick="window.location.href='waitlist.html'">Join waitlist</button>
+        <a href="/how-it-works">How it works</a>
+        <a href="/farms">Partner farms</a>
+        <a href="/faq" aria-current="page">FAQ</a>
+        <a href="/waitlist">Waitlist</a>
+        <a href="/blog">Blog</a>
+        <button class="cta-btn" onclick="window.location.href='/waitlist'">Join waitlist</button>
       </div>
     </nav>
   </header>
@@ -375,7 +430,6 @@
     </div>
 
     <div class="faq-list" id="faq-list">
-      <!-- General -->
       <div class="faq-item" data-category="general">
         <button class="faq-question">
           <span>What is CropCart GH?</span>
@@ -400,7 +454,7 @@
           </div>
         </button>
         <div class="faq-answer">
-          <p>We're launching in Q1 2025 with early access for waitlist members. Join our waitlist today to be among the first to access farm-fresh produce with guaranteed cold-chain delivery.</p>
+          <p>We're launching in Q2 2026 with early access for waitlist members. Join our waitlist today to be among the first to access farm-fresh produce with guaranteed cold-chain delivery.</p>
         </div>
       </div>
 
@@ -417,8 +471,6 @@
           <p>At launch, we're focusing on Accra and surrounding areas within 200km of verified farms. We're actively mapping farms and delivery routes for expansion to Kumasi and other regions in 2025.</p>
         </div>
       </div>
-
-      <!-- Ordering -->
       <div class="faq-item" data-category="ordering">
         <button class="faq-question">
           <span>How do I place an order?</span>
@@ -443,7 +495,7 @@
           </div>
         </button>
         <div class="faq-answer">
-          <p>We're designed for wholesale and institutional buyers. Minimum order will be GH₵500 to ensure efficient cold-chain logistics. For individual consumers, we recommend checking back in late 2025 when we expand to retail orders.</p>
+          <p>We're designed for wholesale and institutional buyers. Minimum order sizes vary by buyer type and delivery route to keep cold-chain logistics efficient. We'll confirm the minimum for your location when you request a quote.</p>
         </div>
       </div>
 
@@ -460,8 +512,6 @@
           <p>Yes! Our platform shows you which farms are supplying each item. You can filter by farm, certification type, or specialty. All farms are verified and audited quarterly for quality standards.</p>
         </div>
       </div>
-
-      <!-- Delivery -->
       <div class="faq-item" data-category="delivery">
         <button class="faq-question">
           <span>How fast is delivery?</span>
@@ -492,20 +542,6 @@
 
       <div class="faq-item" data-category="delivery">
         <button class="faq-question">
-          <span>What if I'm not satisfied with the quality?</span>
-          <div class="faq-icon">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path d="M19 9l-7 7-7-7"/>
-            </svg>
-          </div>
-        </button>
-        <div class="faq-answer">
-          <p>We have a quality guarantee. If produce doesn't meet our standards at delivery, you can refuse the shipment or specific items. We'll issue a full credit or refund within 24 hours. All farms are graded based on quality metrics.</p>
-        </div>
-      </div>
-
-      <div class="faq-item" data-category="delivery">
-        <button class="faq-question">
           <span>Can I schedule recurring deliveries?</span>
           <div class="faq-icon">
             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -517,8 +553,6 @@
           <p>Yes! Restaurants and institutions can set up weekly or bi-weekly standing orders. You'll have flexibility to modify quantities or skip deliveries as needed through our dashboard.</p>
         </div>
       </div>
-
-      <!-- Farmers -->
       <div class="faq-item" data-category="farmers">
         <button class="faq-question">
           <span>How do I become a partner farm?</span>
@@ -567,8 +601,6 @@
           <p>Farms receive payment immediately upon successful delivery via mobile money or bank transfer. Pricing is transparent and set above market rates to ensure fair compensation for quality and cold-chain compliance.</p>
         </div>
       </div>
-
-      <!-- Pricing -->
       <div class="faq-item" data-category="pricing">
         <button class="faq-question">
           <span>How is pricing determined?</span>
@@ -593,7 +625,7 @@
           </div>
         </button>
         <div class="faq-answer">
-          <p>Delivery is free for orders above GH₵2,000. For orders between GH₵500-2,000, there's a flat GH₵50 delivery fee to cover cold-chain logistics. All pricing will be finalized before launch.</p>
+          <p>Delivery fees apply and are based on route, volume, and cold-chain requirements. We’ll confirm the delivery fee with your quote before you place an order.</p>
         </div>
       </div>
 
@@ -615,15 +647,14 @@
     <div class="cta-section">
       <h2>Still have questions?</h2>
       <p>Join our waitlist and our team will reach out with more details</p>
-      <button class="cta-btn" onclick="window.location.href='waitlist.html'">Join Early Access</button>
+      <button class="cta-btn" onclick="window.location.href='/waitlist'">Join Early Access</button>
     </div>
   </main>
 
   <script>
-    const API_BASE = (document.querySelector('meta[name="api-base"]')?.content || window.API_BASE || 'http://localhost:3001');
+    const API_BASE = (document.querySelector('meta[name="api-base"]')?.content || window.API_BASE || 'https://cropcartgh.com/api');
     window.API_BASE = API_BASE;
 
-    // Load FAQs from backend
     async function loadFAQs() {
       try {
         const response = await fetch(`${API_BASE}/api/faqs`);
@@ -684,12 +715,8 @@
     document.querySelectorAll('.category-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const category = btn.dataset.category;
-        
-        // Update active button
         document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        
-        // Filter FAQ items
         document.querySelectorAll('.faq-item').forEach(item => {
           if (category === 'all' || item.dataset.category === category) {
             item.style.display = 'block';
@@ -715,5 +742,18 @@
       lastScrollY = y;
     });
   </script>
+  <!--Start of Tawk.to Script-->
+  <script type="text/javascript">
+  var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+  (function(){
+  var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+  s1.async=true;
+  s1.src='https://embed.tawk.to/6981a1fc3c76db1c37e38a4d/1jgh61gmi';
+  s1.charset='UTF-8';
+  s1.setAttribute('crossorigin','*');
+  s0.parentNode.insertBefore(s1,s0);
+  })();
+  </script>
+  <!--End of Tawk.to Script-->
 </body>
 </html>
