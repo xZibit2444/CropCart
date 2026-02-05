@@ -7,7 +7,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Get Early Access | CropCart GH" />
   <meta property="og:description" content="Join the early access queue for Ghana-grown produce with sealed cold-chain and traceability." />
-  <meta property="og:image" content="favicon-180.png" />
+  <meta property="og:image" content="https://cropcartgh.com/apple-touch-icon.png" />
   <meta property="og:url" content="https://cropcartgh.com/early-access" />
   <link rel="canonical" href="https://cropcartgh.com/early-access" />
   <meta property="og:site_name" content="CropCart GH" />
@@ -16,13 +16,12 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Early Access | CropCart GH" />
   <meta name="twitter:description" content="Get early access to CropCart GH's farm-direct, cold-chain delivery network." />
-  <meta name="twitter:image" content="https://cropcartgh.com/favicon-180.png" />
+  <meta name="twitter:image" content="https://cropcartgh.com/apple-touch-icon.png" />
   <meta name="api-base" content="/api" />
   <title>Get Early Access | CropCart GH</title>
   <link rel="icon" type="image/png" sizes="32x32" href="favicon.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="favicon.png" />
   <link rel="shortcut icon" href="favicon.png" />
-  <link rel="apple-touch-icon" sizes="180x180" href="favicon.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -189,6 +188,31 @@
     .helper { color:var(--muted); font-size:13px; }
     .list { margin:0; padding-left:18px; color:var(--muted); }
 
+    .site-footer {
+      border-top: 1px solid var(--stroke);
+      margin-top: 64px;
+      padding: 24px;
+      background: #ffffff;
+    }
+    .site-footer .footer-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .site-footer .footer-links { display: flex; gap: 16px; }
+    .site-footer .footer-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .site-footer .footer-links a:hover { color: var(--fg); }
+
     @media (max-width:900px) { .hero-card { padding:32px; } .hero-card h1 { font-size:32px; } nav { flex-wrap: wrap; gap: 12px; padding: 0 16px; } .nav-links { flex-wrap: wrap; justify-content: flex-start; gap: 8px; } .nav-links a { padding: 6px 4px; font-size: 14px; } .cta-btn { padding: 10px 16px; font-size: 14px; } }
     @media (max-width:600px) { nav { padding: 8px 16px; height: auto; min-height: 60px; } .brand { height: 48px; } .brand-mark { height: 100%; width: auto; } .nav-links { width: 100%; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 8px; } .nav-links a { font-size: 13px; padding: 4px 6px; } .cta-btn { padding: 10px 14px; font-size: 13px; min-height: 44px; } main { padding: 40px 16px 72px; } .hero-card { border-radius: 12px; padding: 24px; } .hero-card h1 { font-size: 28px; } input, select, textarea { font-size: 16px; padding: 14px; min-height: 48px; } }
   </style>
@@ -273,6 +297,16 @@
       <p class="helper" style="margin-top:12px">Prefer email? Write to <a href="mailto:info@cropcartgh.com">info@cropcartgh.com</a>.</p>
     </div>
   </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span>© 2026 CropCart GH. All rights reserved.</span>
+      <div class="footer-links">
+        <a href="/privacy">Privacy</a>
+        <a href="/terms">Terms</a>
+      </div>
+    </div>
+  </footer>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
 

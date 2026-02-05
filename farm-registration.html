@@ -15,10 +15,13 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Farm Registration | CropCart GH" />
   <meta name="twitter:description" content="Pre-register your farm as a CropCart partner." />
-  <meta name="twitter:image" content="https://cropcartgh.com/favicon-180.png" />
+  <meta name="twitter:image" content="https://cropcartgh.com/apple-touch-icon.png" />
   <meta name="api-base" content="/api" />
   <title>Farm Registration | CropCart GH</title>
   <link rel="icon" type="image/png" sizes="32x32" href="favicon.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon.png" />
+  <link rel="shortcut icon" href="favicon.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -393,6 +396,31 @@
     .toast.success { background: var(--success); }
     .toast.error { background: var(--error); }
 
+    .site-footer {
+      border-top: 1px solid var(--stroke);
+      margin-top: 64px;
+      padding: 24px;
+      background: #ffffff;
+    }
+    .site-footer .footer-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .site-footer .footer-links { display: flex; gap: 16px; }
+    .site-footer .footer-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .site-footer .footer-links a:hover { color: var(--fg); }
+
     @media (max-width: 900px) {
       nav { padding: 0 20px; }
       .nav-links { gap: 16px; }
@@ -528,6 +556,16 @@
       </div>
     </form>
   </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span>© 2026 CropCart GH. All rights reserved.</span>
+      <div class="footer-links">
+        <a href="/privacy">Privacy</a>
+        <a href="/terms">Terms</a>
+      </div>
+    </div>
+  </footer>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 

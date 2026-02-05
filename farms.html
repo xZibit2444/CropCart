@@ -7,7 +7,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Partner Farms | CropCart GH" />
   <meta property="og:description" content="Verified farms supplying Accra and Kumasi with traceable, cold-chain produce." />
-  <meta property="og:image" content="favicon-180.png" />
+  <meta property="og:image" content="https://cropcartgh.com/apple-touch-icon.png" />
   <meta property="og:url" content="https://cropcartgh.com/farms" />
   <link rel="canonical" href="https://cropcartgh.com/farms" />
   <meta property="og:site_name" content="CropCart GH" />
@@ -16,13 +16,12 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Partner Farms | CropCart GH" />
   <meta name="twitter:description" content="Verified farms supplying Accra and Kumasi with traceable, cold-chain produce." />
-  <meta name="twitter:image" content="https://cropcartgh.com/favicon-180.png" />
+  <meta name="twitter:image" content="https://cropcartgh.com/apple-touch-icon.png" />
   <meta name="api-base" content="/api" />
   <title>Partner Farms | CropCart GH</title>
   <link rel="icon" type="image/png" sizes="32x32" href="favicon.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="favicon.png" />
   <link rel="shortcut icon" href="favicon.png" />
-  <link rel="apple-touch-icon" sizes="180x180" href="favicon.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -527,6 +526,31 @@
       font-weight: 500;
     }
 
+    .site-footer {
+      border-top: 1px solid var(--stroke);
+      margin-top: 64px;
+      padding: 24px;
+      background: #ffffff;
+    }
+    .site-footer .footer-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .site-footer .footer-links { display: flex; gap: 16px; }
+    .site-footer .footer-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .site-footer .footer-links a:hover { color: var(--fg); }
+
     @media (max-width: 900px) {
       nav { flex-wrap: wrap; gap: 12px; padding: 0 16px; }
       .nav-links { flex-wrap: wrap; justify-content: flex-start; gap: 8px; }
@@ -828,10 +852,6 @@
         <span>Partner Farms</span>
       </div>
       <div class="stat-item">
-        <strong id="total-regions">—</strong>
-        <span>Regions</span>
-      </div>
-      <div class="stat-item">
         <strong id="total-capacity">—</strong>
         <span>Weekly Capacity</span>
       </div>
@@ -882,6 +902,16 @@
       <button class="apply-btn" onclick="openApplicationModal()">Apply Now</button>
     </div>
   </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span>© 2026 CropCart GH. All rights reserved.</span>
+      <div class="footer-links">
+        <a href="/privacy">Privacy</a>
+        <a href="/terms">Terms</a>
+      </div>
+    </div>
+  </footer>
 
   <div class="modal" id="application-modal">
     <div class="modal-content">
@@ -1117,14 +1147,12 @@
     }
 
     function updateStats() {
-      const regions = new Set(allFarms.map(f => f.location)).size;
       const capacities = allFarms
         .map(f => parseCapacityValue(f.capacity))
         .filter(v => typeof v === 'number' && Number.isFinite(v));
       const totalCapacity = capacities.reduce((sum, v) => sum + v, 0);
 
       document.getElementById('total-farms').textContent = allFarms.length;
-      document.getElementById('total-regions').textContent = regions;
       document.getElementById('total-capacity').textContent = totalCapacity > 0
         ? `${Math.round(totalCapacity)}+ cases/week`
         : 'Varies by farm';
@@ -1311,16 +1339,16 @@
       lastScrollY = y;
     });
 
-    function openApplicationModal() {
+    window.openApplicationModal = function openApplicationModal() {
       document.getElementById('application-modal').classList.add('active');
       document.body.style.overflow = 'hidden';
-    }
+    };
 
-    function closeApplicationModal() {
+    window.closeApplicationModal = function closeApplicationModal() {
       document.getElementById('application-modal').classList.remove('active');
       document.body.style.overflow = '';
       document.getElementById('application-form').reset();
-    }
+    };
 
     // Close modal on backdrop click
     document.getElementById('application-modal').addEventListener('click', (e) => {
@@ -1335,7 +1363,7 @@
       }
     });
 
-    async function submitApplication(event) {
+    window.submitApplication = async function submitApplication(event) {
       event.preventDefault();
       const formEl = event.target;
       clearFieldErrors(formEl);
@@ -1386,7 +1414,7 @@
         submitBtn.disabled = false;
         submitBtn.textContent = 'Submit Application';
       }
-    }
+    };
   </script>
   <!--Start of Tawk.to Script-->
   <script type="text/javascript">

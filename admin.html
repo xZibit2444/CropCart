@@ -8,7 +8,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="favicon.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="favicon.png" />
   <link rel="shortcut icon" href="favicon.png" />
-  <link rel="apple-touch-icon" sizes="180x180" href="favicon.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -283,6 +283,31 @@
       letter-spacing: 0.5px;
     }
 
+    .site-footer {
+      border-top: 1px solid var(--stroke);
+      margin-top: 64px;
+      padding: 24px;
+      background: #ffffff;
+    }
+    .site-footer .footer-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .site-footer .footer-links { display: flex; gap: 16px; }
+    .site-footer .footer-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .site-footer .footer-links a:hover { color: var(--fg); }
+
     @media (max-width: 768px) {
       .container {
         padding: 12px;
@@ -438,6 +463,16 @@
       </div>
     </div>
   </div>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span>© 2026 CropCart GH. All rights reserved.</span>
+      <div class="footer-links">
+        <a href="/privacy">Privacy</a>
+        <a href="/terms">Terms</a>
+      </div>
+    </div>
+  </footer>
 
   <script type="module">
     import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';

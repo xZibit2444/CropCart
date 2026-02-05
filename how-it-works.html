@@ -7,7 +7,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:title" content="How It Works | CropCart GH" />
   <meta property="og:description" content="Traceability, sealed crates, GPS reefer trucks, and delivery windows built for kitchens." />
-  <meta property="og:image" content="favicon-180.png" />
+  <meta property="og:image" content="https://cropcartgh.com/apple-touch-icon.png" />
   <meta property="og:url" content="https://cropcartgh.com/how-it-works" />
   <link rel="canonical" href="https://cropcartgh.com/how-it-works" />
   <meta property="og:site_name" content="CropCart GH" />
@@ -16,13 +16,12 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="How It Works | CropCart GH" />
   <meta name="twitter:description" content="Learn how CropCart GH connects farms to buyers with cold-chain delivery and traceability." />
-  <meta name="twitter:image" content="https://cropcartgh.com/favicon-180.png" />
+  <meta name="twitter:image" content="https://cropcartgh.com/apple-touch-icon.png" />
   <meta name="api-base" content="/api" />
   <title>How It Works | CropCart GH</title>
   <link rel="icon" type="image/png" sizes="32x32" href="favicon.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="favicon.png" />
   <link rel="shortcut icon" href="favicon.png" />
-  <link rel="apple-touch-icon" sizes="180x180" href="favicon.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -505,6 +504,31 @@
       transform: translateY(-1px);
     }
 
+    .site-footer {
+      border-top: 1px solid var(--stroke);
+      margin-top: 64px;
+      padding: 24px;
+      background: #ffffff;
+    }
+    .site-footer .footer-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .site-footer .footer-links { display: flex; gap: 16px; }
+    .site-footer .footer-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .site-footer .footer-links a:hover { color: var(--fg); }
+
     @media (max-width: 900px) {
       .timeline::before, .timeline::after { left: 20px; }
       .timeline-item { flex-direction: column !important; padding-left: 50px; }
@@ -801,6 +825,16 @@
       </div>
     </div>
   </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span>© 2026 CropCart GH. All rights reserved.</span>
+      <div class="footer-links">
+        <a href="/privacy">Privacy</a>
+        <a href="/terms">Terms</a>
+      </div>
+    </div>
+  </footer>
   <!--Start of Tawk.to Script-->
   <script type="text/javascript">
   var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
