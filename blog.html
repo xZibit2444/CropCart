@@ -294,43 +294,223 @@
       font-size: 12px;
       border: 1px solid rgba(34, 197, 94, 0.2);
     }
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .post-card h3 { margin: 0; font-size: 20px; }
-    .post-card p { margin: 0; color: var(--muted); }
-    .meta { color: var(--muted); font-size: 13px; display: flex; gap: 12px; align-items: center; }
-    .tag { display: inline-flex; padding: 6px 10px; border-radius: 999px; background: #ecfdf3; color: #15803d; font-weight: 700; font-size: 12px; }
 
     .cta-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-top: 12px; }
 
     .site-footer {
       border-top: 1px solid var(--stroke);
       margin-top: 64px;
-      padding: 24px;
+      padding: 36px 24px 28px;
       background: #ffffff;
     }
     .site-footer .footer-inner {
       max-width: var(--max-width);
       margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(220px, 1.1fr) 2fr;
+      gap: 28px;
+      align-items: start;
+    }
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .footer-logo { width: 160px; height: auto; }
+    .footer-tagline {
+      color: var(--muted);
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    .footer-columns {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 20px;
+    }
+    .footer-column h4 {
+      margin: 0 0 12px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+    .footer-column ul { list-style: none; padding: 0; margin: 0; }
+    .footer-column ul li { margin-bottom: 8px; }
+    .footer-column a {
+      color: var(--fg);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .footer-column a:hover { color: var(--accent-strong); }
+    .footer-bottom {
+      max-width: var(--max-width);
+      margin: 24px auto 0;
+      padding-top: 16px;
+      border-top: 1px solid var(--stroke);
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 12px;
       flex-wrap: wrap;
       color: var(--muted);
-      font-size: 14px;
+      font-size: 13px;
     }
-    .site-footer .footer-links { display: flex; gap: 16px; }
-    .site-footer .footer-links a {
+    .footer-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .footer-meta a {
       color: var(--muted);
       text-decoration: none;
       font-weight: 600;
     }
-    .site-footer .footer-links a:hover { color: var(--fg); }
+    .footer-meta a:hover { color: var(--fg); }
+    .footer-sep { color: var(--stroke); }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.55);
+      backdrop-filter: blur(6px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      z-index: 200;
+    }
+
+    .modal-backdrop.show { display: flex; }
+
+    .modal {
+      width: min(920px, 100%);
+      background: #ffffff;
+      border-radius: 22px;
+      border: 1px solid var(--stroke);
+      box-shadow: 0 40px 120px rgba(15, 23, 42, 0.3);
+      overflow: hidden;
+      transform: translateY(16px);
+      opacity: 0;
+      transition: all 0.2s ease;
+    }
+
+    .modal-backdrop.show .modal {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 26px 28px 0;
+    }
+
+    .modal-title {
+      font-size: 30px;
+      font-weight: 800;
+      margin: 0;
+      color: var(--fg);
+      letter-spacing: -0.02em;
+    }
+
+    .modal-meta {
+      padding: 10px 28px 0;
+      color: var(--muted);
+      font-size: 13px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .modal-body {
+      padding: 18px 28px 24px;
+      max-height: min(62vh, 620px);
+      overflow: auto;
+      color: var(--fg);
+      font-size: 16px;
+      line-height: 1.8;
+    }
+
+    .modal-body p { margin: 0 0 16px; }
+    .modal-body p:last-child { margin-bottom: 0; }
+
+    .modal-close {
+      border: none;
+      background: #f1f5f9;
+      color: var(--fg);
+      border-radius: 999px;
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      font-size: 18px;
+      font-weight: 700;
+      transition: transform 0.15s ease, background 0.2s ease;
+    }
+    .modal-close:hover { transform: rotate(6deg) scale(1.05); background: #e2e8f0; }
+
+    .modal-author {
+      padding: 0 28px 28px;
+      background: #f8fafc;
+      border-top: 1px solid var(--stroke);
+    }
+    .author-card {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px;
+      margin-top: 18px;
+      border-radius: 16px;
+      background: #ffffff;
+      border: 1px solid var(--stroke);
+      box-shadow: var(--shadow-soft);
+    }
+    .author-avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 999px;
+      background: var(--accent-light);
+      color: var(--accent-strong);
+      font-weight: 800;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      font-size: 16px;
+    }
+    .author-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .author-label {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .author-name {
+      display: block;
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--fg);
+      margin-bottom: 2px;
+    }
+    .author-role {
+      display: block;
+      font-size: 13px;
+      color: var(--muted);
+    }
 
     @media (max-width: 900px) {
       nav { flex-wrap: wrap; gap: 12px; padding: 0 16px; }
@@ -343,14 +523,16 @@
 
     @media (max-width: 620px) {
       nav { padding: 8px 16px; height: auto; min-height: 60px; }
-      .brand { height: 48px; }
-      .brand-mark { height: 100%; width: auto; }
+      .brand { height: 48px; width: 148px; overflow: hidden; flex-shrink: 0; }
+      .brand-mark { height: 100%; width: 230px; max-width: none; object-fit: cover; object-position: left center; }
       .nav-links { width: 100%; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 8px; }
       .nav-links a { font-size: 13px; padding: 4px 6px; }
       .cta-btn { padding: 10px 14px; font-size: 13px; min-height: 44px; }
       main { padding: 40px 16px 72px; }
       .hero { border-radius: 12px; padding: 24px; }
       .hero h1 { font-size: 26px; }
+      .site-footer .footer-inner { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
     }
   </style>
 </head>
@@ -373,7 +555,7 @@
 
   <main>
     <section class="hero">
-      <div class="pill">Insights · Cold chain · Launch updates</div>
+      <div class="pill">Insights ? Cold chain ? Launch updates</div>
       <h1>CropCart GH Blog</h1>
       <p>Stories from our partner farms, how we keep produce cold and traceable, and the rollout roadmap for Accra and Kumasi.</p>
       <div class="cta-row">
@@ -391,12 +573,56 @@
     </section>
   </main>
 
+  <div class="modal-backdrop" id="postModal" aria-hidden="true">
+    <article class="modal" role="dialog" aria-modal="true" aria-labelledby="postTitle">
+      <div class="modal-header">
+        <h2 class="modal-title" id="postTitle"></h2>
+        <button class="modal-close" type="button" aria-label="Close">?</button>
+      </div>
+      <div class="modal-meta" id="postMeta"></div>
+      <div class="modal-body" id="postBody"></div>
+      <div class="modal-author" id="postAuthor"></div>
+    </article>
+  </div>
+
   <footer class="site-footer">
     <div class="footer-inner">
-      <span>© 2026 CropCart GH. All rights reserved.</span>
-      <div class="footer-links">
-        <a href="/privacy">Privacy</a>
-        <a href="/terms">Terms</a>
+      <div class="footer-brand">
+        <img class="footer-logo" src="logo.png" alt="CropCart GH" />
+        <p class="footer-tagline">Verified Ghanaian farms with cold-chain delivery under 12 hours.</p>
+      </div>
+      <div class="footer-columns">
+        <div class="footer-column">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="/how-it-works">How it works</a></li>
+            <li><a href="/farms">Partner farms</a></li>
+            <li><a href="/blog">Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h4>Buyers</h4>
+          <ul>
+            <li><a href="/waitlist">Join waitlist</a></li>
+            <li><a href="/early-access">Early access</a></li>
+            <li><a href="/faq">FAQ</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/privacy">Privacy</a></li>
+            <li><a href="/terms">Terms</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>? 2026 CropCart GH. All rights reserved.</span>
+      <div class="footer-meta">
+        <a href="mailto:info@cropcartgh.com">info@cropcartgh.com</a>
+        <span class="footer-sep">&bull;</span>
+        <span>P.O Box AN8700, Accra, North, Greater Accra</span>
       </div>
     </div>
   </footer>
@@ -406,6 +632,97 @@
     const SUPABASE_URL = 'https://djuvkrjotiowrngcjqrm.supabase.co';
     const SUPABASE_KEY = 'sb_publishable_IAdc3pEESUgbCt_sKAE5nQ_9zLGO3Kg';
     const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    const modalBackdrop = document.getElementById('postModal');
+    const modalTitle = document.getElementById('postTitle');
+    const modalMeta = document.getElementById('postMeta');
+    const modalBody = document.getElementById('postBody');
+    const modalAuthor = document.getElementById('postAuthor');
+    const modalClose = modalBackdrop.querySelector('.modal-close');
+    let postsCache = [];
+
+    function getInitials(name) {
+      return name
+        .split(' ')
+        .filter(Boolean)
+        .slice(0, 2)
+        .map(part => part[0].toUpperCase())
+        .join('');
+    }
+
+    function openPostModal(post) {
+      if (!post) { return; }
+
+      const date = new Date(post.created_at).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+      });
+
+      modalTitle.textContent = post.title || 'Untitled';
+      modalMeta.innerHTML = '';
+      const tag = document.createElement('span');
+      tag.className = 'tag';
+      tag.textContent = post.category || 'General';
+      const dateNode = document.createElement('span');
+      dateNode.textContent = date;
+      const readTime = document.createElement('span');
+      readTime.textContent = post.read_time || '';
+      modalMeta.append(tag, dateNode, readTime);
+
+      modalBody.innerHTML = '';
+      const content = (post.content || '').toString();
+      const paragraphs = content.split(/\r?\n/).filter(line => line.trim().length > 0);
+      if (paragraphs.length === 0) {
+        const empty = document.createElement('p');
+        empty.textContent = 'No content available.';
+        modalBody.appendChild(empty);
+      } else {
+        paragraphs.forEach(line => {
+          const p = document.createElement('p');
+          p.textContent = line.trim();
+          modalBody.appendChild(p);
+        });
+      }
+
+      modalAuthor.innerHTML = '';
+      const authorName = post.author_name || 'CropCart GH';
+      const authorRole = post.author_role || 'Editorial team';
+      const authorAvatar = post.author_avatar || '';
+      const authorCard = document.createElement('div');
+      authorCard.className = 'author-card';
+      authorCard.innerHTML = `
+        <div class="author-avatar">${authorAvatar ? `<img src="${authorAvatar}" alt="${authorName}" />` : getInitials(authorName)}</div>
+        <div>
+          <span class="author-label">Written by</span>
+          <span class="author-name">${authorName}</span>
+          <span class="author-role">${authorRole}</span>
+        </div>
+      `;
+      modalAuthor.appendChild(authorCard);
+
+      modalBackdrop.classList.add('show');
+      modalBackdrop.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closePostModal() {
+      modalBackdrop.classList.remove('show');
+      modalBackdrop.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    modalClose.addEventListener('click', closePostModal);
+    modalBackdrop.addEventListener('click', (event) => {
+      if (event.target === modalBackdrop) {
+        closePostModal();
+      }
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && modalBackdrop.classList.contains('show')) {
+        closePostModal();
+      }
+    });
 
     async function loadBlogPosts() {
       try {
@@ -417,6 +734,8 @@
         if (error) {          return;
         }
 
+        postsCache = data || [];
+
         if (!data || data.length === 0) {
           document.querySelector('.blog-grid').innerHTML = '<p style="color: var(--muted); grid-column: 1/-1;">No blog posts yet. Check back soon!</p>';
           return;
@@ -424,36 +743,38 @@
 
         const postsHTML = data.map(post => {
           const date = new Date(post.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
+          const category = post.category || 'General';
+          const metaItems = [
+            `<span class="tag">${category}</span>`,
+            `<span>${date}</span>`,
+            post.read_time ? `<span>${post.read_time}</span>` : '',
+            post.author_name ? `<span>By ${post.author_name}</span>` : ''
+          ].filter(Boolean).join('');
           return `
             <article class="post-card">
-              <div class="meta"><span class="tag">${post.category}</span><span>${date}</span><span>${post.read_time}</span></div>
+              <div class="meta">${metaItems}</div>
               <h3>${post.title}</h3>
               <p>${post.content.substring(0, 120)}...</p>
               <div class="cta-row">
-                <button class="cta-btn" style="background:#ecfdf3; color:#166534; box-shadow:none;" onclick="alert('${post.title.replace(/'/g, "\\'")}')">Read more</button>
+                <button class="cta-btn read-more-btn" style="background:#ecfdf3; color:#166534; box-shadow:none;" data-post-id="${post.id}">Read more</button>
               </div>
             </article>
           `;
         }).join('');
 
         document.querySelector('.blog-grid').innerHTML = postsHTML;
+        document.querySelectorAll('.read-more-btn').forEach(button => {
+          button.addEventListener('click', () => {
+            const postId = button.getAttribute('data-post-id');
+            const post = postsCache.find(item => String(item.id) === String(postId));
+            openPostModal(post);
+          });
+        });
       } catch (error) {      }
     }
 
     loadBlogPosts();
   </script>
-  <!--Start of Tawk.to Script-->
-  <script type="text/javascript">
-  var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-  (function(){
-  var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-  s1.async=true;
-  s1.src='https://embed.tawk.to/6981a1fc3c76db1c37e38a4d/1jgh61gmi';
-  s1.charset='UTF-8';
-  s1.setAttribute('crossorigin','*');
-  s0.parentNode.insertBefore(s1,s0);
-  })();
-  </script>
-  <!--End of Tawk.to Script-->
 </body>
 </html>
+

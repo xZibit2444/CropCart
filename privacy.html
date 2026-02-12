@@ -147,38 +147,89 @@
     .site-footer {
       border-top: 1px solid var(--stroke);
       margin-top: 64px;
-      padding: 24px;
+      padding: 36px 24px 28px;
       background: #ffffff;
     }
     .site-footer .footer-inner {
       max-width: var(--max-width);
       margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(220px, 1.1fr) 2fr;
+      gap: 28px;
+      align-items: start;
+    }
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .footer-logo { width: 160px; height: auto; }
+    .footer-tagline {
+      color: var(--muted);
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    .footer-columns {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 20px;
+    }
+    .footer-column h4 {
+      margin: 0 0 12px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+    .footer-column ul { list-style: none; padding: 0; margin: 0; }
+    .footer-column ul li { margin-bottom: 8px; }
+    .footer-column a {
+      color: var(--fg);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .footer-column a:hover { color: var(--accent-strong); }
+    .footer-bottom {
+      max-width: var(--max-width);
+      margin: 24px auto 0;
+      padding-top: 16px;
+      border-top: 1px solid var(--stroke);
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 12px;
       flex-wrap: wrap;
       color: var(--muted);
-      font-size: 14px;
+      font-size: 13px;
     }
-    .site-footer .footer-links { display: flex; gap: 16px; }
-    .site-footer .footer-links a {
+    .footer-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .footer-meta a {
       color: var(--muted);
       text-decoration: none;
       font-weight: 600;
     }
-    .site-footer .footer-links a:hover { color: var(--fg); }
+    .footer-meta a:hover { color: var(--fg); }
+    .footer-sep { color: var(--stroke); }
 
     @media (max-width: 720px) {
       nav { padding: 8px 16px; height: auto; min-height: 60px; flex-wrap: wrap; }
-      .brand { height: 48px; }
-      .brand-mark { height: 100%; width: auto; }
+      .brand { height: 48px; width: 148px; overflow: hidden; flex-shrink: 0; }
+      .brand-mark { height: 100%; width: 230px; max-width: none; object-fit: cover; object-position: left center; }
       .nav-links { width: 100%; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 8px; }
       .nav-links a { font-size: 13px; padding: 4px 6px; }
       .cta-btn { padding: 10px 14px; font-size: 13px; min-height: 44px; }
       main { padding: 32px 16px 64px; }
       .hero { padding: 22px; }
       .hero h1 { font-size: 26px; }
+      .site-footer .footer-inner { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
     }
   </style>
 </head>
@@ -254,31 +305,51 @@
     <section class="card">
       <h2>Contact</h2>
       <p>Email us at <a href="mailto:info@cropcartgh.com">info@cropcartgh.com</a> for privacy questions.</p>
-      <p class="muted">This policy may be updated. We’ll post changes on this page.</p>
+      <p class="muted">This policy may be updated. We&rsquo;ll post changes on this page.</p>
     </section>
   </main>
 
   <footer class="site-footer">
     <div class="footer-inner">
-      <span>© 2026 CropCart GH. All rights reserved.</span>
-      <div class="footer-links">
-        <a href="/privacy">Privacy</a>
-        <a href="/terms">Terms</a>
+      <div class="footer-brand">
+        <img class="footer-logo" src="logo.png" alt="CropCart GH" />
+        <p class="footer-tagline">Verified Ghanaian farms with cold-chain delivery under 12 hours.</p>
+      </div>
+      <div class="footer-columns">
+        <div class="footer-column">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="/how-it-works">How it works</a></li>
+            <li><a href="/farms">Partner farms</a></li>
+            <li><a href="/blog">Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h4>Buyers</h4>
+          <ul>
+            <li><a href="/waitlist">Join waitlist</a></li>
+            <li><a href="/early-access">Early access</a></li>
+            <li><a href="/faq">FAQ</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/privacy">Privacy</a></li>
+            <li><a href="/terms">Terms</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>? 2026 CropCart GH. All rights reserved.</span>
+      <div class="footer-meta">
+        <a href="mailto:info@cropcartgh.com">info@cropcartgh.com</a>
+        <span class="footer-sep">&bull;</span>
+        <span>P.O Box AN8700, Accra, North, Greater Accra</span>
       </div>
     </div>
   </footer>
-  <!--Start of Tawk.to Script-->
-  <script type="text/javascript">
-  var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-  (function(){
-  var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-  s1.async=true;
-  s1.src='https://embed.tawk.to/6981a1fc3c76db1c37e38a4d/1jgh61gmi';
-  s1.charset='UTF-8';
-  s1.setAttribute('crossorigin','*');
-  s0.parentNode.insertBefore(s1,s0);
-  })();
-  </script>
-  <!--End of Tawk.to Script-->
 </body>
 </html>
+

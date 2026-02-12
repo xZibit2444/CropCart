@@ -644,7 +644,7 @@
     }
     
     .success-badge::before {
-      content: "✓";
+      content: "?";
       font-weight: 700;
       font-size: 16px;
     }
@@ -788,110 +788,79 @@
     .quote strong { display: block; margin-top: 16px; font-size: 16px; color: var(--fg); }
     .quote span { color: var(--muted); font-size: 14px; }
 
-    footer { 
-      border-top: 1px solid var(--stroke); 
-      margin-top: 80px; 
-      padding: 56px 24px 36px; 
-      background: linear-gradient(180deg, #16a34a 0%, #22c55e 100%);
+    .site-footer {
+      border-top: 1px solid var(--stroke);
+      margin-top: 80px;
+      padding: 36px 24px 28px;
+      background: #ffffff;
     }
-    .footer-top {
-      max-width: var(--max-width);
-      margin: 0 auto 36px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      padding-bottom: 24px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.24);
-    }
-    .footer-brand {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-    .footer-brand .brand-mark { width: 230px; height: 45px; display: block; }
-    .footer-tagline { color: rgba(255, 255, 255, 0.85); font-size: 14px; }
-    .newsletter {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-    .newsletter input[type="email"] {
-      border: 2px solid rgba(255, 255, 255, 0.6);
-      border-radius: 999px;
-      padding: 10px 14px;
-      min-width: 260px;
-      background: rgba(255, 255, 255, 0.95);
-      color: var(--fg);
-      box-shadow: var(--shadow-soft);
-    }
-    .newsletter input[type="email"]::placeholder { color: var(--muted); }
-    .newsletter .cta-btn { padding: 10px 16px; }
-    .footer-content {
+    .site-footer .footer-inner {
       max-width: var(--max-width);
       margin: 0 auto;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 40px;
-      margin-bottom: 32px;
+      grid-template-columns: minmax(220px, 1.1fr) 2fr;
+      gap: 28px;
+      align-items: start;
+    }
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .footer-logo { width: 160px; height: auto; }
+    .footer-tagline {
+      color: var(--muted);
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    .footer-columns {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 20px;
     }
     .footer-column h4 {
-      font-size: 14px;
-      font-weight: 700;
-      margin: 0 0 16px;
-      color: #ffffff;
+      margin: 0 0 12px;
+      font-size: 12px;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.08em;
+      color: var(--muted);
     }
-    .footer-column ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-    .footer-column ul li {
-      margin-bottom: 10px;
-    }
-    .footer-column ul li a {
-      color: rgba(255, 255, 255, 0.85);
+    .footer-column ul { list-style: none; padding: 0; margin: 0; }
+    .footer-column ul li { margin-bottom: 8px; }
+    .footer-column a {
+      color: var(--fg);
+      text-decoration: none;
+      font-weight: 600;
       font-size: 14px;
-      transition: opacity 0.2s ease;
     }
-    .footer-column ul li a:hover {
-      opacity: 1;
-      color: #ffffff;
-    }
+    .footer-column a:hover { color: var(--accent-strong); }
     .footer-bottom {
       max-width: var(--max-width);
-      margin: 0 auto;
-      padding-top: 24px;
-      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      margin: 24px auto 0;
+      padding-top: 16px;
+      border-top: 1px solid var(--stroke);
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
+      gap: 12px;
       flex-wrap: wrap;
-      gap: 16px;
-      color: rgba(255, 255, 255, 0.85);
-      font-size: 14px;
+      color: var(--muted);
+      font-size: 13px;
     }
-    .legal-links { display: flex; gap: 16px; }
-    .legal-links a { color: rgba(255, 255, 255, 0.85); }
-    .legal-links a:hover { color: #ffffff; }
-    .social-links {
+    .footer-meta {
       display: flex;
-      gap: 16px;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
     }
-    .social-links a {
-      color: rgba(255, 255, 255, 0.85);
-      transition: opacity 0.2s ease;
+    .footer-meta a {
+      color: var(--muted);
+      text-decoration: none;
+      font-weight: 600;
     }
-    .social-links a:hover {
-      opacity: 1;
-      color: #ffffff;
-    }
-    footer .cta-btn { background: #ffffff; color: var(--accent-strong); border-color: #ffffff; }
-    footer .cta-btn:hover { background: #f0fdf4; color: var(--accent-strong); }
-    footer .brand-mark text { fill: #ffffff; }
+    .footer-meta a:hover { color: var(--fg); }
+    .footer-sep { color: var(--stroke); }
     .faq-section {
       max-width: 900px;
       margin: 0 auto;
@@ -1002,10 +971,7 @@
       .nav-links { flex-wrap: wrap; justify-content: flex-start; gap: 8px; }
       .nav-links a { padding: 6px 4px; font-size: 14px; }
       .cta-btn { padding: 10px 16px; font-size: 14px; }
-      .footer-top { flex-direction: column; align-items: flex-start; }
-      .newsletter { width: 100%; }
-      .newsletter input[type="email"] { flex: 1; min-width: 0; width: 100%; }
-      .footer-content { grid-template-columns: 1fr; }
+      .site-footer .footer-inner { grid-template-columns: 1fr; }
     }
     @media (max-width: 768px) {
       .cta-form { grid-template-columns: 1fr; }
@@ -1021,8 +987,8 @@
     }
     @media (max-width: 620px) {
       nav { padding: 8px 16px; height: auto; min-height: 60px; }
-      .brand { height: 48px; }
-      .brand-mark { height: 100%; width: auto; }
+      .brand { height: 48px; width: 148px; overflow: hidden; flex-shrink: 0; }
+      .brand-mark { height: 100%; width: 230px; max-width: none; object-fit: cover; object-position: left center; }
       .nav-links { width: 100%; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 8px; }
       .nav-links a { font-size: 13px; padding: 4px 6px; }
       .cta-btn { padding: 10px 14px; font-size: 13px; min-height: 44px; }
@@ -1042,12 +1008,11 @@
         min-height: 48px;
       }
       .cta-btn, .ghost-btn { width: 100%; min-height: 48px; }
-      .newsletter { width: 100%; padding: 14px; }
-      .newsletter input, .newsletter button { font-size: 16px; }
       .cookie-banner { width: calc(100% - 16px); padding: 12px 12px; font-size: 12px; }
       .cookie-banner p { font-size: 12px; }
       .cookie-actions { flex-direction: column; width: 100%; }
       .cookie-btn { width: 100%; min-height: 44px; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
     }
   </style>
 </head>
@@ -1161,7 +1126,7 @@
   <main>
     <section class="hero">
       <div>
-        <div class="eyebrow">Launching Q2 2026 · Ghana-grown · Fresh · Fast</div>
+        <div class="eyebrow">Launching Q2 2026 &middot; Ghana-grown &middot; Fresh &middot; Fast</div>
         <h1>From Ghana's fields to city doors in hours.</h1>
         <p class="lead">CropCart GH links verified Ghanaian farms to buyers in Accra and Kumasi with sealed cold chain and tracked loads. We're building the network now and opening to early buyers soon.</p>
         <div class="hero-actions">
@@ -1237,12 +1202,11 @@
             </svg>
             <strong>Max Pines</strong>
           </div>
-          <p style="margin: 0; color: var(--muted);">Aburi · Pineapples</p>
+          <p style="margin: 0; color: var(--muted);">Aburi ? Pineapples</p>
           <div class="pill-row">
             <span class="pill">Medium - Large Scale</span>
             <span class="pill">Quality produce</span>
           </div>
-          <p style="margin: 8px 0 0 0; font-size: 13px; color: var(--muted);">Contact: Maxwell - 0594599213</p>
         </div>
         <div class="farm-card card-hover">
           <div class="farm-meta">
@@ -1252,12 +1216,11 @@
             </svg>
             <strong>ARCHIKOS</strong>
           </div>
-          <p style="margin: 0; color: var(--muted);">Amrahia · Poultry & Eggs</p>
+          <p style="margin: 0; color: var(--muted);">Amrahia ? Poultry & Eggs</p>
           <div class="pill-row">
             <span class="pill">Medium Scale</span>
             <span class="pill">Fresh poultry</span>
           </div>
-          <p style="margin: 8px 0 0 0; font-size: 13px; color: var(--muted);">Contact: Adelaide - 0545055336</p>
         </div>
         <div class="farm-card card-hover">
           <div class="farm-meta">
@@ -1267,12 +1230,11 @@
             </svg>
             <strong>Amartey Tomatoes</strong>
           </div>
-          <p style="margin: 0; color: var(--muted);">Amrahia · Tomatoes</p>
+          <p style="margin: 0; color: var(--muted);">Amrahia ? Tomatoes</p>
           <div class="pill-row">
             <span class="pill">Medium Scale</span>
             <span class="pill">Tomato farmer</span>
           </div>
-          <p style="margin: 8px 0 0 0; font-size: 13px; color: var(--muted);">Contact: Mr Amartey - 0558433671</p>
         </div>
         <div class="farm-card card-hover">
           <div class="farm-meta">
@@ -1282,12 +1244,11 @@
             </svg>
             <strong>Kwateng Peppers</strong>
           </div>
-          <p style="margin: 0; color: var(--muted);">NTHC Estate · Peppers</p>
+          <p style="margin: 0; color: var(--muted);">NTHC Estate ? Peppers</p>
           <div class="pill-row">
             <span class="pill">Small Scale</span>
             <span class="pill">Specialty peppers</span>
           </div>
-          <p style="margin: 8px 0 0 0; font-size: 13px; color: var(--muted);">Contact: Kwateng - 0208661377</p>
         </div>
       </div>
       <div class="chips">
@@ -1303,7 +1264,7 @@
       <div class="cta-wide">
         <div>
           <h3>Want to be part of the launch?</h3>
-          <p>We're selecting early partners now—restaurants, markets, and food businesses ready to source smarter.</p>
+          <p>We're selecting early partners now&mdash;restaurants, markets, and food businesses ready to source smarter.</p>
         </div>
         <div class="hero-actions" style="margin: 0; justify-content: flex-end;">
           <button class="ghost-btn" onclick="window.location.href='/early-access'">Get early access</button>
@@ -1362,69 +1323,44 @@
 
   </main>
 
-  <footer>
-    <div class="footer-top">
+  <footer class="site-footer">
+    <div class="footer-inner">
       <div class="footer-brand">
-        <svg class="brand-mark" viewBox="0 0 230 60" xmlns="http://www.w3.org/2000/svg" aria-label="CropCart GH">
-          <text x="0" y="45" font-family="Manrope, Arial, sans-serif" font-size="40" font-weight="800" fill="#ffffff" letter-spacing="-1">Crop</text>
-          <text x="88" y="45" font-family="Manrope, Arial, sans-serif" font-size="40" font-weight="800" fill="#ffffff" letter-spacing="-1">Cart</text>
-          <text x="165" y="45" font-family="Manrope, Arial, sans-serif" font-size="40" font-weight="800" fill="#ffffff" letter-spacing="-1">GH</text>
-        </svg>
-        <span class="footer-tagline">Sourcing that keeps farms thriving and cities fed.</span>
+        <img class="footer-logo" src="logo.png" alt="CropCart GH" />
+        <p class="footer-tagline">Verified Ghanaian farms with cold-chain delivery under 12 hours.</p>
       </div>
-      <form class="newsletter" id="newsletter-form" novalidate>
-        <input type="email" id="newsletter-email" name="email" placeholder="Your email" aria-label="Email" required />
-        <button class="cta-btn" type="submit">Join waitlist</button>
-        <div class="field-error" id="newsletter-error" aria-live="polite"></div>
-      </form>
-    </div>
-    <div class="footer-content">
-      <div class="footer-column">
-        <h4>Company</h4>
-        <ul>
-          <li><a href="/">About</a></li>
-          <li><a href="/farms">Partner Farms</a></li>
-          <li><a href="/how-it-works">How it Works</a></li>
-          <li><a href="/blog">Blog</a></li>
-        </ul>
-      </div>
-      <div class="footer-column">
-        <h4>Products</h4>
-        <ul>
-          <li><a href="/how-it-works">How It Works</a></li>
-          <li><a href="/blog">Blog</a></li>
-          <li><a href="/farms">Farms</a></li>
-        </ul>
-      </div>
-      <div class="footer-column">
-        <h4>Resources</h4>
-        <ul>
-          <li><a href="#faq">FAQ</a></li>
-          <li><a href="/blog">Blog</a></li>
-          <li><a href="/faq">Help</a></li>
-        </ul>
-      </div>
-      <div class="footer-column">
-        <h4>Contact</h4>
-        <ul>
-          <li><a href="tel:+233123456789">+233 123 456 789</a></li>
-          <li><a href="mailto:info@cropcartgh.com">info@cropcartgh.com</a></li>
-          <li><a href="#">WhatsApp Support</a></li>
-          <li>Accra, Ghana</li>
-        </ul>
+      <div class="footer-columns">
+        <div class="footer-column">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="/how-it-works">How it works</a></li>
+            <li><a href="/farms">Partner farms</a></li>
+            <li><a href="/blog">Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h4>Buyers</h4>
+          <ul>
+            <li><a href="/waitlist">Join waitlist</a></li>
+            <li><a href="/early-access">Early access</a></li>
+            <li><a href="/faq">FAQ</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/privacy">Privacy</a></li>
+            <li><a href="/terms">Terms</a></li>
+          </ul>
+        </div>
       </div>
     </div>
     <div class="footer-bottom">
-      <span>&copy; 2025 CropCart GH. All rights reserved.</span>
-      <div class="legal-links">
-        <a href="/privacy">Privacy</a>
-        <a href="/terms">Terms</a>
-      </div>
-      <div class="social-links">
-        <a href="#" aria-label="Facebook">Facebook</a>
-        <a href="#" aria-label="Instagram">Instagram</a>
-        <a href="#" aria-label="Twitter">Twitter</a>
-        <a href="#" aria-label="LinkedIn">LinkedIn</a>
+      <span>? 2026 CropCart GH. All rights reserved.</span>
+      <div class="footer-meta">
+        <a href="mailto:info@cropcartgh.com">info@cropcartgh.com</a>
+        <span class="footer-sep">&bull;</span>
+        <span>P.O Box AN8700, Accra, North, Greater Accra</span>
       </div>
     </div>
   </footer>
@@ -1697,18 +1633,6 @@
 
     initConsent();
   </script>
-  <!--Start of Tawk.to Script-->
-  <script type="text/javascript">
-  var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-  (function(){
-  var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-  s1.async=true;
-  s1.src='https://embed.tawk.to/6981a1fc3c76db1c37e38a4d/1jgh61gmi';
-  s1.charset='UTF-8';
-  s1.setAttribute('crossorigin','*');
-  s0.parentNode.insertBefore(s1,s0);
-  })();
-  </script>
-  <!--End of Tawk.to Script-->
 </body>
 </html>
+

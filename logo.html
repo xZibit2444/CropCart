@@ -30,28 +30,82 @@
     .site-footer {
       border-top: 1px solid #e5e7eb;
       margin-top: 40px;
-      padding: 24px;
+      padding: 36px 24px 28px;
       background: #ffffff;
       width: 100%;
     }
     .site-footer .footer-inner {
       max-width: 960px;
       margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(220px, 1.1fr) 2fr;
+      gap: 28px;
+      align-items: start;
+    }
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .footer-logo { width: 160px; height: auto; }
+    .footer-tagline {
+      color: #6b7280;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    .footer-columns {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 20px;
+    }
+    .footer-column h4 {
+      margin: 0 0 12px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #6b7280;
+    }
+    .footer-column ul { list-style: none; padding: 0; margin: 0; }
+    .footer-column ul li { margin-bottom: 8px; }
+    .footer-column a {
+      color: #1a1a1a;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .footer-column a:hover { color: #16a34a; }
+    .footer-bottom {
+      max-width: 960px;
+      margin: 24px auto 0;
+      padding-top: 16px;
+      border-top: 1px solid #e5e7eb;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 12px;
       flex-wrap: wrap;
       color: #6b7280;
-      font-size: 14px;
+      font-size: 13px;
     }
-    .site-footer .footer-links { display: flex; gap: 16px; }
-    .site-footer .footer-links a {
+    .footer-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .footer-meta a {
       color: #6b7280;
       text-decoration: none;
       font-weight: 600;
     }
-    .site-footer .footer-links a:hover { color: #1a1a1a; }
+    .footer-meta a:hover { color: #1a1a1a; }
+    .footer-sep { color: #e5e7eb; }
+
+    @media (max-width: 700px) {
+      .site-footer .footer-inner { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+    }
   </style>
 </head>
 <body>
@@ -123,13 +177,44 @@
 
   <footer class="site-footer">
     <div class="footer-inner">
-      <span>© 2026 CropCart GH. All rights reserved.</span>
-      <div class="footer-links">
-        <a href="/privacy">Privacy</a>
-        <a href="/terms">Terms</a>
+      <div class="footer-brand">
+        <img class="footer-logo" src="logo.png" alt="CropCart GH" />
+        <p class="footer-tagline">Verified Ghanaian farms with cold-chain delivery under 12 hours.</p>
+      </div>
+      <div class="footer-columns">
+        <div class="footer-column">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="/how-it-works">How it works</a></li>
+            <li><a href="/farms">Partner farms</a></li>
+            <li><a href="/blog">Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h4>Buyers</h4>
+          <ul>
+            <li><a href="/waitlist">Join waitlist</a></li>
+            <li><a href="/early-access">Early access</a></li>
+            <li><a href="/faq">FAQ</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/privacy">Privacy</a></li>
+            <li><a href="/terms">Terms</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>? 2026 CropCart GH. All rights reserved.</span>
+      <div class="footer-meta">
+        <a href="mailto:info@cropcartgh.com">info@cropcartgh.com</a>
+        <span class="footer-sep">&bull;</span>
+        <span>P.O Box AN8700, Accra, North, Greater Accra</span>
       </div>
     </div>
   </footer>
-
 </body>
 </html>
